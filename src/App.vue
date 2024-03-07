@@ -5,16 +5,16 @@ const inputs: Inputs = {
   input1: "输入框1",
   input2: "输入框2*",
   input3: {
-    type: "text",
+    type: "input",
     label: "输入框3",
   },
   input4: {
-    type: "text",
+    type: "input",
     label: "输入框4",
     value: "默认值",
   },
   input5: {
-    type: "text",
+    type: "input",
     label: "输入框5",
     disabled: true,
   },
