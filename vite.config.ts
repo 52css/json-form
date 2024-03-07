@@ -21,6 +21,7 @@ export default defineConfig({
         }),
         ElementPlusResolver(),
       ],
+      dts: 'src/types/auto-import.d.ts',
     }),
     Components({
       resolvers: [
@@ -29,6 +30,7 @@ export default defineConfig({
         }),
         ElementPlusResolver(),
       ],
+      dts: 'src/types/components.d.ts',
     }),
   ],
   json: {
