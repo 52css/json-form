@@ -20,25 +20,25 @@
 //   };
 // }
 
-import { InputField, Model, TextField, Inputs, Layout } from "../types";
+import { CommonInput, Model, InputField, Inputs, Layout } from "../types";
 
-export const getInputField = (inputField: InputField) => {
-  if (typeof inputField === "string") {
+export const getCommonInput = (commonInput: CommonInput) => {
+  if (typeof commonInput === "string") {
     return {
-      label: inputField.replace(/\*/g, ""),
-      required: /\*/.test(inputField),
-      type: "text",
-    } as TextField;
+      label: commonInput.replace(/\*/g, ""),
+      required: /\*/.test(commonInput),
+      type: "input",
+    } as InputField;
   }
 
-  return inputField;
+  return commonInput;
 };
 
 export const getInputsByInputs = (inputs: Inputs, model: Model) => {
-  const rtv: Record<string, Exclude<InputField, string>> = {};
+  const rtv: Record<string, Exclude<CommonInput, string>> = {};
 
   for (const key in inputs) {
-    rtv[key] = getInputField(inputs[key]);
+    rtv[key] = getCommonInput(inputs[key]);
     model[key] = model[key] ?? rtv[key].value;
   }
 
@@ -50,5 +50,5 @@ export const getLabelAlignByLayout = (layout?: Layout) => {
 };
 
 export const getLayoutByLayout = (layout?: Layout) => {
-  return layout === 'inline' ? 'inline': 'vertical'
-}
+  return layout === "inline" ? "inline" : "vertical";
+};

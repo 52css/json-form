@@ -61,7 +61,7 @@ export interface CommonOption {
   value: CommonValue;
 }
 
-export interface TextField extends CommonField {
+export interface InputField extends CommonField {
   type: "text";
   placeholder?: string;
   maxlength?: number;
@@ -75,7 +75,7 @@ export interface CheckboxField extends CommonField {
   value?: CommonValue[];
 }
 
-export type Inputs = Record<string, string | TextField | CheckboxField>;
+export type Inputs = Record<string, string | InputField | CheckboxField>;
 
 export interface JsonFormProps {
   inputs: Inputs;
@@ -113,6 +113,25 @@ const inputs: Inputs = {
 };
 
 ```
+
+## TODO
+
+- [ ] AutoComplete 自动完成
+- [ ] Cascader 级联选择
+- [x] Checkbox 多选框
+- [ ] DatePicker 日期选择框
+- [x] Input 输入框
+- [ ] InputNumber 数字输入框
+- [ ] Mentions 提及
+- [ ] Radio 单选框
+- [ ] Rate 评分
+- [ ] Select 选择器
+- [ ] Slider 滑动输入条
+- [ ] Switch 开关
+- [ ] TimePicker 时间选择框
+- [ ] Transfer 穿梭框
+- [ ] TreeSelect 树选择
+- [ ] Upload 上传
 
 ## Form表单映射
 

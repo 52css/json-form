@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { type JsonFormProps, type Inputs, JsonFormDefault } from '../types'
 import { getInputsByInputs, getLabelAlignByLayout } from '../utils'
+import { type CheckboxGroupValueType } from 'element-plus'
 
 export interface ElementPlusJsonFormProps extends JsonFormProps {
   prop1?: string
@@ -35,13 +36,24 @@ const formData = ref(props.model ?? {})
       }]"
     >
       <el-input
-        v-if="inputField?.type === 'text'"
+        v-if="inputField?.type === 'input'"
         v-model="(formData[prop] as string)"
         :placeholder="inputField?.placeholder ?? '请输入'"
         :clearable="inputField?.clearable"
         :disabled="inputField?.disabled"
         :maxlength="inputField?.maxlength"
       />
+      <el-checkbox-group
+        v-else-if="inputField?.type === 'checkbox'"
+        v-model="(formData[prop] as unknown as CheckboxGroupValueType)"
+      >
+        <el-checkbox
+          v-for="(option, optionIndex) in inputField?.options"
+          :label="option.label"
+          :value="option.value"
+          :key="optionIndex"
+        />
+      </el-checkbox-group>
     </el-form-item>
   </el-form>
 </template>

@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { type JsonFormProps, type Inputs, JsonFormDefault } from '../types'
 import { getInputsByInputs } from '../utils'
+import { type CheckboxOptionType } from 'ant-design-vue'
 
 export interface AntDesignJsonFormProps extends JsonFormProps {
   prop1?: string
@@ -42,12 +43,17 @@ const formData = ref(props.model ?? {})
       }]"
     >
       <a-input
-        v-if="inputField?.type === 'text'"
+        v-if="inputField?.type === 'input'"
         v-model:value="(formData[prop] as string)"
         :placeholder="inputField?.placeholder ?? '请输入'"
         :clearable="inputField?.clearable"
         :disabled="inputField?.disabled"
         :maxlength="inputField?.maxlength"
+      />
+      <a-checkbox-group
+        v-else-if="inputField?.type === 'checkbox'"
+        v-model:value="(formData[prop] as unknown as string[])"
+        :options="(inputField?.options as unknown as CheckboxOptionType[])"
       />
     </a-form-item>
   </a-form>

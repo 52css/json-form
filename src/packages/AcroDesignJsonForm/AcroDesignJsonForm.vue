@@ -1,8 +1,9 @@
 <script lang="ts">
-import { Form as AForm, FormItem as AFormItem, Input as AInput } from '@arco-design/web-vue'
+import { Form as AForm, FormItem as AFormItem, Input as AInput, CheckboxGroup as ACheckboxGroup, type CheckboxOption } from '@arco-design/web-vue'
 import { ref } from 'vue'
 import { type JsonFormProps, type Inputs, JsonFormDefault } from '../types'
 import { getInputsByInputs } from '../utils'
+
 
 export interface AcroDesignJsonFormProps extends JsonFormProps {
   prop1?: string
@@ -40,12 +41,17 @@ const formData = ref(props.model ?? {})
       }]"
     >
       <a-input
-        v-if="inputField?.type === 'text'"
+        v-if="inputField?.type === 'input'"
         v-model="(formData[prop] as string)"
         :placeholder="inputField?.placeholder ?? '请输入'"
         :clearable="inputField?.clearable"
         :disabled="inputField?.disabled"
         :maxlength="inputField?.maxlength"
+      />
+      <a-checkbox-group
+        v-else-if="inputField?.type === 'checkbox'"
+        v-model="(formData[prop] as unknown as string[])"
+        :options="(inputField?.options as CheckboxOption[])"
       />
     </a-form-item>
   </a-form>

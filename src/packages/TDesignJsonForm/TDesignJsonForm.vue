@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { type JsonFormProps, type Inputs, JsonFormDefault } from '../types'
 import { getInputsByInputs, getLabelAlignByLayout, getLayoutByLayout } from '../utils'
-import { type InputValue } from 'tdesign-vue-next'
+import { type InputValue, type CheckboxGroupValue } from 'tdesign-vue-next'
 
 export interface TDesignJsonFormProps extends JsonFormProps {
   prop1?: string
@@ -36,12 +36,17 @@ const formData = ref(props.model ?? {})
         }]"
       >
         <t-input
-          v-if="inputField?.type === 'text'"
+          v-if="inputField?.type === 'input'"
           v-model="(formData[prop] as InputValue)"
           :placeholder="inputField?.placeholder"
           :clearable="inputField?.clearable"
           :disabled="inputField?.disabled"
           :maxlength="inputField?.maxlength"
+        />
+        <t-checkbox-group
+          v-else-if="inputField?.type === 'checkbox'"
+          v-model="(formData[prop] as unknown as CheckboxGroupValue)"
+          :options="inputField?.options"
         />
       </t-form-item>
     </t-form>
