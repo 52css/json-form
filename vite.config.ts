@@ -8,7 +8,10 @@ import {
   ElementPlusResolver,
   TDesignResolver,
   AntDesignVueResolver,
+  // ArcoResolver,
 } from "unplugin-vue-components/resolvers";
+
+import { vitePluginForArco } from '@arco-plugins/vite-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -24,6 +27,8 @@ export default defineConfig({
         }),
         ElementPlusResolver(),
         AntDesignVueResolver(),
+        // 和 ant-design 命名冲突，手动导入
+        // ArcoResolver(),
       ],
       dts: "src/types/auto-import.d.ts",
     }),
@@ -35,9 +40,17 @@ export default defineConfig({
         ElementPlusResolver(),
         //ant-design-vue   importStyle = false 样式就没了
         AntDesignVueResolver({ importStyle: false }),
+        // 和 ant-design 命名冲突，手动导入
+        // ArcoResolver({
+        //   sideEffect: true
+        // })
       ],
       dts: "src/types/components.d.ts",
     }),
+    // 和 ant-design 命名冲突，手动导入
+    // vitePluginForArco({
+    //   style: 'css'
+    // })
   ],
   json: {
     // 是否支持从 .json 文件中进行按名导入

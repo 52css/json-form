@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TDesignJsonForm, ElementPlusJsonForm, AntDesignJsonForm, type Inputs } from './packages/index.ts';
+import { TDesignJsonForm, ElementPlusJsonForm, AntDesignJsonForm, AcroDesignJsonForm, type Inputs } from './packages/index.ts';
 
 const inputs: Inputs = {
   input1: "输入框1",
@@ -43,6 +43,8 @@ const inputs: Inputs = {
   <ElementPlusJsonForm :inputs="inputs" />
   <h2>AntDesignJsonForm</h2>
   <AntDesignJsonForm :inputs="inputs" />
+  <h2>AcroDesignJsonForm</h2>
+  <AcroDesignJsonForm :inputs="inputs" />
 </template>
 
 <style scoped>
