@@ -1,19 +1,44 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import JsonForm from './components/JsonForm.vue'
+import { TDesignJsonForm, type Inputs } from './packages/index.ts';
+
+const inputs: Inputs = {
+  input1: "输入框1",
+  input2: "输入框2*",
+  input3: {
+    type: "text",
+    label: "输入框3",
+  },
+  input4: {
+    type: "text",
+    label: "输入框4",
+    value: "默认值",
+  },
+  input5: {
+    type: "text",
+    label: "输入框5",
+    disabled: true,
+  },
+  checkbox1: {
+    type: "checkbox",
+    options: [
+      { label: "选项1", value: "1" },
+      { label: "选项2", value: "2" },
+    ],
+  },
+  checkbox2: {
+    type: "checkbox",
+    options: [
+      { label: "选项1", value: "1" },
+      { label: "选项2", value: "2" },
+    ],
+    value: ["1"],
+  },
+}
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
-  <JsonForm />
+  <h2>TDesignJsonForm</h2>
+  <TDesignJsonForm :inputs="inputs" />
 </template>
 
 <style scoped>

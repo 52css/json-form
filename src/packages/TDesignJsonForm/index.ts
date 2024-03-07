@@ -1,2 +1,2 @@
-import TDesignJsonForm from "./src/TDesignJsonForm.vue";
+import TDesignJsonForm from "./TDesignJsonForm.vue";
 export { TDesignJsonForm };
