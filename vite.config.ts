@@ -7,6 +7,7 @@ import Components from "unplugin-vue-components/vite";
 import {
   ElementPlusResolver,
   TDesignResolver,
+  AntDesignVueResolver,
 } from "unplugin-vue-components/resolvers";
 
 // https://vitejs.dev/config/
@@ -15,13 +16,16 @@ export default defineConfig({
     vue(),
     vueJsx(),
     AutoImport({
+      //安装两行后你会发现在组件中不用再导入ref，reactive等
+      imports: ["vue", "vue-router"],
       resolvers: [
         TDesignResolver({
           library: "vue-next",
         }),
         ElementPlusResolver(),
+        AntDesignVueResolver(),
       ],
-      dts: 'src/types/auto-import.d.ts',
+      dts: "src/types/auto-import.d.ts",
     }),
     Components({
       resolvers: [
@@ -29,8 +33,10 @@ export default defineConfig({
           library: "vue-next",
         }),
         ElementPlusResolver(),
+        //ant-design-vue   importStyle = false 样式就没了
+        AntDesignVueResolver({ importStyle: false }),
       ],
-      dts: 'src/types/components.d.ts',
+      dts: "src/types/components.d.ts",
     }),
   ],
   json: {

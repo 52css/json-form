@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TDesignJsonForm, ElementPlusJsonForm, type Inputs } from './packages/index.ts';
+import { TDesignJsonForm, ElementPlusJsonForm, AntDesignJsonForm, type Inputs } from './packages/index.ts';
 
 const inputs: Inputs = {
   input1: "输入框1",
@@ -39,9 +39,10 @@ const inputs: Inputs = {
 <template>
   <h2>TDesignJsonForm</h2>
   <TDesignJsonForm :inputs="inputs" />
-
   <h2>ElementPlusJsonForm</h2>
   <ElementPlusJsonForm :inputs="inputs" />
+  <h2>AntDesignJsonForm</h2>
+  <AntDesignJsonForm :inputs="inputs" />
 </template>
 
 <style scoped>
