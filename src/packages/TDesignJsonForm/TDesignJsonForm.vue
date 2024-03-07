@@ -1,14 +1,14 @@
 <script lang="ts">
 import { ref } from 'vue'
-import { type JsonFormProps, type Inputs } from '../types'
-import { getInputs } from '../utils'
+import { type JsonFormProps, type Inputs, JsonFormDefault } from '../types'
+import { getInputsByInputs, getLabelAlignByLayout, getLayoutByLayout } from '../utils'
 import { type InputValue } from 'tdesign-vue-next'
 
 export interface TDesignJsonFormProps extends JsonFormProps {
   prop1?: string
 }
 export const TDesignJsonFormDefault = {
-  model: () => ({})
+  ...JsonFormDefault
 }
 export interface TDesignJsonFormEmits {
   (event: 'event1'): void
@@ -25,9 +25,9 @@ const formData = ref(props.model ?? {})
 
 <template>
   <div class="t-design-json-form">
-    <t-form :data="formData" v-if="props.inputs">
+    <t-form :data="formData" v-if="inputs" :label-align="getLabelAlignByLayout(layout)" :layout="getLayoutByLayout(layout)" label-width="auto">
       <t-form-item
-        v-for="(inputField, prop) in getInputs(inputs as Inputs, formData)"
+        v-for="(inputField, prop) in getInputsByInputs(inputs as Inputs, formData)"
         :label="inputField?.label"
         :name="prop"
         :key="prop"

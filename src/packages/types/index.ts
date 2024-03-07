@@ -29,10 +29,19 @@ export interface CheckboxField extends CommonField {
 
 export type InputField = string | TextField | CheckboxField;
 export type Inputs = Record<string, InputField>;
-export type Model = Record<string, CommonValue>
+export type Model = Record<string, CommonValue>;
+export type Layout = 'horizontal' | 'vertical' | 'inline';
 
 export interface JsonFormProps {
   inputs?: Inputs;
+  layout?: Layout;
   request?: Request;
   model?: Model;
+}
+
+export const JsonFormDefault = {
+  layout: 'vertical' as Layout,
+  model: () => {
+    return {};
+  }
 }

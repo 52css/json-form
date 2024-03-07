@@ -1,13 +1,13 @@
 <script lang="ts">
 import { ref } from 'vue'
-import { type JsonFormProps, type Inputs } from '../types'
-import { getInputs } from '../utils'
+import { type JsonFormProps, type Inputs, JsonFormDefault } from '../types'
+import { getInputsByInputs, getLabelAlignByLayout } from '../utils'
 
 export interface ElementPlusJsonFormProps extends JsonFormProps {
   prop1?: string
 }
 export const ElementPlusJsonFormDefault = {
-  model: () => ({})
+  ...JsonFormDefault
 }
 export interface ElementPlusJsonFormEmits {
   (event: 'event1'): void
@@ -23,9 +23,9 @@ const formData = ref(props.model ?? {})
 </script>
 
 <template>
-  <el-form :model="formData" v-if="props.inputs">
+  <el-form :model="formData" v-if="props.inputs" :label-position="getLabelAlignByLayout(layout)" :inline="layout === 'inline'">
     <el-form-item
-      v-for="(inputField, prop) in getInputs(inputs as Inputs, formData)"
+      v-for="(inputField, prop) in getInputsByInputs(inputs as Inputs, formData)"
       :label="inputField?.label"
       :prop="prop"
       :key="prop"

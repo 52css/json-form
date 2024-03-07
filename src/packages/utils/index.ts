@@ -20,7 +20,7 @@
 //   };
 // }
 
-import { InputField, Model, TextField, Inputs } from "../types";
+import { InputField, Model, TextField, Inputs, Layout } from "../types";
 
 export const getInputField = (inputField: InputField) => {
   if (typeof inputField === "string") {
@@ -34,7 +34,7 @@ export const getInputField = (inputField: InputField) => {
   return inputField;
 };
 
-export const getInputs = (inputs: Inputs, model: Model) => {
+export const getInputsByInputs = (inputs: Inputs, model: Model) => {
   const rtv: Record<string, Exclude<InputField, string>> = {};
 
   for (const key in inputs) {
@@ -44,3 +44,11 @@ export const getInputs = (inputs: Inputs, model: Model) => {
 
   return rtv;
 };
+
+export const getLabelAlignByLayout = (layout?: Layout) => {
+  return layout === "vertical" ? "top" : "right";
+};
+
+export const getLayoutByLayout = (layout?: Layout) => {
+  return layout === 'inline' ? 'inline': 'vertical'
+}

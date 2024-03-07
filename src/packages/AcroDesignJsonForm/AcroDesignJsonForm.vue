@@ -1,14 +1,14 @@
 <script lang="ts">
 import { Form as AForm, FormItem as AFormItem, Input as AInput } from '@arco-design/web-vue'
 import { ref } from 'vue'
-import { type JsonFormProps, type Inputs } from '../types'
-import { getInputs } from '../utils'
+import { type JsonFormProps, type Inputs, JsonFormDefault } from '../types'
+import { getInputsByInputs } from '../utils'
 
 export interface AcroDesignJsonFormProps extends JsonFormProps {
   prop1?: string
 }
 export const AcroDesignJsonFormDefault = {
-  model: () => ({})
+  ...JsonFormDefault
 }
 export interface AcroDesignJsonFormEmits {
   (event: 'event1'): void
@@ -25,11 +25,12 @@ const formData = ref(props.model ?? {})
 
 <template>
   <a-form
+    v-if="inputs"
     :model="formData"
-    v-if="props.inputs"
+    :layout="layout"
   >
     <a-form-item
-      v-for="(inputField, prop) in getInputs(inputs as Inputs, formData)"
+      v-for="(inputField, prop) in getInputsByInputs(inputs as Inputs, formData)"
       :label="inputField?.label"
       :field="prop"
       :key="prop"

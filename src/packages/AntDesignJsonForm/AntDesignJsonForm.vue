@@ -1,13 +1,13 @@
 <script lang="ts">
 import { ref } from 'vue'
-import { type JsonFormProps, type Inputs } from '../types'
-import { getInputs } from '../utils'
+import { type JsonFormProps, type Inputs, JsonFormDefault } from '../types'
+import { getInputsByInputs } from '../utils'
 
 export interface AntDesignJsonFormProps extends JsonFormProps {
   prop1?: string
 }
 export const AntDesignJsonFormDefault = {
-  model: () => ({})
+  ...JsonFormDefault
 }
 export interface AntDesignJsonFormEmits {
   (event: 'event1'): void
@@ -27,11 +27,12 @@ const formData = ref(props.model ?? {})
     AntDesignJsonForm
   </div> -->
   <a-form
+    v-if="inputs"
     :model="formData"
-    v-if="props.inputs"
+    :layout="layout"
   >
     <a-form-item
-      v-for="(inputField, prop) in getInputs(inputs as Inputs, formData)"
+      v-for="(inputField, prop) in getInputsByInputs(inputs as Inputs, formData)"
       :label="inputField?.label"
       :name="prop"
       :key="prop"

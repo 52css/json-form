@@ -113,3 +113,18 @@ const inputs: Inputs = {
 };
 
 ```
+
+## Form表单映射
+
+| 属性                        | tdesign                               | element-plus                          | ant-design         | acro-design           |
+|---------------------------|---------------------------------------|---------------------------------------|--------------------|-----------------------|
+| 绑定数据(model)             | data                                  | model                                 | model              | model                 |
+| 对齐方式(layout-horizontal) | label-align(right) + layout(vertical) | label-position(right) + inline(false) | layout(horizontal) | layout(horizontal) |
+| 对齐方式(layout-vertical)   | label-align(top) + layout(vertical)   | label-position(top) + inline(false)   | layout(vertical)   | layout(vertical)   |
+| 对齐方式(layout-inline)     | label-align(right) + layout(inline)   | label-position(right) + inline(true)  | layout(inline)     | layout(inline)     |
+
+## FormItem表单映射
+
+| 属性     | tdesign | element-plus | ant-design | acro-design |
+|--------|---------|--------------|------------|-------------|
+| 绑定属性 | data    | prop         | name       | field       |
