@@ -203,7 +203,7 @@ export type CommonInput =
   | TimeRangeField;
 
 export type Inputs = Record<string, CommonInput>;
-export type Model = Record<string, CommonValue>;
+export type Model = Record<string, any>;
 export type Layout = "horizontal" | "vertical" | "inline";
 
 export interface JsonFormProps {

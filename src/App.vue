@@ -5,51 +5,60 @@ const tabs = ref('tdesign')
 const layout = ref<Layout>('vertical')
 const disabled = ref(1)
 
+const model = ref({
+  obj: {
+    input9: 99
+  }
+})
 const inputs: Inputs = {
-  input1: "输入框1",
-  input2: "输入框2*",
+  input1: "普通输入框",
+  input2: "支持必填*",
   input3: {
     type: "text",
-    label: "输入框3",
+    label: "通过type生成",
   },
   input4: {
     type: "text",
-    label: "输入框4",
+    label: "支持默认值",
     value: "默认值",
   },
   input5: {
     type: "text",
-    label: "输入框5",
+    label: "支持禁用",
     disabled: true,
   },
   input6: {
     type: "text",
-    label: "输入框6",
+    label: "禁用是同步函数",
     disabled: () => !!disabled.value,
   },
   input7: {
     type: "text",
-    label: "输入框7",
+    label: "禁用是异步函数",
     disabled: async () => !!disabled.value,
   },
-  input8: '输入框8',
-  checkbox1: {
-    type: "checkbox",
-    label: '复选框1',
-    options: [
-      { label: "选项1", value: "1" },
-      { label: "选项2", value: "2" },
-    ],
+  input8: '自定义插槽',
+  "obj.input9": {
+    type: "text",
+    label: "支持对象属性",
   },
-  checkbox2: {
-    type: "checkbox",
-    label: '复选框2',
-    options: [
-      { label: "选项1", value: "1" },
-      { label: "选项2", value: "2" },
-    ],
-    value: ["1"],
-  },
+  // checkbox1: {
+  //   type: "checkbox",
+  //   label: '复选框1',
+  //   options: [
+  //     { label: "选项1", value: "1" },
+  //     { label: "选项2", value: "2" },
+  //   ],
+  // },
+  // checkbox2: {
+  //   type: "checkbox",
+  //   label: '复选框2',
+  //   options: [
+  //     { label: "选项1", value: "1" },
+  //     { label: "选项2", value: "2" },
+  //   ],
+  //   value: ["1"],
+  // },
 }
 </script>
 
@@ -58,28 +67,28 @@ const inputs: Inputs = {
     <main>
       <t-tabs v-model="tabs" theme="card">
         <t-tab-panel value="tdesign" label="tdesign">
-          <TDesignJsonForm :inputs="inputs" :layout="layout">
+          <TDesignJsonForm :model="model" :inputs="inputs" :layout="layout">
             <template #input8>
               这个是input8
             </template>
           </TDesignJsonForm>
         </t-tab-panel>
         <t-tab-panel value="element" label="element">
-          <ElementPlusJsonForm :inputs="inputs" :layout="layout">
+          <ElementPlusJsonForm :model="model" :inputs="inputs" :layout="layout">
             <template #input8>
               这个是input8
             </template>
           </ElementPlusJsonForm>
         </t-tab-panel>
         <t-tab-panel value="ant-design" label="ant-design">
-          <AntDesignJsonForm :inputs="inputs" :layout="layout">
+          <AntDesignJsonForm :model="model" :inputs="inputs" :layout="layout">
             <template #input8>
               这个是input8
             </template>
           </AntDesignJsonForm>
         </t-tab-panel>
         <t-tab-panel value="acro-design" label="acro-design">
-          <AcroDesignJsonForm :inputs="inputs" :layout="layout">
+          <AcroDesignJsonForm :model="model"  :inputs="inputs" :layout="layout">
             <template #input8>
               这个是input8
             </template>

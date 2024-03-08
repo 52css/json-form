@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { type JsonFormProps, type Inputs, JsonFormDefault } from '../types'
 import { getInputsByInputs, getLabelAlignByLayout, getLayoutByLayout } from '../utils'
-import { type InputValue, type CheckboxGroupValue, type TreeOptionData } from 'tdesign-vue-next'
+import { type CheckboxGroupValue, type TreeOptionData } from 'tdesign-vue-next'
 
 export interface TDesignJsonFormProps extends JsonFormProps {
   prop1?: string
@@ -25,6 +25,7 @@ const formData = ref(props.model ?? {})
 
 <template>
   <div class="t-design-json-form">
+    <!-- {{ formData }} -->
     <t-form :data="formData" v-if="inputs" :label-align="getLabelAlignByLayout(layout)" :layout="getLayoutByLayout(layout)" label-width="auto">
       <t-form-item
         v-for="(inputField, prop) in getInputsByInputs(inputs as Inputs, formData)"

@@ -19,7 +19,7 @@
 //     return result;
 //   };
 // }
-
+import { get } from 'lodash';
 import { CommonInput, Model, Inputs, Layout, CommonValue, CommonOption } from "../types";
 
 export interface Field {
@@ -86,7 +86,7 @@ export const getInputsByInputs = (inputs: Inputs, model: Model) => {
     rtv[key] = getCommonInput(val, model);
 
     if (typeof rtv[key]?.value !== undefined) {
-      model[key] = model[key] ?? rtv[key].value;
+      model[key] = get(model, key) ?? rtv[key].value;
     }
   }
 
