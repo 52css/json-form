@@ -75,6 +75,10 @@ const formData = ref(props.model ?? {})
           :maxlength="inputField?.maxlength"
         />
       </t-form-item>
+      <t-form-item v-if="submission">
+        <t-button theme="primary" type="submit" style="margin-right: 8px">提交</t-button>
+        <t-button theme="default" variant="base" type="reset">重置</t-button>
+      </t-form-item>
     </t-form>
   </div>
 </template>

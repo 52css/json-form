@@ -19,6 +19,7 @@ declare module 'vue' {
     HelloWorld: typeof import('./../components/HelloWorld.vue')['default']
     JsonForm: typeof import('./../components/JsonForm.vue')['default']
     TAutoComplete: typeof import('tdesign-vue-next')['AutoComplete']
+    TButton: typeof import('tdesign-vue-next')['Button']
     TCascader: typeof import('tdesign-vue-next')['Cascader']
     TCheckboxGroup: typeof import('tdesign-vue-next')['CheckboxGroup']
     TColorPicker: typeof import('tdesign-vue-next')['ColorPicker']
@@ -29,6 +30,7 @@ declare module 'vue' {
     TRadioButton: typeof import('tdesign-vue-next')['RadioButton']
     TRadioGroup: typeof import('tdesign-vue-next')['RadioGroup']
     TSelect: typeof import('tdesign-vue-next')['Select']
+    TSwitch: typeof import('tdesign-vue-next')['Switch']
     TTabPanel: typeof import('tdesign-vue-next')['TabPanel']
     TTabs: typeof import('tdesign-vue-next')['Tabs']
   }

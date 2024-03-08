@@ -3,7 +3,8 @@ import { TDesignJsonForm, ElementPlusJsonForm, AntDesignJsonForm, AcroDesignJson
 
 const tabs = ref('tdesign')
 const layout = ref<Layout>('vertical')
-const disabled = ref(1)
+const disabled = ref(true)
+const submission = ref(false)
 
 const model = ref({
   obj: {
@@ -67,28 +68,28 @@ const inputs: Inputs = {
     <main>
       <t-tabs v-model="tabs" theme="card">
         <t-tab-panel value="tdesign" label="tdesign">
-          <TDesignJsonForm :model="model" :inputs="inputs" :layout="layout">
+          <TDesignJsonForm :model="model" :inputs="inputs" :layout="layout" :submission="submission">
             <template #input8>
               这个是input8
             </template>
           </TDesignJsonForm>
         </t-tab-panel>
         <t-tab-panel value="element" label="element">
-          <ElementPlusJsonForm :model="model" :inputs="inputs" :layout="layout">
+          <ElementPlusJsonForm :model="model" :inputs="inputs" :layout="layout" :submission="submission">
             <template #input8>
               这个是input8
             </template>
           </ElementPlusJsonForm>
         </t-tab-panel>
         <t-tab-panel value="ant-design" label="ant-design">
-          <AntDesignJsonForm :model="model" :inputs="inputs" :layout="layout">
+          <AntDesignJsonForm :model="model" :inputs="inputs" :layout="layout" :submission="submission">
             <template #input8>
               这个是input8
             </template>
           </AntDesignJsonForm>
         </t-tab-panel>
         <t-tab-panel value="acro-design" label="acro-design">
-          <AcroDesignJsonForm :model="model"  :inputs="inputs" :layout="layout">
+          <AcroDesignJsonForm :model="model"  :inputs="inputs" :layout="layout" :submission="submission">
             <template #input8>
               这个是input8
             </template>
@@ -106,10 +107,10 @@ const inputs: Inputs = {
           </t-select>
         </t-form-item>
         <t-form-item label="disabled">
-          <t-select v-model="disabled" clearable>
-            <t-option :value="1">true</t-option>
-            <t-option :value="0">false</t-option>
-          </t-select>
+          <t-switch v-model="disabled" />
+        </t-form-item>
+        <t-form-item label="submission">
+          <t-switch v-model="submission" />
         </t-form-item>
       </t-form>
     </aside>

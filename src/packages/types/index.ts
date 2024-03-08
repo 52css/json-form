@@ -212,6 +212,7 @@ export interface JsonFormProps {
   disabled?: boolean;
   request?: Request;
   model?: Model;
+  submission?: boolean;
 }
 
 export const JsonFormDefault = {

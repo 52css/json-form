@@ -19,8 +19,15 @@
 //     return result;
 //   };
 // }
-import { get } from 'lodash';
-import { CommonInput, Model, Inputs, Layout, CommonValue, CommonOption } from "../types";
+import { get } from "lodash";
+import {
+  CommonInput,
+  Model,
+  Inputs,
+  Layout,
+  CommonValue,
+  CommonOption,
+} from "../types";
 
 export interface Field {
   type?: string;
@@ -29,10 +36,10 @@ export interface Field {
   placeholder?: string;
   clearable?: boolean;
   filterable?: boolean;
-  value?: CommonValue
+  value?: CommonValue;
   disabled?: boolean;
   outputs?: Record<string, any>;
-  options?: CommonOption[]
+  options?: CommonOption[];
   autocomplete?: boolean;
   maxlength?: number;
   [key: string]: any; // 添加索引签名
@@ -93,10 +100,10 @@ export const getInputsByInputs = (inputs: Inputs, model: Model) => {
   return rtv;
 };
 
-export const getLabelAlignByLayout = (layout?: Layout) => {
-  return layout === "vertical" ? "top" : "right";
+export const getLabelAlignByLayout = (layout: Layout) => {
+  return ["vertical"].includes(layout) ? "top" : "right";
 };
 
-export const getLayoutByLayout = (layout?: Layout) => {
-  return layout === "inline" ? "inline" : "vertical";
+export const getLayoutByLayout = (layout: Layout) => {
+  return ["inline"].includes(layout) ? "inline" : "vertical";
 };
