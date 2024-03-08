@@ -42,8 +42,9 @@ const formData = ref(props.model ?? {})
         message: inputField?.label + '必填',
       }]"
     >
+      <slot v-if="$slots[prop]" :name="prop" :prop="prop" :model="formData[prop]" :field="inputField" />
       <a-input
-        v-if="inputField?.type === 'text'"
+        v-else-if="inputField?.type === 'text'"
         v-model:value="(formData[prop] as string)"
         :placeholder="inputField?.placeholder ?? '请输入'"
         :clearable="inputField?.clearable"

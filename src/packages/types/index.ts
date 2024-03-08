@@ -20,10 +20,6 @@ export interface CommonOption {
   children?: CommonOption[];
 }
 
-export interface SlotField {
-  type: "slot";
-}
-
 export interface TextField extends CommonField {
   type: "text";
   placeholder?: CommonAttr<string>;
@@ -184,7 +180,6 @@ export interface TimeRangeField extends CommonField {
 
 export type CommonInput =
   | string
-  | SlotField
   | TextField
   | CheckboxField
   | SelectField

@@ -32,6 +32,7 @@ const inputs: Inputs = {
     label: "输入框7",
     disabled: async () => !!disabled.value,
   },
+  input8: '输入框8',
   checkbox1: {
     type: "checkbox",
     label: '复选框1',
@@ -57,16 +58,32 @@ const inputs: Inputs = {
     <main>
       <t-tabs v-model="tabs" theme="card">
         <t-tab-panel value="tdesign" label="tdesign">
-          <TDesignJsonForm :inputs="inputs" :layout="layout" />
+          <TDesignJsonForm :inputs="inputs" :layout="layout">
+            <template #input8>
+              这个是input8
+            </template>
+          </TDesignJsonForm>
         </t-tab-panel>
         <t-tab-panel value="element" label="element">
-          <ElementPlusJsonForm :inputs="inputs" :layout="layout" />
+          <ElementPlusJsonForm :inputs="inputs" :layout="layout">
+            <template #input8>
+              这个是input8
+            </template>
+          </ElementPlusJsonForm>
         </t-tab-panel>
         <t-tab-panel value="ant-design" label="ant-design">
-          <AntDesignJsonForm :inputs="inputs" :layout="layout" />
+          <AntDesignJsonForm :inputs="inputs" :layout="layout">
+            <template #input8>
+              这个是input8
+            </template>
+          </AntDesignJsonForm>
         </t-tab-panel>
         <t-tab-panel value="acro-design" label="acro-design">
-          <AcroDesignJsonForm :inputs="inputs" :layout="layout" />
+          <AcroDesignJsonForm :inputs="inputs" :layout="layout">
+            <template #input8>
+              这个是input8
+            </template>
+          </AcroDesignJsonForm>
         </t-tab-panel>
       </t-tabs>
     </main>

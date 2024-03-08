@@ -35,8 +35,9 @@ const formData = ref(props.model ?? {})
           required: inputField?.required,
         }]"
       >
+        <slot v-if="$slots[prop]" :name="prop" :prop="prop" :model="formData[prop]" :field="inputField" />
         <t-auto-complete
-          v-if="inputField?.type === 'text' && inputField.autocomplete"
+          v-else-if="inputField?.type === 'text' && inputField.autocomplete"
           v-model="(formData[prop] as string)"
           :disabled="inputField?.disabled"
           :placeholder="inputField?.placeholder"
