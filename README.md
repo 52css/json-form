@@ -86,54 +86,70 @@ export interface JsonFormProps {
 }
 
 const inputs: Inputs = {
-  input1: "输入框1",
-  input2: "输入框2*",
+  input1: "普通输入框",
+  input2: "支持必填*",
   input3: {
     type: "text",
-    label: "输入框3",
+    label: "通过type生成",
   },
   input4: {
     type: "text",
-    label: "输入框4",
+    label: "支持默认值",
     value: "默认值",
   },
-  checkbox1: {
-    type: "checkbox",
-    options: [
-      { label: "选项1", value: "1" },
-      { label: "选项2", value: "2" },
-    ],
+  input5: {
+    type: "text",
+    label: "支持禁用",
+    disabled: true,
   },
-  checkbox2: {
-    type: "checkbox",
-    options: [
-      { label: "选项1", value: "1" },
-      { label: "选项2", value: "2" },
-    ],
-    value: ["1"],
+  input6: {
+    type: "text",
+    label: "禁用是同步函数",
+    disabled: () => !!disabled.value,
+  },
+  input7: {
+    type: "text",
+    label: "禁用是异步函数",
+    disabled: async () => !!disabled.value,
+  },
+  input8: '自定义插槽',
+  "obj.input9": {
+    type: "text",
+    label: "支持对象属性",
   },
 };
 
 ```
 
-## TODO
+## 框架TODO
 
-- [ ] AutoComplete 自动完成 => type="text" + autocomplete
-- [ ] Cascader 级联选择
-- [x] Checkbox 多选框
-- [ ] DatePicker 日期选择框
-- [x] Input 输入框 => type="text"
-- [ ] InputNumber 数字输入框
-- [ ] Mentions 提及
-- [ ] Radio 单选框
-- [ ] Rate 评分
-- [ ] Select 选择器
-- [ ] Slider 滑动输入条
-- [ ] Switch 开关
-- [ ] TimePicker 时间选择框
-- [ ] Transfer 穿梭框
-- [ ] TreeSelect 树选择
-- [ ] Upload 上传
+- [ ] 支持tdesign、element-plus、ant-design-vue、acro-design
+- [ ] 支持组件动态注入
+- [ ] 支持标题
+- [x] 支持inputs, 支持字符串、对象、label带星号必填、对象属性支持getter和promise、对象支持value设置默认值
+- [x] 支持自定义slot
+- [ ] 支持outputs
+- [ ] 支持列表、表单、抽屉、弹窗场景
+- [ ] 支持普通表单、数组表单、（tabs表单）对象表单、steps表单
+- [ ] 支持span分栏
+
+## 组件TODO
+
+- [ ] AutoComplete 自动完成 => type="`text`" + autocomplete
+- [ ] Cascader 级联选择 => type="`select`" + cascader
+- [x] Checkbox 多选框 => type="`checkbox`"
+- [ ] DatePicker 日期选择框 => type="`date`" type="`datetime`" type="`datetimerange`" type="`daterange`"
+- [x] Input 输入框 => type="`text`" type="password"
+- [ ] InputNumber 数字输入框 => type="`number`"
+- [ ] Radio 单选框 => type="`radio`"
+- [ ] Rate 评分 => type="`rate`"
+- [ ] Select 选择器 => type="`select`"
+- [ ] Slider 滑动输入条 => type="`range`"
+- [ ] Switch 开关 => type="`switch`"
+- [ ] TimePicker 时间选择框 => type="`time`" type="`timerange`"
+- [ ] Transfer 穿梭框 => type="`transfer`"
+- [ ] TreeSelect 树选择 => type="`select`" + treeSelect
+- [ ] Upload 上传 => type="`file`" type="`image`"
 
 ## Form表单映射
 
