@@ -35,9 +35,19 @@ const formData = ref(props.model ?? {})
           required: inputField?.required,
         }]"
       >
+        <t-auto-complete
+          v-if="inputField?.type === 'text' && inputField.autocomplete"
+          v-model="(formData[prop] as string)"
+          :options="inputField?.options"
+          :filterable="inputField?.filterable"
+          :placeholder="inputField?.placeholder"
+          :clearable="inputField?.clearable"
+          :disabled="inputField?.disabled"
+          :maxlength="inputField?.maxlength"
+        />
         <t-input
-          v-if="inputField?.type === 'input'"
-          v-model="(formData[prop] as InputValue)"
+          v-if="inputField?.type === 'text'"
+          v-model="(formData[prop] as string)"
           :placeholder="inputField?.placeholder"
           :clearable="inputField?.clearable"
           :disabled="inputField?.disabled"
@@ -57,4 +67,3 @@ const formData = ref(props.model ?? {})
 .t-design-json-form {
 }
 </style>
-../types../utils

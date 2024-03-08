@@ -18,11 +18,16 @@ declare module 'vue' {
     ElInput: typeof import('element-plus/es')['ElInput']
     HelloWorld: typeof import('./../components/HelloWorld.vue')['default']
     JsonForm: typeof import('./../components/JsonForm.vue')['default']
+    TAutoComplete: typeof import('tdesign-vue-next')['AutoComplete']
     TCheckboxGroup: typeof import('tdesign-vue-next')['CheckboxGroup']
     TForm: typeof import('tdesign-vue-next')['Form']
     TFormItem: typeof import('tdesign-vue-next')['FormItem']
     TInput: typeof import('tdesign-vue-next')['Input']
+    TOption: typeof import('tdesign-vue-next')['Option']
     TRadioButton: typeof import('tdesign-vue-next')['RadioButton']
     TRadioGroup: typeof import('tdesign-vue-next')['RadioGroup']
+    TSelect: typeof import('tdesign-vue-next')['Select']
+    TTabPanel: typeof import('tdesign-vue-next')['TabPanel']
+    TTabs: typeof import('tdesign-vue-next')['Tabs']
   }
 }

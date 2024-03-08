@@ -31,12 +31,12 @@ const formData = ref(props.model ?? {})
       :prop="prop"
       :key="prop"
       :rules="[{
-        required: inputField?.required,
+        required: !!inputField?.required,
         message: inputField?.label + '必填',
       }]"
     >
       <el-input
-        v-if="inputField?.type === 'input'"
+        v-if="inputField?.type === 'text'"
         v-model="(formData[prop] as string)"
         :placeholder="inputField?.placeholder ?? '请输入'"
         :clearable="inputField?.clearable"

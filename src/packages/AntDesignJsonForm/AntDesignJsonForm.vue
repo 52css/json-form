@@ -43,7 +43,7 @@ const formData = ref(props.model ?? {})
       }]"
     >
       <a-input
-        v-if="inputField?.type === 'input'"
+        v-if="inputField?.type === 'text'"
         v-model:value="(formData[prop] as string)"
         :placeholder="inputField?.placeholder ?? '请输入'"
         :clearable="inputField?.clearable"

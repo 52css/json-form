@@ -42,6 +42,7 @@
 * 如果提交的key不是原始类型，例如提交是 `test.id` , 可以对key兼容处理支持 `test.id`: `field配置`
 * 如果`必填`，可以设置 label 后面加 `*`，也可以`inputField` 增加 `required` 属性
 * 常用的input，可以设置 `inputField` 支持 `string`
+* 常用是计算方式，可以修改成 `getter` 函数，对于 `inputs` 就是普通函数，如果数据是异步获取, 可以修改成`异步函数`
 
 通过以上考虑，可以定义类型
 
@@ -61,7 +62,7 @@ export interface CommonOption {
   value: CommonValue;
 }
 
-export interface InputField extends CommonField {
+export interface TextField extends CommonField {
   type: "text";
   placeholder?: string;
   maxlength?: number;
@@ -75,7 +76,7 @@ export interface CheckboxField extends CommonField {
   value?: CommonValue[];
 }
 
-export type Inputs = Record<string, string | InputField | CheckboxField>;
+export type Inputs = Record<string, string | TextField | CheckboxField>;
 
 export interface JsonFormProps {
   inputs: Inputs;
@@ -116,11 +117,11 @@ const inputs: Inputs = {
 
 ## TODO
 
-- [ ] AutoComplete 自动完成
+- [ ] AutoComplete 自动完成 => type="text" + autocomplete
 - [ ] Cascader 级联选择
 - [x] Checkbox 多选框
 - [ ] DatePicker 日期选择框
-- [x] Input 输入框
+- [x] Input 输入框 => type="text"
 - [ ] InputNumber 数字输入框
 - [ ] Mentions 提及
 - [ ] Radio 单选框
