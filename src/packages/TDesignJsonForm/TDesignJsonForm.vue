@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { type JsonFormProps, type Inputs, JsonFormDefault } from '../types'
 import { getInputsByInputs, getLabelAlignByLayout, getLayoutByLayout } from '../utils'
-import { type InputValue, type CheckboxGroupValue } from 'tdesign-vue-next'
+import { type InputValue, type CheckboxGroupValue, type TreeOptionData } from 'tdesign-vue-next'
 
 export interface TDesignJsonFormProps extends JsonFormProps {
   prop1?: string
@@ -38,25 +38,39 @@ const formData = ref(props.model ?? {})
         <t-auto-complete
           v-if="inputField?.type === 'text' && inputField.autocomplete"
           v-model="(formData[prop] as string)"
+          :disabled="inputField?.disabled"
+          :placeholder="inputField?.placeholder"
+          :clearable="inputField?.clearable"
+          :maxlength="inputField?.maxlength"
           :options="inputField?.options"
           :filterable="inputField?.filterable"
-          :placeholder="inputField?.placeholder"
-          :clearable="inputField?.clearable"
-          :disabled="inputField?.disabled"
-          :maxlength="inputField?.maxlength"
         />
-        <t-input
-          v-if="inputField?.type === 'text'"
+        <t-cascader
+          v-else-if="inputField?.type === 'select' && inputField.cascader"
           v-model="(formData[prop] as string)"
+          :disabled="inputField?.disabled"
           :placeholder="inputField?.placeholder"
           :clearable="inputField?.clearable"
-          :disabled="inputField?.disabled"
-          :maxlength="inputField?.maxlength"
+          :options="(inputField?.options as TreeOptionData<string | number>[])"
+          :filterable="inputField?.filterable"
         />
         <t-checkbox-group
           v-else-if="inputField?.type === 'checkbox'"
           v-model="(formData[prop] as unknown as CheckboxGroupValue)"
           :options="inputField?.options"
+        />
+        <t-color-picker
+          v-else-if="inputField?.type === 'color'"
+          v-model="(formData[prop] as string)"
+          format="CSS"
+        />
+        <t-input
+          v-else-if="inputField?.type === 'text' && !inputField.autocomplete"
+          v-model="(formData[prop] as string)"
+          :placeholder="inputField?.placeholder"
+          :clearable="inputField?.clearable"
+          :disabled="inputField?.disabled"
+          :maxlength="inputField?.maxlength"
         />
       </t-form-item>
     </t-form>
