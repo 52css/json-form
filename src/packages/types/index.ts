@@ -119,7 +119,7 @@ export interface WeekField extends CommonField {
 
 export interface NumberField extends CommonField {
   type: "number";
-  value?: CommonAttr<CommonValue>;
+  value?: CommonAttr<number>;
   min?: CommonAttr<number>;
   max?: CommonAttr<number>;
   step?: CommonAttr<number>;
@@ -134,21 +134,19 @@ export interface RadioField extends CommonField {
   value?: CommonAttr<CommonValue[]>;
 }
 
-export interface InputRangeField extends CommonField {
-  type: "inputrange";
-  value?: CommonAttr<CommonValue[]>;
-}
+// export interface InputRangeField extends CommonField {
+//   type: "inputrange";
+//   value?: CommonAttr<CommonValue[]>;
+// }
 
 export interface RangeField extends CommonField {
   type: "range";
   value?: CommonAttr<CommonValue>;
+  min?: CommonAttr<number>;
+  max?: CommonAttr<number>;
+  step?: CommonAttr<number>;
+  marks?: CommonAttr<Array<string | number>>;
 }
-
-export interface RangeField extends CommonField {
-  type: "range";
-  value?: CommonAttr<CommonValue>;
-}
-
 export interface SwitchField extends CommonField {
   type: "switch";
   value?: CommonAttr<CommonValue>;
@@ -195,7 +193,7 @@ export type CommonInput =
   | WeekField
   | NumberField
   | RadioField
-  | InputRangeField
+  // | InputRangeField
   | RangeField
   | SwitchField
   | TextareaField

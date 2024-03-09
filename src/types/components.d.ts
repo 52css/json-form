@@ -23,6 +23,8 @@ declare module 'vue' {
     TCascader: typeof import('tdesign-vue-next')['Cascader']
     TCheckboxGroup: typeof import('tdesign-vue-next')['CheckboxGroup']
     TColorPicker: typeof import('tdesign-vue-next')['ColorPicker']
+    TDatePicker: typeof import('tdesign-vue-next')['DatePicker']
+    TDateRangePicker: typeof import('tdesign-vue-next')['DateRangePicker']
     TForm: typeof import('tdesign-vue-next')['Form']
     TFormItem: typeof import('tdesign-vue-next')['FormItem']
     TInput: typeof import('tdesign-vue-next')['Input']
@@ -36,5 +38,9 @@ declare module 'vue' {
     TSwitch: typeof import('tdesign-vue-next')['Switch']
     TTabPanel: typeof import('tdesign-vue-next')['TabPanel']
     TTabs: typeof import('tdesign-vue-next')['Tabs']
+    TTextarea: typeof import('tdesign-vue-next')['Textarea']
+    TTimePicker: typeof import('tdesign-vue-next')['TimePicker']
+    TTransfer: typeof import('tdesign-vue-next')['Transfer']
+    TTreeSelect: typeof import('tdesign-vue-next')['TreeSelect']
   }
 }

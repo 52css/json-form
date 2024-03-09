@@ -69,6 +69,86 @@ const formData = ref(props.model ?? {})
           v-model="(formData[prop] as string)"
           format="CSS"
         />
+        <t-date-picker
+          v-else-if="inputField?.type === 'date'"
+          v-model="(formData[prop] as string)"
+          allow-input
+          clearable
+        />
+        <t-date-range-picker
+          v-else-if="inputField?.type === 'daterange'"
+          v-model="(formData[prop] as string[])"
+          allow-input
+          clearable
+        />
+        <t-date-picker
+          v-else-if="inputField?.type === 'datetime'"
+          v-model="(formData[prop] as string)"
+          allow-input
+          clearable
+        />
+        <t-date-range-picker
+          v-else-if="inputField?.type === 'datetimerange'"
+          v-model="(formData[prop] as string[])"
+          allow-input
+          clearable
+        />
+        <t-date-picker
+          v-else-if="inputField?.type === 'year'"
+          v-model="(formData[prop] as string)"
+          mode="year"
+          allow-input
+          clearable
+        />
+        <t-date-range-picker
+          v-else-if="inputField?.type === 'yearrange'"
+          v-model="(formData[prop] as string[])"
+          mode="year"
+          allow-input
+          clearable
+        />
+        <t-date-picker
+          v-else-if="inputField?.type === 'month'"
+          v-model="(formData[prop] as string)"
+          mode="month"
+          allow-input
+          clearable
+        />
+        <t-date-range-picker
+          v-else-if="inputField?.type === 'monthrange'"
+          v-model="(formData[prop] as string[])"
+          mode="month"
+          allow-input
+          clearable
+        />
+        <t-date-picker
+          v-else-if="inputField?.type === 'quarter'"
+          v-model="(formData[prop] as string)"
+          mode="quarter"
+          allow-input
+          clearable
+        />
+        <t-date-range-picker
+          v-else-if="inputField?.type === 'quarterrange'"
+          v-model="(formData[prop] as string[])"
+          mode="quarter"
+          allow-input
+          clearable
+        />
+        <t-date-picker
+          v-else-if="inputField?.type === 'week'"
+          v-model="(formData[prop] as string)"
+          mode="week"
+          allow-input
+          clearable
+        />
+        <t-date-range-picker
+          v-else-if="inputField?.type === 'weekrange'"
+          v-model="(formData[prop] as string[])"
+          mode="week"
+          allow-input
+          clearable
+        />
         <t-input
           v-else-if="inputField?.type === 'text' && !inputField.autocomplete"
           v-model="(formData[prop] as string)"
@@ -76,6 +156,54 @@ const formData = ref(props.model ?? {})
           :clearable="inputField?.clearable"
           :disabled="inputField?.disabled"
           :maxlength="inputField?.maxlength"
+        />
+        <t-input-number
+          v-else-if="inputField?.type === 'number'"
+          v-model="(formData[prop] as number)"
+          :min="inputField?.min"
+          :max="inputField?.max"
+          :step="inputField?.step"
+          :precision="inputField?.precision"
+        />
+        <t-radio-group
+          v-else-if="inputField?.type === 'radio'"
+          v-model="formData[prop]"
+          :options="inputField?.options"
+        />
+        <t-select
+          v-else-if="inputField?.type === 'select' && !inputField.cascader && !inputField.tree"
+          v-model="formData[prop]"
+          :options="inputField?.options"
+        />
+        <t-slider
+          v-else-if="inputField?.type === 'range'"
+          v-model="formData[prop]"
+          :min="inputField.min"
+          :max="inputField.max"
+          :step="inputField.step"
+          :marks="inputField.marks"
+        />
+        <t-switch
+          v-else-if="inputField?.type === 'switch'"
+          v-model="formData[prop]"
+        />
+        <t-textarea
+          v-else-if="inputField?.type === 'textarea'"
+          v-model="formData[prop]"
+        />
+        <t-transfer
+          v-else-if="inputField?.type === 'textarea'"
+          v-model="formData[prop]"
+          :data="(inputField?.options)"
+        />
+        <t-time-picker
+          v-else-if="inputField?.type === 'time'"
+          v-model="formData[prop]"
+        />
+        <t-tree-select
+          v-else-if="inputField?.type === 'select' && inputField.tree"
+          v-model="formData[prop]"
+          :options="inputField?.options"
         />
       </t-form-item>
       <!-- <t-form-item v-if="submission">
