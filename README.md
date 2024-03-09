@@ -130,8 +130,48 @@ const inputs: Inputs = {
 - [x] 支持自定义slot
 - [ ] 支持outputs
 - [ ] 支持列表、表单、抽屉、弹窗场景
-- [ ] 支持普通表单、数组表单、（tabs表单）对象表单、steps表单
+- [ ] 支持普通表单、步骤条、左边导航、头部导航
 - [ ] 支持span分栏
+
+### 支持普通表单、步骤条、左边导航、头部导航
+
+```js
+// 普通表单
+inputs: {}
+
+// 步骤条
+steps: {
+  s1: '步骤1'
+},
+inputs: {
+  aa: {
+    type: 'text',
+    label: 's1.测试',
+  }
+}
+
+// 左边导航
+lefts: {
+  l1: '基本信息'
+},
+inputs: {
+  aa: {
+    type: 'text',
+    label: 'l1.测试',
+  }
+}
+
+// 头部导航
+tabs: {
+  t1: '基本信息'
+},
+inputs: {
+  aa: {
+    type: 'text',
+    label: 's1.l1.t1.基本信息',
+  }
+}
+```
 
 ## 组件TODO
 

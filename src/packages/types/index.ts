@@ -207,12 +207,12 @@ export type Model = Record<string, any>;
 export type Layout = "horizontal" | "vertical" | "inline";
 
 export interface JsonFormProps {
-  inputs?: Inputs;
   layout?: Layout;
+  inputs?: Inputs;
   disabled?: boolean;
   request?: Request;
   model?: Model;
-  submission?: boolean;
+  // submission?: boolean;
 }
 
 export const JsonFormDefault = {
