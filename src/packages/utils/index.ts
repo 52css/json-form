@@ -68,8 +68,7 @@ export const getCommonInput = (commonInput: CommonInput, model: Model) => {
   const rtv = reactive<Field>({});
 
   for (const [key, val] of Object.entries(commonInput)) {
-    // type R = CommonAttr2<typeof val>;
-
+    rtv[`$${key}`] = val;
     if (isPromise(val)) {
       val(model).then((res: any) => {
         rtv[key] = res;

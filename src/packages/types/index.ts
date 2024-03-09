@@ -6,6 +6,7 @@ export type CommonAttr<T> =
   | ((model?: Model) => Promise<T>);
 
 export interface CommonField {
+  if?: CommonAttr<boolean>;
   required?: CommonAttr<boolean>;
   disabled?: CommonAttr<boolean>;
   readonly?: CommonAttr<boolean>;

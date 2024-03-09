@@ -71,9 +71,11 @@ const inputs: Inputs = {
   input2: "支持必填*",
   input3: {
     type: "text",
-    label: "通过type生成"
+    label: "通过type生成",
+    placeholder: "请输入a试试",
   },
   input4: {
+    if: (x: any) => x.input3 !== "a",
     type: "text",
     label: "支持默认值",
     value: "默认值",
