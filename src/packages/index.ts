@@ -4,6 +4,8 @@ import { ElementPlusJsonForm } from "./ElementPlusJsonForm";
 import { AntDesignJsonForm } from "./AntDesignJsonForm";
 import { AcroDesignJsonForm } from "./AcroDesignJsonForm";
 
+import './index.scss';
+
 import '@arco-design/web-vue/dist/arco.css';
 
 export * from "./types";

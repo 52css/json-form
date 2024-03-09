@@ -11,6 +11,7 @@ export interface CommonField {
   readonly?: CommonAttr<boolean>;
   label?: CommonAttr<string>;
   outputs?: Record<string, any>;
+  span?: CommonAttr<number>;
 }
 
 export interface CommonOption {
@@ -213,6 +214,7 @@ export interface JsonFormProps {
   request?: Request;
   model?: Model;
   // submission?: boolean;
+  span?: number;
 }
 
 export const JsonFormDefault = {
@@ -220,4 +222,5 @@ export const JsonFormDefault = {
   model: () => {
     return {};
   },
+  span: 12,
 };

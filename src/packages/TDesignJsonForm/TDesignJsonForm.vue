@@ -26,7 +26,7 @@ const formData = ref(props.model ?? {})
 <template>
   <div class="t-design-json-form">
     <!-- {{ formData }} -->
-    <t-form :data="formData" v-if="inputs" :label-align="getLabelAlignByLayout(layout)" :layout="getLayoutByLayout(layout)" label-width="auto">
+    <t-form :data="formData" :disabled="disabled" v-if="inputs" :label-align="getLabelAlignByLayout(layout)" :layout="getLayoutByLayout(layout)" label-width="auto" class="json-form">
       <t-form-item
         v-for="(inputField, prop) in getInputsByInputs(inputs as Inputs, formData)"
         :label="inputField?.label"
@@ -34,7 +34,10 @@ const formData = ref(props.model ?? {})
         :key="prop"
         :rules="[{
           required: inputField?.required,
+          message: inputField?.label + '必填',
         }]"
+        class="json-form__item"
+        :data-span="inputField.span ?? span"
       >
         <slot v-if="$slots[prop]" :name="prop" :prop="prop" :model="formData[prop]" :field="inputField" />
         <t-auto-complete
@@ -75,10 +78,12 @@ const formData = ref(props.model ?? {})
           :maxlength="inputField?.maxlength"
         />
       </t-form-item>
-      <t-form-item v-if="submission">
-        <t-button theme="primary" type="submit" style="margin-right: 8px">提交</t-button>
+      <!-- <t-form-item v-if="submission">
+        <t-button theme="primary" type="submit" style="margin-right: 8px">
+          {{ layout === 'inline' ? '查询' : '提交' }}
+        </t-button>
         <t-button theme="default" variant="base" type="reset">重置</t-button>
-      </t-form-item>
+      </t-form-item> -->
     </t-form>
   </div>
 </template>

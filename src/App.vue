@@ -3,8 +3,11 @@ import { TDesignJsonForm, ElementPlusJsonForm, AntDesignJsonForm, AcroDesignJson
 
 const tabs = ref('tdesign')
 const layout = ref<Layout>('vertical')
-const disabled = ref(true)
-const submission = ref(false)
+const disabled = ref(false)
+const oneDisabled = ref(true)
+// const submission = ref(false)
+const span = ref(12)
+const oneSpan = ref()
 
 const model = ref({
   obj: {
@@ -17,6 +20,7 @@ const inputs: Inputs = {
   input3: {
     type: "text",
     label: "通过type生成",
+    span: () => oneSpan.value,
   },
   input4: {
     type: "text",
@@ -31,12 +35,12 @@ const inputs: Inputs = {
   input6: {
     type: "text",
     label: "禁用是同步函数",
-    disabled: () => !!disabled.value,
+    disabled: () => !!oneDisabled.value,
   },
   input7: {
     type: "text",
     label: "禁用是异步函数",
-    disabled: async () => !!disabled.value,
+    disabled: async () => !!oneDisabled.value,
   },
   input8: '自定义插槽',
   "obj.input9": {
@@ -68,28 +72,28 @@ const inputs: Inputs = {
     <main>
       <t-tabs v-model="tabs" theme="card">
         <t-tab-panel value="tdesign" label="tdesign">
-          <TDesignJsonForm :model="model" :inputs="inputs" :layout="layout" :submission="submission">
+          <TDesignJsonForm :model="model" :inputs="inputs" :layout="layout" :disabled="disabled" :span="span">
             <template #input8>
               这个是input8
             </template>
           </TDesignJsonForm>
         </t-tab-panel>
         <t-tab-panel value="element" label="element">
-          <ElementPlusJsonForm :model="model" :inputs="inputs" :layout="layout" :submission="submission">
+          <ElementPlusJsonForm :model="model" :inputs="inputs" :layout="layout" :disabled="disabled" :span="span">
             <template #input8>
               这个是input8
             </template>
           </ElementPlusJsonForm>
         </t-tab-panel>
         <t-tab-panel value="ant-design" label="ant-design">
-          <AntDesignJsonForm :model="model" :inputs="inputs" :layout="layout" :submission="submission">
+          <AntDesignJsonForm :model="model" :inputs="inputs" :layout="layout" :disabled="disabled" :span="span">
             <template #input8>
               这个是input8
             </template>
           </AntDesignJsonForm>
         </t-tab-panel>
         <t-tab-panel value="acro-design" label="acro-design">
-          <AcroDesignJsonForm :model="model"  :inputs="inputs" :layout="layout" :submission="submission">
+          <AcroDesignJsonForm :model="model"  :inputs="inputs" :layout="layout" :disabled="disabled" :span="span">
             <template #input8>
               这个是input8
             </template>
@@ -109,8 +113,17 @@ const inputs: Inputs = {
         <t-form-item label="disabled">
           <t-switch v-model="disabled" />
         </t-form-item>
-        <t-form-item label="submission">
+        <t-form-item label="oneDisabled">
+          <t-switch v-model="oneDisabled" />
+        </t-form-item>
+        <!-- <t-form-item label="submission">
           <t-switch v-model="submission" />
+        </t-form-item> -->
+        <t-form-item label="span">
+          <t-slider v-model="span" :min="1" :max="12" :marks="[2, 3, 4, 6, 12]" />
+        </t-form-item>
+        <t-form-item label="oneSpan">
+          <t-input-number v-model="oneSpan" :min="1" :max="12" :step="1" />
         </t-form-item>
       </t-form>
     </aside>
