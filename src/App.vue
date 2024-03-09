@@ -7,7 +7,7 @@ const disabled = ref(false)
 const oneDisabled = ref(true)
 // const submission = ref(false)
 const span = ref(12)
-const oneSpan = ref()
+const oneSpan = ref(12)
 
 const model = ref({
   obj: {
@@ -19,8 +19,7 @@ const inputs: Inputs = {
   input2: "支持必填*",
   input3: {
     type: "text",
-    label: "通过type生成",
-    span: () => oneSpan.value,
+    label: "通过type生成"
   },
   input4: {
     type: "text",
@@ -47,6 +46,11 @@ const inputs: Inputs = {
     type: "text",
     label: "支持对象属性",
   },
+  input10: {
+    type: 'text',
+    label: "span默认12",
+    span: () => oneSpan.value
+  }
   // checkbox1: {
   //   type: "checkbox",
   //   label: '复选框1',
@@ -123,7 +127,7 @@ const inputs: Inputs = {
           <t-slider v-model="span" :min="1" :max="12" :marks="[2, 3, 4, 6, 12]" />
         </t-form-item>
         <t-form-item label="oneSpan">
-          <t-input-number v-model="oneSpan" :min="1" :max="12" :step="1" />
+          <t-slider v-model="oneSpan" :min="1" :max="12" :marks="[2, 3, 4, 6, 12]" />
         </t-form-item>
       </t-form>
     </aside>
