@@ -106,14 +106,15 @@ const inputs: Inputs = {
   //   span: () => configModel.value.oneSpan
   // },
   tabs: {
-    type: 'group',
+    type: 'tabs',
     value: '1',
+    theme: 'card',
     options: [
       {
         label: '学生1',
         value: '1',
         inputs: {
-          'tab1.input11': 'input11',
+          'tab1.input11': 'input11*',
           'tab1.input12': 'input12'
         }
       },
@@ -122,7 +123,7 @@ const inputs: Inputs = {
         value: '2',
         inputs: {
           'tab2.input11': 'input11',
-          'tab2.input12': 'input12'
+          'tab2.input12': 'input12*'
         }
       },
     ],
@@ -150,7 +151,7 @@ const inputs: Inputs = {
 <template>
   <div class="container">
     <main>
-      {{ model }}
+      <!-- {{ model }} -->
       <component
         :is="componentMap[configModel.component as keyof typeof componentMap]"
         :model="model"

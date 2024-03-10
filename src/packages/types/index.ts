@@ -71,7 +71,7 @@ export interface DateField extends CommonField {
 }
 
 export interface DateRangeField extends CommonField {
-  type: "daterange";
+  type: "date-range";
   value?: CommonAttr<CommonValue>;
   clearable?: CommonAttr<boolean>;
   allowInput?: CommonAttr<boolean>;
@@ -85,7 +85,7 @@ export interface DateTimeField extends CommonField {
 }
 
 export interface DateTimeRangeField extends CommonField {
-  type: "datetimerange";
+  type: "datetime-range";
   value?: CommonAttr<CommonValue>;
   clearable?: CommonAttr<boolean>;
   allowInput?: CommonAttr<boolean>;
@@ -160,31 +160,35 @@ export interface TextareaField extends CommonField {
   placeholder?: CommonAttr<string>;
   maxlength?: CommonAttr<number>;
   clearable?: CommonAttr<boolean>;
-  autosize?: CommonAttr<{ minRows?: number, maxRows?: number }>
+  autosize?: CommonAttr<{ minRows?: number; maxRows?: number }>;
 }
 
 export interface TransferField extends CommonField {
-  type: 'transfer',
+  type: "transfer";
   value?: CommonAttr<CommonValue[]>;
   data?: CommonAttr<CommonOption[]>;
 }
 
 export interface TimeField extends CommonField {
-  type: 'time',
+  type: "time";
   value?: CommonAttr<CommonValue>;
 }
 
 export interface TimeRangeField extends CommonField {
-  type: 'timerange',
+  type: "time-range";
   value?: CommonAttr<CommonValue[]>;
 }
 
-export interface GroupField extends CommonField {
-  type: 'group',
+export interface TabsField extends CommonField {
+  type: "tabs";
   value?: CommonAttr<CommonValue>;
-  options?: CommonAttr<(CommonOption & {
-    inputs: Record<string, CommonInput>
-  })[]>
+  theme?: CommonAttr<string>;
+  placement?: CommonAttr<"top" | "right" | "bottom" | "left">;
+  options?: CommonAttr<
+    (CommonOption & {
+      inputs: Record<string, CommonInput>;
+    })[]
+  >;
 }
 
 export type CommonInput =
@@ -210,7 +214,7 @@ export type CommonInput =
   | TransferField
   | TimeField
   | TimeRangeField
-  | GroupField;
+  | TabsField;
 
 export type Inputs = Record<string, CommonInput>;
 export type Model = Record<string, any>;

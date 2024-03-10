@@ -40,7 +40,7 @@ export interface Field {
   disabled?: boolean;
   outputs?: Record<string, any>;
   options?: (CommonOption & {
-    inputs: Record<string, Field>
+    inputs: Record<string, Field>;
   })[];
   autocomplete?: boolean;
   maxlength?: number;
@@ -70,7 +70,7 @@ export const getCommonInput = (commonInput: CommonInput, model: Model) => {
   const rtv = reactive<Field>({});
 
   for (const [key, val] of Object.entries(commonInput)) {
-    rtv[`$${key}`] = val;
+    rtv[`_${key}`] = val;
     if (isPromise(val)) {
       val(model).then((res: any) => {
         rtv[key] = res;
@@ -93,7 +93,7 @@ export const getInputsByInputs = (inputs: Inputs, model: Model) => {
   for (const [key, val] of Object.entries(inputs)) {
     rtv[key] = getCommonInput(val, model);
 
-    const defaultValue = rtv[key].type === 'group' ? {} : undefined
+    const defaultValue = rtv[key].type === "group" ? {} : undefined;
 
     model[key] = get(model, key) ?? rtv[key].value ?? defaultValue;
   }
