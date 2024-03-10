@@ -86,7 +86,13 @@ export const getInputsByInputs = (
     rtv[key] = getCommonInput(val, model);
 
     // 判断多选是数组，其他是 undefined
-    const defaultValue = rtv[key].type === "group" ? {} : undefined;
+    const isArray =
+      rtv[key].type === 'checkbox-group' ||
+      rtv[key].type === 'tree-select' ||
+      rtv[key].type === 'date-range-picker' ||
+      rtv[key].type === 'time-range-picker' ||
+      (rtv[key].type === 'select' && rtv[key].multiple)
+    const defaultValue = isArray ? [] : undefined;
     const newVal = get(model, key) ?? rtv[key].value ?? defaultValue;
 
     model[key] = newVal;

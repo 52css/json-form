@@ -55,8 +55,8 @@ const onReset: FormProps['onReset'] = () => {
 
 <template>
   <div class="t-design-json-form">
-    {{ model }}
-    {{ defaultModel }}
+    <!-- {{ model }} -->
+    <!-- {{ defaultModel }} -->
     <t-form
       v-if="inputs"
       :data="model"
