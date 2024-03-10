@@ -6,7 +6,7 @@
 
 目前市面上的UI框架很多，例如 element-plus、ant-design-vue、arco-design、tdesign，各自有相应的api，如何通用的？
 
-所有的属性我们使用html标签已有特有属性，我们主要符合html标准，再各自统一就可以达到我们的目的。
+~~所有的属性我们使用html标签已有特有属性，我们主要符合html标准，再各自统一就可以达到我们的目的。~~ 映射太复杂，直接type是相应组件。例如 `t-input-number` 对应的 type 就是 `input-number`
 
 ## 如何简单？
 
@@ -121,77 +121,27 @@ const inputs: Inputs = {
 
 ```
 
-## 框架TODO
+## Prop支持
 
 - [ ] 支持tdesign、element-plus、ant-design-vue、acro-design
 - [ ] 支持组件动态注入
-- [ ] 支持标题
-- [x] 支持inputs, 支持字符串、对象、label带星号必填、对象属性支持getter和promise、对象支持value设置默认值
 - [x] 支持自定义slot
-- [ ] 支持outputs
-- [ ] 支持列表、表单、抽屉、弹窗场景
+- [ ] 支持`layout` 布局, 可设置`horizontal`, `vertical`, `inline`
+- [x] 支持列表、表单、抽屉、弹窗场景
 - [ ] 支持普通表单、步骤条、左边导航、头部导航
 - [x] 支持span分栏（全局和单个）
 - [x] 支持disabled禁用(全局和单个)
-- [x] 支持动态表单（if控制）
 
-### 支持普通表单、步骤条、左边导航、头部导航
+## Inputs支持
 
-```js
-// 普通表单
-inputs: {}
-
-// 步骤条
-steps: {
-  s1: '步骤1'
-},
-inputs: {
-  aa: {
-    type: 'text',
-    label: 's1.测试',
-  }
-}
-
-// 左边导航
-lefts: {
-  l1: '基本信息'
-},
-inputs: {
-  aa: {
-    type: 'text',
-    label: 'l1.测试',
-  }
-}
-
-// 头部导航
-tabs: {
-  t1: '基本信息'
-},
-inputs: {
-  aa: {
-    type: 'text',
-    label: 's1.l1.t1.基本信息',
-  }
-}
-```
-
-## 组件TODO
-
-- [ ] AutoComplete 自动完成 => type="`text`" + autocomplete
-- [ ] Cascader 级联选择 => type="`select`" + cascader
-- [x] Checkbox 多选框 => type="`checkbox`"
-- [ ] DatePicker 日期选择框 => type="`date`" type="`datetime`" type="`datetimerange`" type="`daterange`"
-- [x] Input 输入框 => type="`text`" type="password"
-- [ ] InputNumber 数字输入框 => type="`number`"
-- [ ] Radio 单选框 => type="`radio`"
-- [ ] Rate 评分 => type="`rate`"
-- [ ] Select 选择器 => type="`select`"
-- [ ] Slider 滑动输入条 => type="`range`"
-- [ ] Switch 开关 => type="`switch`"
-- [ ] TimePicker 时间选择框 => type="`time`" type="`timerange`"
-- [ ] Transfer 穿梭框 => type="`transfer`"
-- [ ] TreeSelect 树选择 => type="`select`" + treeSelect
-- [ ] Upload 上传 => type="`file`" type="`image`"
+- [x] 支持attrValue.`if`, 控制显示隐藏
+- [x] 支持attrValue=`字符串`，转换成`input`对象
+- [x] 支持attrValue.`label`，带星号必填，其他转换成`label`
+- [x] 支持attrValue.`*`, 所有的属性`透传`到组件, `t-input` 响应的`label` 转换成属性`prefix`
+- [x] 支持attrValue.`*`，支持`string`, `function` 转换成 `getter function`, `async function` 转换成 `响应式数据`
+- [x] 支持attrValue.type=`tabs`，`嵌套`表单，支持错误`校验`
+- [ ] 支持attrValue.`outputs`控制输出转换
+- [ ] 支持attrValue.type=`title`实现标题
 
 ## Form表单映射
 
