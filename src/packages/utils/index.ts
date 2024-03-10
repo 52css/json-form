@@ -39,7 +39,9 @@ export interface Field {
   value?: CommonValue;
   disabled?: boolean;
   outputs?: Record<string, any>;
-  options?: CommonOption[];
+  options?: (CommonOption & {
+    inputs: Record<string, Field>
+  })[];
   autocomplete?: boolean;
   maxlength?: number;
   [key: string]: any; // 添加索引签名
@@ -91,9 +93,9 @@ export const getInputsByInputs = (inputs: Inputs, model: Model) => {
   for (const [key, val] of Object.entries(inputs)) {
     rtv[key] = getCommonInput(val, model);
 
-    if (typeof rtv[key]?.value !== undefined) {
-      model[key] = get(model, key) ?? rtv[key].value;
-    }
+    const defaultValue = rtv[key].type === 'group' ? {} : undefined
+
+    model[key] = get(model, key) ?? rtv[key].value ?? defaultValue;
   }
 
   return rtv;

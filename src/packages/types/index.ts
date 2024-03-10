@@ -13,6 +13,7 @@ export interface CommonField {
   label?: CommonAttr<string>;
   outputs?: Record<string, any>;
   span?: CommonAttr<number>;
+  group?: string;
 }
 
 export interface CommonOption {
@@ -178,6 +179,14 @@ export interface TimeRangeField extends CommonField {
   value?: CommonAttr<CommonValue[]>;
 }
 
+export interface GroupField extends CommonField {
+  type: 'group',
+  value?: CommonAttr<CommonValue>;
+  options?: CommonAttr<(CommonOption & {
+    inputs: Record<string, CommonInput>
+  })[]>
+}
+
 export type CommonInput =
   | string
   | TextField
@@ -200,7 +209,8 @@ export type CommonInput =
   | TextareaField
   | TransferField
   | TimeField
-  | TimeRangeField;
+  | TimeRangeField
+  | GroupField;
 
 export type Inputs = Record<string, CommonInput>;
 export type Model = Record<string, any>;
