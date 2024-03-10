@@ -60,7 +60,7 @@ export const getCommonInput = (commonInput: CommonInput, model: Model) => {
     return reactive<Field>({
       label: commonInput.replace(/\*/g, ""),
       required: /\*/.test(commonInput),
-      type: "text",
+      type: "input",
       placeholder: "请输入",
       clearable: true,
       filterable: true,

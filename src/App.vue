@@ -47,14 +47,14 @@ const configInputs = ref<Inputs>({
   },
   span: {
     label: '全局span',
-    type: 'range',
+    type: 'slider',
     min: 1,
     max: 12,
     marks: [2, 3, 4, 6, 12],
   },
   oneSpan: {
     label: '单独span',
-    type: 'range',
+    type: 'slider',
     min: 1,
     max: 12,
     marks: [2, 3, 4, 6, 12],

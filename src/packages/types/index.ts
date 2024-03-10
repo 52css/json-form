@@ -13,7 +13,7 @@ export interface CommonField {
   label?: CommonAttr<string>;
   outputs?: Record<string, any>;
   span?: CommonAttr<number>;
-  group?: string;
+  [key: string]: any; // 添加索引签名
 }
 
 export interface CommonOption {
@@ -23,132 +23,81 @@ export interface CommonOption {
   children?: CommonOption[];
 }
 
-export interface TextField extends CommonField {
-  type: "text";
-  placeholder?: CommonAttr<string>;
-  maxlength?: CommonAttr<number>;
-  clearable?: CommonAttr<boolean>;
+export interface AutoCompleteField extends CommonField {
+  type: "auto-complete";
   value?: CommonAttr<CommonValue>;
-  prefix?: CommonAttr<string>;
-  suffix?: CommonAttr<string>;
-  // 兼容AutoComplete
-  autocomplete?: CommonAttr<boolean>;
-  filterable?: CommonAttr<boolean>;
-  options?: CommonAttr<CommonOption[]>;
 }
 
-export interface CheckboxField extends CommonField {
-  type: "checkbox";
-  options: CommonAttr<CommonOption[]>;
+export interface CascaderField extends CommonField {
+  type: "cascader";
+  value?: CommonAttr<CommonValue | CommonValue[]>;
+}
+
+export interface CheckboxGroupField extends CommonField {
+  type: "checkbox-group";
+  value?: CommonAttr<CommonValue[]>;
+}
+
+export interface ColorPickerField extends CommonField {
+  type: "color-picker";
+  value?: CommonAttr<CommonValue>;
+}
+
+export interface DatePickerField extends CommonField {
+  type: "date-picker";
+  value?: CommonAttr<CommonValue>;
+}
+
+export interface DateRangePickerField extends CommonField {
+  type: "date-range-picker";
+  value?: CommonAttr<CommonValue[]>;
+}
+
+export interface InputField extends CommonField {
+  type: "input";
+  value?: CommonAttr<CommonValue>;
+}
+
+export interface InputAdornmentField extends CommonField {
+  type: "input-adornment";
+  value?: CommonAttr<CommonValue>;
+}
+
+export interface InputNumberField extends CommonField {
+  type: "input-number";
+  value?: CommonAttr<number>;
+}
+
+export interface TagInputField extends CommonField {
+  type: "tag-input";
+  value?: CommonAttr<CommonValue[]>;
+}
+
+export interface RadioGroupField extends CommonField {
+  type: "radio-group";
+  value?: CommonAttr<CommonValue[]>;
+}
+
+export interface RangeInputField extends CommonField {
+  type: "range-input";
   value?: CommonAttr<CommonValue[]>;
 }
 
 export interface SelectField extends CommonField {
   type: "select";
-  placeholder?: CommonAttr<string>;
-  clearable?: CommonAttr<boolean>;
   value?: CommonAttr<CommonValue | CommonValue[]>;
-  filterable?: CommonAttr<boolean>;
-  options?: CommonAttr<CommonOption[]>;
-  multiple?: CommonAttr<boolean>;
-  // cascader
-  cascader?: CommonAttr<boolean>;
-  // tree-select
-  treeSelect?: CommonAttr<boolean>;
-  data?: CommonAttr<CommonOption[]>;
 }
 
-export interface ColorField extends CommonField {
-  type: "color";
-  value?: CommonAttr<CommonValue>;
+export interface SelectInputField extends CommonField {
+  type: "select-input";
+  value?: CommonAttr<CommonValue | CommonValue[]>;
 }
 
-export interface DateField extends CommonField {
-  type: "date";
-  value?: CommonAttr<CommonValue>;
-  clearable?: CommonAttr<boolean>;
-  allowInput?: CommonAttr<boolean>;
+export interface SliderField extends CommonField {
+  type: "slider";
+  value?: CommonAttr<CommonValue | CommonValue[]>;
 }
 
-export interface DateRangeField extends CommonField {
-  type: "date-range";
-  value?: CommonAttr<CommonValue>;
-  clearable?: CommonAttr<boolean>;
-  allowInput?: CommonAttr<boolean>;
-}
-
-export interface DateTimeField extends CommonField {
-  type: "datetime";
-  value?: CommonAttr<CommonValue>;
-  clearable?: CommonAttr<boolean>;
-  allowInput?: CommonAttr<boolean>;
-}
-
-export interface DateTimeRangeField extends CommonField {
-  type: "datetime-range";
-  value?: CommonAttr<CommonValue>;
-  clearable?: CommonAttr<boolean>;
-  allowInput?: CommonAttr<boolean>;
-}
-
-export interface YearField extends CommonField {
-  type: "year";
-  value?: CommonAttr<CommonValue>;
-  clearable?: CommonAttr<boolean>;
-  allowInput?: CommonAttr<boolean>;
-}
-
-export interface MonthField extends CommonField {
-  type: "month";
-  value?: CommonAttr<CommonValue>;
-  clearable?: CommonAttr<boolean>;
-  allowInput?: CommonAttr<boolean>;
-}
-
-export interface QuarterField extends CommonField {
-  type: "quarter";
-  value?: CommonAttr<CommonValue>;
-  clearable?: CommonAttr<boolean>;
-  allowInput?: CommonAttr<boolean>;
-}
-
-export interface WeekField extends CommonField {
-  type: "week";
-  value?: CommonAttr<CommonValue>;
-  clearable?: CommonAttr<boolean>;
-  allowInput?: CommonAttr<boolean>;
-}
-
-export interface NumberField extends CommonField {
-  type: "number";
-  value?: CommonAttr<number>;
-  min?: CommonAttr<number>;
-  max?: CommonAttr<number>;
-  step?: CommonAttr<number>;
-  precision?: CommonAttr<number>;
-  prefix?: CommonAttr<string>;
-  suffix?: CommonAttr<string>;
-}
-
-export interface RadioField extends CommonField {
-  type: "radio";
-  options: CommonAttr<CommonOption[]>;
-  value?: CommonAttr<CommonValue[]>;
-}
-
-// export interface InputRangeField extends CommonField {
-//   type: "inputrange";
-//   value?: CommonAttr<CommonValue[]>;
-// }
-
-export interface RangeField extends CommonField {
-  type: "range";
-  value?: CommonAttr<CommonValue>;
-  min?: CommonAttr<number>;
-  max?: CommonAttr<number>;
-  step?: CommonAttr<number>;
-  marks?: CommonAttr<Array<string | number>>;
-}
 export interface SwitchField extends CommonField {
   type: "switch";
   value?: CommonAttr<CommonValue>;
@@ -157,26 +106,31 @@ export interface SwitchField extends CommonField {
 export interface TextareaField extends CommonField {
   type: "textarea";
   value?: CommonAttr<CommonValue>;
-  placeholder?: CommonAttr<string>;
-  maxlength?: CommonAttr<number>;
-  clearable?: CommonAttr<boolean>;
-  autosize?: CommonAttr<{ minRows?: number; maxRows?: number }>;
 }
 
 export interface TransferField extends CommonField {
   type: "transfer";
   value?: CommonAttr<CommonValue[]>;
-  data?: CommonAttr<CommonOption[]>;
 }
 
-export interface TimeField extends CommonField {
-  type: "time";
+export interface TimePickerField extends CommonField {
+  type: "time-picker";
   value?: CommonAttr<CommonValue>;
 }
 
-export interface TimeRangeField extends CommonField {
+export interface TimeRangePickerField extends CommonField {
   type: "time-range";
   value?: CommonAttr<CommonValue[]>;
+}
+
+export interface TreeSelectField extends CommonField {
+  type: "tree-select";
+  value?: CommonAttr<CommonValue | CommonValue[]>;
+}
+
+export interface UploadField extends CommonField {
+  type: "upload";
+  value?: CommonAttr<CommonValue | CommonValue[]>;
 }
 
 export interface TabsField extends CommonField {
@@ -193,27 +147,28 @@ export interface TabsField extends CommonField {
 
 export type CommonInput =
   | string
-  | TextField
-  | CheckboxField
+  | AutoCompleteField
+  | CascaderField
+  | CheckboxGroupField
+  | ColorPickerField
+  | DatePickerField
+  | DateRangePickerField
+  | InputField
+  | InputAdornmentField
+  | InputNumberField
+  | TagInputField
+  | RadioGroupField
+  | RangeInputField
   | SelectField
-  | ColorField
-  | DateField
-  | DateRangeField
-  | DateTimeField
-  | DateTimeRangeField
-  | YearField
-  | MonthField
-  | QuarterField
-  | WeekField
-  | NumberField
-  | RadioField
-  // | InputRangeField
-  | RangeField
+  | SelectInputField
+  | SliderField
   | SwitchField
   | TextareaField
   | TransferField
-  | TimeField
-  | TimeRangeField
+  | TimePickerField
+  | TimeRangePickerField
+  | TreeSelectField
+  | UploadField
   | TabsField;
 
 export type Inputs = Record<string, CommonInput>;
