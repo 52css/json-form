@@ -123,7 +123,8 @@ const inputs: Inputs = {
         value: '2',
         inputs: {
           'tab2.input11': 'input11',
-          'tab2.input12': 'input12*'
+          'tab2.input12': 'input12*',
+          'tab2.input13': '自定义插槽'
         }
       },
     ],
@@ -160,7 +161,7 @@ const inputs: Inputs = {
         :disabled="configModel.disabled"
         :span="configModel.span"
       >
-        <template #input8>
+        <template #tab2.input13>
           这个是input8
         </template>
       </component>

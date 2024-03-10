@@ -80,10 +80,15 @@ const inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model, pro
           :key="(option?.value as string)"
           :destroy-on-hide="false"
         >
-          <TDesignFormItem :inputs="(option.inputs as Inputs)" :model="model" :default-model="defaultModel" :span="span" />
+          <TDesignFormItem :inputs="(option.inputs as Inputs)" :model="model" :default-model="defaultModel" :span="span">
+            <template v-for="(_value, name) in $slots" #[name]="scopeData">
+              <slot :name="name" v-bind="scopeData" />
+            </template>
+          </TDesignFormItem>
         </t-tab-panel>
       </t-tabs>
       <t-form-item
+        v-else
         :label="inputField?.label"
         :name="prop"
         :rules="[{

@@ -68,7 +68,11 @@ const onReset: FormProps['onReset'] = () => {
       @submit="onSubmit"
       @reset="onReset"
     >
-      <TDesignFormItem :inputs="inputs" :model="model" :default-model="defaultModel" :span="span" />
+      <TDesignFormItem :inputs="inputs" :model="model" :default-model="defaultModel" :span="span">
+        <template v-for="(_value, name) in $slots" #[name]="scopeData">
+          <slot :name="name" v-bind="scopeData" />
+        </template>
+      </TDesignFormItem>
       <t-form-item>
         <t-button theme="primary" type="submit" style="margin-right: 8px">
           {{ layout === 'inline' ? '查询' : '提交' }}
