@@ -24,7 +24,8 @@ import {
 
 export interface TDesignFormItemProps {
   inputs?: Inputs
-  model?: Model,
+  model: Model,
+  defaultModel: Model,
   span?: number,
 }
 export const TDesignFormItemDefault = {}
@@ -39,7 +40,6 @@ export default {
 <script setup lang="ts">
 const props = withDefaults(defineProps<TDesignFormItemProps>(), TDesignFormItemDefault)
 defineEmits<TDesignFormItemEmits>()
-const model = ref(props.model ?? {})
 const componentMap = {
   TAutoComplete,
   TCascader,
@@ -59,10 +59,11 @@ const componentMap = {
   TTransfer,
   TUpload,
 }
+const inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model, props.defaultModel)
 </script>
 
 <template>
-  <template v-for="(inputField, prop) in getInputsByInputs(inputs as Inputs, model)" :key="prop">
+  <template v-for="(inputField, prop) in inputFieldMap" :key="prop">
     <template v-if="(inputField._if ? inputField._if(model): true)">
       <t-tabs
         v-if="inputField.type === 'tabs'"
@@ -79,7 +80,7 @@ const componentMap = {
           :key="(option?.value as string)"
           :destroy-on-hide="false"
         >
-          <TDesignFormItem :inputs="(option.inputs as Inputs)" :model="model" :span="span" />
+          <TDesignFormItem :inputs="(option.inputs as Inputs)" :model="model" :default-model="defaultModel" :span="span" />
         </t-tab-panel>
       </t-tabs>
       <t-form-item

@@ -70,38 +70,38 @@ const inputs: Inputs = {
   // input1: "普通输入框",
   // input2: "支持必填*",
   // input3: {
-  //   type: "text",
+  //   type: "input",
   //   label: "通过type生成",
   //   placeholder: "请输入a试试",
   // },
   // input4: {
   //   if: (x: any) => x.input3 !== "a",
-  //   type: "text",
+  //   type: "input",
   //   label: "支持默认值",
   //   value: "默认值",
   // },
   // input5: {
-  //   type: "text",
+  //   type: "input",
   //   label: "支持禁用",
   //   disabled: true,
   // },
   // input6: {
-  //   type: "text",
+  //   type: "input",
   //   label: "禁用是同步函数",
   //   disabled: () => !!configModel.value.oneDisabled,
   // },
   // input7: {
-  //   type: "text",
+  //   type: "input",
   //   label: "禁用是异步函数",
   //   disabled: async () => !!configModel.value.oneDisabled,
   // },
   // input8: '自定义插槽',
   // "obj.input9": {
-  //   type: "text",
+  //   type: "input",
   //   label: "支持对象属性",
   // },
   // input10: {
-  //   type: 'text',
+  //   type: 'input',
   //   label: "span默认12",
   //   span: () => configModel.value.oneSpan
   // },
@@ -114,7 +114,7 @@ const inputs: Inputs = {
         label: '学生1',
         value: '1',
         inputs: {
-          'tab1.input11': 'input11*',
+          'tab1.input11': 'input11',
           'tab1.input12': 'input12'
         }
       },

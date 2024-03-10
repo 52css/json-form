@@ -4,6 +4,7 @@ import { type JsonFormProps, JsonFormDefault } from '../types'
 import { getLabelAlignByLayout, getLayoutByLayout } from '../utils'
 import TDesignFormItem from './TDesignFormItem.vue'
 import { FormProps } from 'tdesign-vue-next'
+import {cloneDeep} from 'lodash'
 
 export interface TDesignJsonFormProps extends JsonFormProps {
   prop1?: string
@@ -22,29 +23,40 @@ defineOptions({
   name: 'TDesignJsonForm',
 })
 const model = ref(props.model ?? {})
-const onSubmit: FormProps['onSubmit'] = ({ validateResult, firstError }) => {
+const onSubmit: FormProps['onSubmit'] = ({ validateResult }) => {
   if (validateResult === true) {
     MessagePlugin.success('提交成功');
   } else {
     console.log('Errors: ', validateResult);
-    // MessagePlugin.warning(firstError);
-    // // 判断错误在第几个 Tab，而后自动切换到第几个
-    // for (let i = 0, len = formData.students.length; i < len; i++) {
-    //   const item = formData.students[i];
-    //   const keys = Object.keys(item).map((key) => `students[${i}].${key}`);
-    //   // 数组数据 key 在 validateResult 中存在，则表示校验不通过
-    //   const isInvalid = keys.find((key) => validateResult[key]);
-    //   if (isInvalid) {
-    //     studentTab.value = item.id;
-    //     return;
-    //   }
-    // }
+    const errorKeys = Object.keys(validateResult);
+    if (!props.inputs) {
+      return;
+    }
+    tabs: for (const [key, val] of Object.entries(props.inputs)) {
+      if (val && typeof val !== 'string' && val.type === 'tabs' && val.options && Array.isArray(val.options)) {
+        for (let tabItem of val.options) {
+          const tabsInputs = Object.keys(tabItem.inputs)
+          const hasKey = errorKeys.some((errorKey) => tabsInputs.includes(errorKey));
+
+          if (hasKey) {
+            model.value[key] = tabItem.value;
+            break tabs;
+          }
+        }
+      }
+    }
   }
+}
+const defaultModel = ref({})
+const onReset: FormProps['onReset'] = () => {
+  model.value = cloneDeep(defaultModel.value)
 }
 </script>
 
 <template>
   <div class="t-design-json-form">
+    {{ model }}
+    {{ defaultModel }}
     <t-form
       v-if="inputs"
       :data="model"
@@ -54,8 +66,9 @@ const onSubmit: FormProps['onSubmit'] = ({ validateResult, firstError }) => {
       label-width="auto"
       class="json-form"
       @submit="onSubmit"
+      @reset="onReset"
     >
-      <TDesignFormItem :inputs="inputs" :model="model" :span="span" />
+      <TDesignFormItem :inputs="inputs" :model="model" :default-model="defaultModel" :span="span" />
       <t-form-item>
         <t-button theme="primary" type="submit" style="margin-right: 8px">
           {{ layout === 'inline' ? '查询' : '提交' }}

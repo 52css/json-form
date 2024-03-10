@@ -9,7 +9,6 @@ export interface CommonField {
   if?: CommonAttr<boolean>;
   required?: CommonAttr<boolean>;
   disabled?: CommonAttr<boolean>;
-  readonly?: CommonAttr<boolean>;
   label?: CommonAttr<string>;
   outputs?: Record<string, any>;
   span?: CommonAttr<number>;

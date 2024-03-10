@@ -19,31 +19,18 @@
 //     return result;
 //   };
 // }
-import { get } from "lodash";
-import {
-  CommonInput,
-  Model,
-  Inputs,
-  Layout,
-  CommonValue,
-  CommonOption,
-} from "../types";
+import { cloneDeep, get } from "lodash";
+import { CommonInput, Model, Inputs, Layout, CommonValue } from "../types";
 
 export interface Field {
-  type?: string;
-  label?: string;
+  if?: (x?: Model) => boolean;
   required?: boolean;
-  placeholder?: string;
-  clearable?: boolean;
-  filterable?: boolean;
-  value?: CommonValue;
   disabled?: boolean;
+  label?: string;
   outputs?: Record<string, any>;
-  options?: (CommonOption & {
-    inputs: Record<string, Field>;
-  })[];
-  autocomplete?: boolean;
-  maxlength?: number;
+  span?: number;
+  type?: string;
+  value?: CommonValue | CommonValue[];
   [key: string]: any; // 添加索引签名
 }
 
@@ -56,6 +43,7 @@ export const isPromise = (obj: unknown) => {
 // type PromiseType<T> = T extends Promise<infer P> ? P : never;
 
 export const getCommonInput = (commonInput: CommonInput, model: Model) => {
+  // console.log('getCommonInput', commonInput, model)
   if (typeof commonInput === "string") {
     return reactive<Field>({
       label: commonInput.replace(/\*/g, ""),
@@ -87,15 +75,22 @@ export const getCommonInput = (commonInput: CommonInput, model: Model) => {
   return rtv;
 };
 
-export const getInputsByInputs = (inputs: Inputs, model: Model) => {
+export const getInputsByInputs = (
+  inputs: Inputs,
+  model: Model,
+  defaultModel: Model
+) => {
   const rtv: Record<string, Field> = {};
 
   for (const [key, val] of Object.entries(inputs)) {
     rtv[key] = getCommonInput(val, model);
 
+    // 判断多选是数组，其他是 undefined
     const defaultValue = rtv[key].type === "group" ? {} : undefined;
+    const newVal = get(model, key) ?? rtv[key].value ?? defaultValue;
 
-    model[key] = get(model, key) ?? rtv[key].value ?? defaultValue;
+    model[key] = newVal;
+    defaultModel[key] = newVal;
   }
 
   return rtv;
