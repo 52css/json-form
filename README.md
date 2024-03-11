@@ -148,13 +148,14 @@ const inputs: Inputs = {
 - [ ] 支持attrValue.`outputs`控制输出转换
 - [ ] 支持attrValue.type=`title`实现标题
 - [ ] 支持attrValue.type=`steps`，`步骤`表单
-- [ ] 支持attrValue.`request` 控制请求，再加上 `columns` 控制表格展示
+- [ ] 支持attrValue.`request` 提交表单
+- [ ] 支持attrValue.`request` + `columns` 请求搜索，并且渲染表格
 
 ## Form表单映射
 
-| 属性                        | tdesign                               | element-plus                          | ant-design         | acro-design           |
-|---------------------------|---------------------------------------|---------------------------------------|--------------------|-----------------------|
-| 绑定数据(model)             | data                                  | model                                 | model              | model                 |
+| 属性                        | tdesign                               | element-plus                          | ant-design         | acro-design        |
+|---------------------------|---------------------------------------|---------------------------------------|--------------------|--------------------|
+| 绑定数据(model)             | data                                  | model                                 | model              | model              |
 | 对齐方式(layout-horizontal) | label-align(right) + layout(vertical) | label-position(right) + inline(false) | layout(horizontal) | layout(horizontal) |
 | 对齐方式(layout-vertical)   | label-align(top) + layout(vertical)   | label-position(top) + inline(false)   | layout(vertical)   | layout(vertical)   |
 | 对齐方式(layout-inline)     | label-align(right) + layout(inline)   | label-position(right) + inline(true)  | layout(inline)     | layout(inline)     |
@@ -164,3 +165,9 @@ const inputs: Inputs = {
 | 属性     | tdesign | element-plus | ant-design | acro-design |
 |--------|---------|--------------|------------|-------------|
 | 绑定属性 | data    | prop         | name       | field       |
+
+## Input表单映射
+
+| 属性       | tdesign | element-plus | ant-design | acro-design |
+|----------|---------|--------------|------------|-------------|
+| prefix属性 | label   | -            | -          | -           |
