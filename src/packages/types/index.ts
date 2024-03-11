@@ -5,12 +5,24 @@ export type CommonAttr<T> =
   | ((model?: Model) => T)
   | ((model?: Model) => Promise<T>);
 
+export type CommonOutput = string | ((model: Model, ...args: any[]) => any);
+
+export type CommonColumn =
+  | string
+  | {
+      if?: CommonAttr<boolean>;
+      label?: CommonAttr<string>; // 映射组件的title，为了和inputs保持一致，使用label
+      minWidth?: CommonAttr<number>;
+      width?: CommonAttr<number>;
+      align?: CommonAttr<"left" | "right" | "center">;
+    };
+
 export interface CommonField {
   if?: CommonAttr<boolean>;
   required?: CommonAttr<boolean>;
   disabled?: CommonAttr<boolean>;
   label?: CommonAttr<string>;
-  outputs?: Record<string, any>;
+  outputs?: CommonAttr<Record<string, CommonOutput>>;
   span?: CommonAttr<number>;
   [key: string]: any; // 添加索引签名
 }
@@ -145,8 +157,8 @@ export interface TabsField extends CommonField {
 }
 
 export interface TitleField extends CommonField {
-  type: 'title',
-  label: CommonAttr<string>
+  type: "title";
+  label: CommonAttr<string>;
 }
 
 export type CommonInput =
@@ -179,6 +191,8 @@ export type CommonInput =
 export type Inputs = Record<string, CommonInput>;
 export type Model = Record<string, any>;
 export type Layout = "horizontal" | "vertical" | "inline";
+export type Columns = Record<string, CommonColumn>;
+export type Request = (model: Model) => Promise<any>;
 
 export interface JsonFormProps {
   layout?: Layout;
@@ -188,6 +202,7 @@ export interface JsonFormProps {
   model?: Model;
   // submission?: boolean;
   span?: number;
+  columns?: Columns;
 }
 
 export const JsonFormDefault = {

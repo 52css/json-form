@@ -168,8 +168,10 @@ const inputs: Inputs = {
   * [x] 支持outputValue是`function`，例如配置 `(_m: Model, _val: string, content:any) => content.option.label`, 即输出选中项的`content.option.label`值到`model`的outputs的`key`上
 * [x] 支持attrValue.type=`title`实现标题
 * [ ] 支持attrValue.type=`steps`，`步骤`表单
-* [ ] 支持attrValue.`request` 提交表单
-* [ ] 支持attrValue.`request` + `columns` 请求搜索，并且渲染表格
+* [ ] 支持attrValue.`request`
+  * [ ] 新建表单 `request`, 提交调用`request`, 成功提示`操作成果`
+  * [ ] 编辑表单 `request` + `model`, 渲染页面，调用数据接口设置`model`，提交调用`request`, 成功提示`操作成果`
+  * [ ] 列表，初始化调用`request` + `columns`，渲染表格
 
 ## Form表单映射
 

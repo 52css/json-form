@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TDesignJsonForm, ElementPlusJsonForm, AntDesignJsonForm, AcroDesignJsonForm, type Inputs, type Layout, type Model } from './packages/index.ts';
+import { TDesignJsonForm, ElementPlusJsonForm, AntDesignJsonForm, AcroDesignJsonForm, type Inputs, type Layout, type Model, type Request } from './packages/index.ts';
 
 const componentMap = {
   TDesignJsonForm,
@@ -171,6 +171,14 @@ const inputs: Inputs = {
   //   value: ["1"],
   // },
 }
+const request: Request = (model: Model) => {
+  return new Promise((resolve) => {
+    console.log('正在请求model', model)
+    setTimeout(() => {
+      resolve(true)
+    }, 200)
+  })
+}
 </script>
 
 <template>
@@ -184,6 +192,7 @@ const inputs: Inputs = {
         :layout="configModel.layout"
         :disabled="configModel.disabled"
         :span="configModel.span"
+        :request="request"
       >
         <template #tab2.input13>
           这个是input8

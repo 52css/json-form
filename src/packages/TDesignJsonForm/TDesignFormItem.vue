@@ -61,6 +61,10 @@ const componentMap: Record<string, Component> = {
   TUpload,
 }
 const inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model, props.defaultModel)
+
+defineExpose({
+  inputFieldMap,
+})
 </script>
 
 <template>
@@ -71,7 +75,7 @@ const inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model, pro
         v-bind="inputField"
         :is="registerJsonFormFieldComponents[pascalCase(inputField.type as string)]"
         :data-span="inputField.span ?? span"
-        class="json-form__item"
+        class="json-form__form__form-item"
       />
       <t-tabs
         v-else-if="inputField.type === 'tabs'"
@@ -79,7 +83,7 @@ const inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model, pro
         :data-span="inputField.span ?? span"
         :theme="inputField.theme"
         :placement="inputField.placement"
-        class="json-form__item"
+        class="json-form__form__form-item"
       >
         <t-tab-panel
           v-for="option in inputField.options"
@@ -104,7 +108,7 @@ const inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model, pro
         }]"
         :data-span="inputField.span ?? span"
         :data-prop="prop"
-        class="json-form__item"
+        class="json-form__form__form-item"
       >
         <!-- {{ inputField }} -->
         <slot

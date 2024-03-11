@@ -116,11 +116,11 @@ export const getInputsByInputs = (
   return rtv;
 };
 
-export const getLabelAlignByLayout = (layout: Layout) => {
+export const getLabelAlignByLayout = (layout: Layout = "vertical") => {
   return ["vertical"].includes(layout) ? "top" : "right";
 };
 
-export const getLayoutByLayout = (layout: Layout) => {
+export const getLayoutByLayout = (layout: Layout = "vertical") => {
   return ["inline"].includes(layout) ? "inline" : "vertical";
 };
 
