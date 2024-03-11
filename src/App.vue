@@ -135,6 +135,19 @@ const inputs: Inputs = {
     onChange(model: Model, val: any) {
       console.log('val', model, val)
     }
+  },
+  select1: {
+    type: 'select',
+    label: '下拉框',
+    clearable: true,
+    options: [
+      { label: "选项1", value: "1" },
+      { label: "选项2", value: "2" },
+    ],
+    outputs: {
+      select1Label1: 'label',
+      select1Label2: (_m: Model, _val: string, content:any) => content.option.label
+    }
   }
   // checkbox1: {
   //   type: "checkbox",
@@ -159,7 +172,7 @@ const inputs: Inputs = {
 <template>
   <div class="container">
     <main>
-      <!-- {{ model }} -->
+      {{ model }}
       <component
         :is="componentMap[configModel.component as keyof typeof componentMap]"
         :model="model"

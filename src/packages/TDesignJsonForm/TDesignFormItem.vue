@@ -1,6 +1,6 @@
 <script lang="ts">
 import { type Inputs, type Model } from '../types'
-import { getInputsByInputs } from '../utils'
+import { getInputsByInputs, setOutputs } from '../utils'
 import _ from 'lodash'
 import { 
   AutoComplete as TAutoComplete,
@@ -98,6 +98,7 @@ const inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model, pro
         :data-prop="prop"
         class="json-form__item"
       >
+        <!-- {{ inputField }} -->
         <slot
           v-if="$slots[prop]"
           :name="prop"
@@ -120,6 +121,7 @@ const inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model, pro
             if (inputField._onChange) {
               inputField._onChange(model, ...args);
             }
+            setOutputs(model, inputField, args);
           }"
           @clear="(...args: any[]) => {
             if (inputField._onClear) {

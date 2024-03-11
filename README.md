@@ -146,7 +146,9 @@ const inputs: Inputs = {
 - [x] 支持attrValue.`*`，支持`string`, `function` 转换成 `getter function`, `async function` 转换成 `响应式数据`
 - [x] 支持attrValue.type=`tabs`，`嵌套`表单，支持错误`校验`
 - [x] 支持attrValue.`on`，支持`事件`绑定, `onBlur`、`onChange`、`onClear`、`onClick`、`onCompositionend`、`onCompositionstart`、`onEnter`、`onFocus`、`onKeydown`、`onKeypress`、`onKeyup`、`onMouseenter`、`onMouseleave`、`onPaste`、`onValidate`、`onWheel`, 支持的`Function(model: Model, ...args)` 其他默认参数
-- [ ] 支持attrValue.`outputs`控制输出转换
+- [x] 支持attrValue.`outputs`控制输出转换
+  - [x] 支持outputValue是`string`，例如配置 `label`, 即输出选中项的`label`值到`model`的outputs的`key`上
+  - [x] 支持outputValue是`function`，例如配置 ` (_m: Model, _val: string, content:any) => content.option.label`, 即输出选中项的`content.option.label`值到`model`的outputs的`key`上
 - [ ] 支持attrValue.type=`title`实现标题
 - [ ] 支持attrValue.type=`steps`，`步骤`表单
 - [ ] 支持attrValue.`request` 提交表单

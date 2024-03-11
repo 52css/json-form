@@ -19,8 +19,15 @@
 //     return result;
 //   };
 // }
-import { cloneDeep, get } from "lodash";
-import { CommonInput, Model, Inputs, Layout, CommonValue } from "../types";
+import { get } from "lodash";
+import {
+  type CommonInput,
+  type Model,
+  type Inputs,
+  type Layout,
+  type CommonValue,
+  type CommonOption,
+} from "../types";
 
 export interface Field {
   if?: (x?: Model) => boolean;
@@ -59,6 +66,11 @@ export const getCommonInput = (commonInput: CommonInput, model: Model) => {
 
   for (const [key, val] of Object.entries(commonInput)) {
     rtv[`_${key}`] = val;
+
+    if (/^on/.test(key)) {
+      continue;
+    }
+
     if (isPromise(val)) {
       val(model).then((res: any) => {
         rtv[key] = res;
@@ -68,6 +80,8 @@ export const getCommonInput = (commonInput: CommonInput, model: Model) => {
         get() {
           return typeof val === "function" ? val(model) : val;
         },
+        // 设置可枚举，可以用直接 v-bind 绑定所有属性
+        enumerable: true,
       });
     }
   }
@@ -87,11 +101,11 @@ export const getInputsByInputs = (
 
     // 判断多选是数组，其他是 undefined
     const isArray =
-      rtv[key].type === 'checkbox-group' ||
-      rtv[key].type === 'tree-select' ||
-      rtv[key].type === 'date-range-picker' ||
-      rtv[key].type === 'time-range-picker' ||
-      (rtv[key].type === 'select' && rtv[key].multiple)
+      rtv[key].type === "checkbox-group" ||
+      rtv[key].type === "tree-select" ||
+      rtv[key].type === "date-range-picker" ||
+      rtv[key].type === "time-range-picker" ||
+      (rtv[key].type === "select" && rtv[key].multiple);
     const defaultValue = isArray ? [] : undefined;
     const newVal = get(model, key) ?? rtv[key].value ?? defaultValue;
 
@@ -108,4 +122,34 @@ export const getLabelAlignByLayout = (layout: Layout) => {
 
 export const getLayoutByLayout = (layout: Layout) => {
   return ["inline"].includes(layout) ? "inline" : "vertical";
+};
+
+export const getOption = (
+  val: CommonValue | CommonValue[],
+  options: CommonOption[]
+) => {
+  if (Array.isArray(val)) {
+    return options.filter((option) => val.includes(option.value));
+  }
+
+  return options.find((option) => option.value === val);
+};
+
+export const setOutputs = (model: Model, inputField: Field, args: any[]) => {
+  if (!inputField.outputs) {
+    return;
+  }
+  const value = args[0];
+  for (const [key, val] of Object.entries(inputField.outputs)) {
+    if (value) {
+      const optionItem = getOption(value, inputField.options);
+      model[key] =
+        typeof val === "function"
+          ? val(model, ...args)
+          : get(optionItem, val as string);
+    } else {
+      // 设置model的变量为undefined
+      model[key] = undefined;
+    }
+  }
 };
