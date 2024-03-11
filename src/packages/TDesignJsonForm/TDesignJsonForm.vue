@@ -25,8 +25,9 @@ defineOptions({
 const model = ref(props.model ?? {})
 const onSubmit: FormProps['onSubmit'] = ({ validateResult }) => {
   if (validateResult === true) {
-    console.log('Success: ', model.value, getFlatModel.value);
-    MessagePlugin.success('提交成功');
+    props.request && props.request(getFlatModel.value).then(() => {
+      MessagePlugin.success('提交成功');
+    })
   } else {
     console.log('Errors: ', validateResult);
     const errorKeys = Object.keys(validateResult);
@@ -55,38 +56,39 @@ const onReset: FormProps['onReset'] = () => {
 const tableData = ref()
 const paginationTotal = ref(0)
 const formItemRef = ref()
-// const obj = {};
 
-// set(obj, 'abc.efg', 123)
-
-// console.log('obj', obj)
-const setFlatModel = (inputs: Inputs, flatModel: Model) => {
+const getCanSet = (inputs: Inputs, setKey: string) => {
   for (const [key, inputField] of Object.entries(inputs)) {
-    const show = inputField.if ? inputField.if(model) : true
 
-    if (show) {
-      console.log('key', key, typeof key, model.value[key])
-      debugger
-      set(flatModel, key, model.value[key])
-      // set(flatModel, 'tab2.input129999', 123)
-      // set(flatModel, 'abc.efg', 123)
-      if (inputField.type === 'tabs') {
-        inputField.options.forEach(x => setFlatModel(x.inputs, flatModel))
+    if (typeof inputField === 'string') {
+      return true;
+    }
+
+    if (key === setKey) {
+      return inputField._if ? inputField._if(model) : true;
+    }
+
+    if (inputField.type === 'tabs') {
+      for (const tab of inputField.options) {
+        if (getCanSet(tab.inputs, setKey)) {
+          return true;
+        }
       }
-    } else {
-      // delete flatModel[key]
+      // inputField.options.forEach(x => setFlatModel(x.inputs, flatModel))
     }
   }
 }
 const getFlatModel = computed(() => {
-  const flatModel = cloneDeep(model.value)
+  const flatModel = {};
   const inputs = formItemRef.value?.inputFieldMap
 
-  setFlatModel(inputs, flatModel)
-
-  // set(flatModel, 'abc.efg', 123)
-
-  // console.log('aaa', flatModel)
+  for (const [key, val] of Object.entries(toRaw(model.value))) {
+    const canSet  = getCanSet(inputs, key);
+    // 判断是否可以set
+    if (canSet) {
+      set(flatModel, key, val)
+    }
+  }
 
   return flatModel;
 })
@@ -100,7 +102,8 @@ const init = () => {
 }
 
 defineExpose({
-  init
+  init,
+  model: () => getFlatModel.value,
 })
 </script>
 

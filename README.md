@@ -169,7 +169,7 @@ const inputs: Inputs = {
 * [x] 支持attrValue.type=`title`实现标题
 * [ ] 支持attrValue.type=`steps`，`步骤`表单
 * [ ] 支持attrValue.`request`
-  * [ ] 新建表单 `request`, 提交调用`request`, 成功提示`操作成果`
+  * [x] 新建表单 `request`, 提交调用`request`, 成功提示`操作成功`
   * [ ] 编辑表单 `request` + `model`, 渲染页面，调用数据接口设置`model`，提交调用`request`, 成功提示`操作成果`
   * [ ] 列表，初始化调用`request` + `columns`，渲染表格
 
