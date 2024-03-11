@@ -12,6 +12,7 @@
     // flex: 1; /* 使每个项目等分 */
     margin-left: 0.5rem !important; /* 为了显示间隙，可以根据需要调整 */
     margin-right: 0.5rem !important; /* 为了显示间隙，可以根据需要调整 */
+    margin-bottom: 24px;
     box-sizing: border-box; /* 确保边框和填充不会增加项目的宽度 */
     &[data-span="12"] {
       width: calc(100% - 1rem);

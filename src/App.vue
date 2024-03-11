@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TDesignJsonForm, ElementPlusJsonForm, AntDesignJsonForm, AcroDesignJsonForm, type Inputs, type Layout } from './packages/index.ts';
+import { TDesignJsonForm, ElementPlusJsonForm, AntDesignJsonForm, AcroDesignJsonForm, type Inputs, type Layout, type Model } from './packages/index.ts';
 
 const componentMap = {
   TDesignJsonForm,
@@ -128,6 +128,13 @@ const inputs: Inputs = {
         }
       },
     ],
+  },
+  input14: {
+    type: 'input',
+    label: '支持onChange',
+    onChange(model: Model, val: any) {
+      console.log('val', model, val)
+    }
   }
   // checkbox1: {
   //   type: "checkbox",

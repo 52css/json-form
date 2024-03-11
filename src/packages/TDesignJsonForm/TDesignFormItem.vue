@@ -111,6 +111,86 @@ const inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model, pro
           v-model="(model[prop] as any)"
           v-bind="(inputField as any)"
           :label="inputField?.prefix"
+          @blur="(...args: any[]) => {
+            if (inputField._onBlur) {
+              inputField._onBlur(model, ...args);
+            }
+          }"
+          @change="(...args: any[]) => {
+            if (inputField._onChange) {
+              inputField._onChange(model, ...args);
+            }
+          }"
+          @clear="(...args: any[]) => {
+            if (inputField._onClear) {
+              inputField._onClear(model, ...args);
+            }
+          }"
+          @click="(...args: any[]) => {
+            if (inputField._onClick) {
+              inputField._onClick(model, ...args);
+            }
+          }"
+          @compositionend="(...args: any[]) => {
+            if (inputField._onCompositionend) {
+              inputField._onCompositionend(model, ...args);
+            }
+          }"
+          @compositionstart="(...args: any[]) => {
+            if (inputField._onCompositionstart) {
+              inputField._onCompositionstart(model, ...args);
+            }
+          }"
+          @enter="(...args: any[]) => {
+            if (inputField._onEnter) {
+              inputField._onEnter(model, ...args);
+            }
+          }"
+          @focus="(...args: any[]) => {
+            if (inputField._onFocus) {
+              inputField._onFocus(model, ...args);
+            }
+          }"
+          @keydown="(...args: any[]) => {
+            if (inputField._onKeydown) {
+              inputField._onKeydown(model, ...args);
+            }
+          }"
+          @keypress="(...args: any[]) => {
+            if (inputField._onKeypress) {
+              inputField._onKeypress(model, ...args);
+            }
+          }"
+          @keyup="(...args: any[]) => {
+            if (inputField._onKeyup) {
+              inputField._onKeyup(model, ...args);
+            }
+          }"
+          @mouseenter="(...args: any[]) => {
+            if (inputField._onMouseenter) {
+              inputField._onMouseenter(model, ...args);
+            }
+          }"
+          @mouseleave="(...args: any[]) => {
+            if (inputField._onMouseleave) {
+              inputField._onMouseleave(model, ...args);
+            }
+          }"
+          @paste="(...args: any[]) => {
+            if (inputField._onPaste) {
+              inputField._onPaste(model, ...args);
+            }
+          }"
+          @validate="(...args: any[]) => {
+            if (inputField._onValidate) {
+              inputField._onValidate(model, ...args);
+            }
+          }"
+          @wheel="(...args: any[]) => {
+            if (inputField._onWheel) {
+              inputField._onWheel(model, ...args);
+            }
+          }"
         />
       </t-form-item>
     </template>

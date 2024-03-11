@@ -145,6 +145,7 @@ const inputs: Inputs = {
 - [x] 支持attrValue.`*`, 所有的属性`透传`到组件, `t-input` 响应的`label` 转换成属性`prefix`
 - [x] 支持attrValue.`*`，支持`string`, `function` 转换成 `getter function`, `async function` 转换成 `响应式数据`
 - [x] 支持attrValue.type=`tabs`，`嵌套`表单，支持错误`校验`
+- [x] 支持attrValue.`on`，支持`事件`绑定, `onBlur`、`onChange`、`onClear`、`onClick`、`onCompositionend`、`onCompositionstart`、`onEnter`、`onFocus`、`onKeydown`、`onKeypress`、`onKeyup`、`onMouseenter`、`onMouseleave`、`onPaste`、`onValidate`、`onWheel`, 支持的`Function(model: Model, ...args)` 其他默认参数
 - [ ] 支持attrValue.`outputs`控制输出转换
 - [ ] 支持attrValue.type=`title`实现标题
 - [ ] 支持attrValue.type=`steps`，`步骤`表单
