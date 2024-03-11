@@ -21,6 +21,7 @@ import {
   Transfer as TTransfer,
   Upload as TUpload,
 } from 'tdesign-vue-next'
+import { registerJsonFormFieldComponents } from '../index'
 
 export interface TDesignFormItemProps {
   inputs?: Inputs
@@ -40,7 +41,7 @@ export default {
 <script setup lang="ts">
 const props = withDefaults(defineProps<TDesignFormItemProps>(), TDesignFormItemDefault)
 defineEmits<TDesignFormItemEmits>()
-const componentMap = {
+const componentMap: Record<string, Component> = {
   TAutoComplete,
   TCascader,
   TCheckboxGroup,
@@ -65,8 +66,15 @@ const inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model, pro
 <template>
   <template v-for="(inputField, prop) in inputFieldMap" :key="prop">
     <template v-if="(inputField._if ? inputField._if(model): true)">
+      <component
+        v-if="registerJsonFormFieldComponents[pascalCase(inputField.type as string)]"
+        v-bind="inputField"
+        :is="registerJsonFormFieldComponents[pascalCase(inputField.type as string)]"
+        :data-span="inputField.span ?? span"
+        class="json-form__item"
+      />
       <t-tabs
-        v-if="inputField.type === 'tabs'"
+        v-else-if="inputField.type === 'tabs'"
         v-model="model[prop]"
         :data-span="inputField.span ?? span"
         :theme="inputField.theme"

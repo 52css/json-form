@@ -148,7 +148,11 @@ const inputs: Inputs = {
       select1Label1: 'label',
       select1Label2: (_m: Model, _val: string, content:any) => content.option.label
     }
-  }
+  },
+  title1: {
+    type: 'title',
+    label: '标题1',
+  },
   // checkbox1: {
   //   type: "checkbox",
   //   label: '复选框1',
@@ -172,7 +176,7 @@ const inputs: Inputs = {
 <template>
   <div class="container">
     <main>
-      {{ model }}
+      <!-- {{ model }} -->
       <component
         :is="componentMap[configModel.component as keyof typeof componentMap]"
         :model="model"

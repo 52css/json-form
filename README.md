@@ -124,35 +124,52 @@ const inputs: Inputs = {
 
 ## 框架支持
 
-- [ ] 支持tdesign、element-plus、ant-design-vue、acro-design
-- [ ] 支持组件动态注入
-- [ ] 支持插入场景（页面、抽屉、弹窗）
-- [ ] 支持表单形式（普通表单、步骤条、左边导航、头部导航）
-
+* [ ] 支持tdesign、element-plus、ant-design-vue、acro-design
+* [x] 支持组件动态注入
+* [ ] 支持插入场景（页面、抽屉、弹窗）
+* [ ] 支持表单形式（普通表单、步骤条、左边导航、头部导航）
 
 ## Prop支持
 
-- [x] 支持自定义slot
-- [x] 支持`layout` 布局, 可设置`horizontal`, `vertical`, `inline`
-- [x] 支持span分栏（全局和单个）
-- [x] 支持disabled禁用(全局和单个)
+* [x] 支持自定义slot
+* [x] 支持`layout` 布局, 可设置`horizontal`, `vertical`, `inline`
+* [x] 支持span分栏（全局和单个）
+* [x] 支持disabled禁用(全局和单个)
 
 ## Inputs支持
 
-- [x] 支持attrValue.`if`, 控制显示隐藏
-- [x] 支持attrValue=`字符串`，转换成`input`对象
-- [x] 支持attrValue.`label`，带星号必填，其他转换成`label`
-- [x] 支持attrValue.`*`, 所有的属性`透传`到组件, `t-input` 响应的`label` 转换成属性`prefix`
-- [x] 支持attrValue.`*`，支持`string`, `function` 转换成 `getter function`, `async function` 转换成 `响应式数据`
-- [x] 支持attrValue.type=`tabs`，`嵌套`表单，支持错误`校验`
-- [x] 支持attrValue.`on`，支持`事件`绑定, `onBlur`、`onChange`、`onClear`、`onClick`、`onCompositionend`、`onCompositionstart`、`onEnter`、`onFocus`、`onKeydown`、`onKeypress`、`onKeyup`、`onMouseenter`、`onMouseleave`、`onPaste`、`onValidate`、`onWheel`, 支持的`Function(model: Model, ...args)` 其他默认参数
-- [x] 支持attrValue.`outputs`控制输出转换
-  - [x] 支持outputValue是`string`，例如配置 `label`, 即输出选中项的`label`值到`model`的outputs的`key`上
-  - [x] 支持outputValue是`function`，例如配置 ` (_m: Model, _val: string, content:any) => content.option.label`, 即输出选中项的`content.option.label`值到`model`的outputs的`key`上
-- [ ] 支持attrValue.type=`title`实现标题
-- [ ] 支持attrValue.type=`steps`，`步骤`表单
-- [ ] 支持attrValue.`request` 提交表单
-- [ ] 支持attrValue.`request` + `columns` 请求搜索，并且渲染表格
+* [x] 支持attrValue.`if`, 控制显示隐藏
+* [x] 支持attrValue=`字符串`，转换成`input`对象
+* [x] 支持attrValue.`label`，带星号必填，其他转换成`label`
+* [x] 支持attrValue.`*`
+  * [x] 支持`string`
+  * [x] 支持`function`转换成`getter function`
+  * [x] 支持`async function` 转换成 `响应式数据`
+* [x] 支持attrValue.type=`tabs`，`嵌套`表单，支持错误`校验`
+* [x] 支持attrValue.`on`，支持`事件`绑定, 支持的`(model: Model, ...args) => void` 其他默认参数
+  * [x] `onBlur`
+  * [x] `onChange`
+  * [x] `onClear`
+  * [x] `onClick`
+  * [x] `onCompositionend`
+  * [x] `onCompositionstart`
+  * [x] `onEnter`
+  * [x] `onFocus`
+  * [x] `onKeydown`
+  * [x] `onKeypress`
+  * [x] `onKeyup`
+  * [x] `onMouseenter`
+  * [x] `onMouseleave`
+  * [x] `onPaste`
+  * [x] `onValidate`
+  * [x] `onWheel`
+* [x] 支持attrValue.`outputs`控制输出转换
+  * [x] 支持outputValue是`string`，例如配置 `label`, 即输出选中项的`label`值到`model`的outputs的`key`上
+  * [x] 支持outputValue是`function`，例如配置 `(_m: Model, _val: string, content:any) => content.option.label`, 即输出选中项的`content.option.label`值到`model`的outputs的`key`上
+* [x] 支持attrValue.type=`title`实现标题
+* [ ] 支持attrValue.type=`steps`，`步骤`表单
+* [ ] 支持attrValue.`request` 提交表单
+* [ ] 支持attrValue.`request` + `columns` 请求搜索，并且渲染表格
 
 ## Form表单映射
 

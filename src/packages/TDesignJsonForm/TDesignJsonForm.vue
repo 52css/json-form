@@ -4,7 +4,7 @@ import { type JsonFormProps, JsonFormDefault } from '../types'
 import { getLabelAlignByLayout, getLayoutByLayout } from '../utils'
 import TDesignFormItem from './TDesignFormItem.vue'
 import { FormProps } from 'tdesign-vue-next'
-import {cloneDeep} from 'lodash'
+import { cloneDeep } from 'lodash'
 
 export interface TDesignJsonFormProps extends JsonFormProps {
   prop1?: string

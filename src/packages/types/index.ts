@@ -144,6 +144,11 @@ export interface TabsField extends CommonField {
   >;
 }
 
+export interface TitleField extends CommonField {
+  type: 'title',
+  label: CommonAttr<string>
+}
+
 export type CommonInput =
   | string
   | AutoCompleteField
@@ -168,7 +173,8 @@ export type CommonInput =
   | TimeRangePickerField
   | TreeSelectField
   | UploadField
-  | TabsField;
+  | TabsField
+  | TitleField;
 
 export type Inputs = Record<string, CommonInput>;
 export type Model = Record<string, any>;
