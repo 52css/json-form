@@ -33,6 +33,7 @@
 
 * inputs (表单元素)
 * request (请求)
+* columns (表格展示)
 
 ## 考虑兼容性
 
@@ -89,46 +90,50 @@ const inputs: Inputs = {
   input1: "普通输入框",
   input2: "支持必填*",
   input3: {
-    type: "text",
+    type: "input",
     label: "通过type生成",
   },
   input4: {
-    type: "text",
+    type: "input",
     label: "支持默认值",
     value: "默认值",
   },
   input5: {
-    type: "text",
+    type: "input",
     label: "支持禁用",
     disabled: true,
   },
   input6: {
-    type: "text",
+    type: "input",
     label: "禁用是同步函数",
     disabled: () => !!disabled.value,
   },
   input7: {
-    type: "text",
+    type: "input",
     label: "禁用是异步函数",
     disabled: async () => !!disabled.value,
   },
   input8: '自定义插槽',
   "obj.input9": {
-    type: "text",
+    type: "input",
     label: "支持对象属性",
   },
 };
 
 ```
 
-## Prop支持
+## 框架支持
 
 - [ ] 支持tdesign、element-plus、ant-design-vue、acro-design
 - [ ] 支持组件动态注入
+- [ ] 支持插入场景（页面、抽屉、弹窗）
+- [ ] 支持表单形式（普通表单、步骤条、左边导航、头部导航）
+
+
+## Prop支持
+
 - [x] 支持自定义slot
-- [ ] 支持`layout` 布局, 可设置`horizontal`, `vertical`, `inline`
-- [x] 支持列表、表单、抽屉、弹窗场景
-- [ ] 支持普通表单、步骤条、左边导航、头部导航
+- [x] 支持`layout` 布局, 可设置`horizontal`, `vertical`, `inline`
 - [x] 支持span分栏（全局和单个）
 - [x] 支持disabled禁用(全局和单个)
 
@@ -142,6 +147,8 @@ const inputs: Inputs = {
 - [x] 支持attrValue.type=`tabs`，`嵌套`表单，支持错误`校验`
 - [ ] 支持attrValue.`outputs`控制输出转换
 - [ ] 支持attrValue.type=`title`实现标题
+- [ ] 支持attrValue.type=`steps`，`步骤`表单
+- [ ] 支持attrValue.`request` 控制请求，再加上 `columns` 控制表格展示
 
 ## Form表单映射
 
