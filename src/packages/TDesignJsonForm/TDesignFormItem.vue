@@ -40,6 +40,7 @@ export const pascalCase = (string: string) => _.upperFirst(_.camelCase(string));
 </script>
 <script setup lang="ts">
 const props = withDefaults(defineProps<TDesignFormItemProps>(), TDesignFormItemDefault)
+const slots = defineSlots()
 defineEmits<TDesignFormItemEmits>()
 defineOptions({
   name: 'TDesignFormItem',
@@ -108,7 +109,7 @@ defineExpose({
             :disabled="disabled"
             :span="inputField.span ?? span"
           >
-            <template v-for="(_value, name) in $slots" #[name]="scopeData">
+            <template v-for="(_value, name) in slots" #[name]="scopeData">
               <slot :name="(name as string)" v-bind="scopeData" />
             </template>
           </TDesignJsonForm>
@@ -118,7 +119,7 @@ defineExpose({
               :model="model"
               :span="span"
             >
-              <template v-for="(_value, name) in $slots" #[name]="scopeData">
+              <template v-for="(_value, name) in slots" #[name]="scopeData">
                 <slot :name="name" v-bind="scopeData" />
               </template>
             </TDesignFormItem>

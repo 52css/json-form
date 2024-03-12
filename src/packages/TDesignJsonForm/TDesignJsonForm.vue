@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { type JsonFormProps, JsonFormDefault, type Inputs, type CommonOption, type CommonInput, type Columns } from '../types'
 import { getColumnsByColumns, getLabelAlignByLayout, getLayoutByLayout } from '../utils'
 import TDesignFormItem from './TDesignFormItem.vue'
-import { FormProps, PageInfo } from 'tdesign-vue-next'
+import { FormProps, PageInfo, PrimaryTableCol, TableRowData, TdPaginationProps, } from 'tdesign-vue-next'
 import { set } from 'lodash'
 
 export interface TDesignJsonFormProps extends JsonFormProps {
@@ -18,11 +18,12 @@ export interface TDesignJsonFormEmits {
 </script>
 <script setup lang="ts">
 const props = withDefaults(defineProps<TDesignJsonFormProps>(), TDesignJsonFormDefault)
+const slots = defineSlots()
 defineEmits<TDesignJsonFormEmits>()
 defineOptions({
   name: 'TDesignJsonForm',
 })
-const model = ref({})
+const model = ref<{ [key: string]: any }>({})
 const onSubmit: FormProps['onSubmit'] = ({ validateResult }) => {
   if (validateResult === true) {
     props.request && props.request(getFlatModel.value).then(() => {
@@ -162,7 +163,7 @@ defineExpose({
         :disabled="disabled"
         :columns="columns"
       >
-        <template v-for="(_value, name) in $slots" #[name]="scopeData">
+        <template v-for="(_value, name) in slots" #[name]="scopeData">
           <slot :name="(name as string)" v-bind="scopeData" />
         </template>
       </TDesignFormItem>
@@ -178,8 +179,8 @@ defineExpose({
       v-if="columns"
       v-bind="$attrs"
       :data="tableData"
-      :columns="columnList"
-      :pagination="pagination"
+      :columns="(columnList as PrimaryTableCol<TableRowData>[])"
+      :pagination="(pagination as TdPaginationProps)"
       @page-change="onPageChange"
     />
   </div>

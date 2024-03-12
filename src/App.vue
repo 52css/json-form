@@ -492,7 +492,7 @@ const formData = ref({
 <template>
   <div class="container">
     <main>
-      选中的行: {{ selectedRowKeys }}
+      <!-- 选中的行: {{ selectedRowKeys }} -->
       <!-- {{ formData.normal.model }} -->
       <component
         :is="componentMap[configModel.component as keyof typeof componentMap]"
