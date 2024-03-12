@@ -181,6 +181,7 @@ defineExpose({
       :data="tableData"
       :columns="(columnList as PrimaryTableCol<TableRowData>[])"
       :pagination="(pagination as TdPaginationProps)"
+      select-on-row-click
       @page-change="onPageChange"
     />
   </div>
