@@ -27,6 +27,7 @@ import {
   type Layout,
   type CommonValue,
   type CommonOption,
+  type Columns,
 } from "../types";
 
 export interface Field {
@@ -138,9 +139,13 @@ export const setOutputs = (model: Model, inputField: Field, args: any[]) => {
   const value = args[0];
   for (const [key, val] of Object.entries(inputField.outputs)) {
     if (value) {
-      const optionItem = inputField.type && ["date-range-picker", 'range-input', 'time-range-picker'].includes(inputField.type)
-        ? value
-        : getOption(value, inputField.options);
+      const optionItem =
+        inputField.type &&
+        ["date-range-picker", "range-input", "time-range-picker"].includes(
+          inputField.type
+        )
+          ? value
+          : getOption(value, inputField.options);
       model[key] =
         typeof val === "function"
           ? val(model, ...args)
@@ -150,4 +155,82 @@ export const setOutputs = (model: Model, inputField: Field, args: any[]) => {
       model[key] = undefined;
     }
   }
+};
+
+export const getColumnsByColumns = (columns: Columns) => {
+  let fixedLeftIndex = 0;
+  return columns
+    ? Object.keys(columns).map((colKey: string, index, arr) => {
+        const val = columns[colKey];
+
+        const obj =
+          typeof val === "string"
+            ? { label: val }
+            : typeof val === "object"
+            ? val
+            : {};
+
+        if (colKey === "$single") {
+          fixedLeftIndex++;
+          return {
+            colKey: "row-select",
+            type: "single",
+            width: 40,
+            fixed: "left",
+            align: "center",
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            checkProps: (val && (val as any).checkProps) ?? {},
+          };
+        }
+
+        if (colKey === "$multiple") {
+          fixedLeftIndex++;
+          return {
+            colKey: "row-select",
+            type: "multiple",
+            width: 40,
+            fixed: "left",
+            align: "center",
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            checkProps: (val && (val as any).checkProps) ?? {},
+          };
+        }
+        // if (colKey === '$dragSort') {
+        //   fixedLeftIndex++
+        //   return {
+        //     colKey: 'drag',
+        //     width: 40,
+        //     align: 'center',
+        //     cell: () => h(MoveIcon, {}),
+        //   }
+        // }
+
+        if (colKey === "$index") {
+          fixedLeftIndex++;
+          return {
+            colKey: "serial-number",
+            width: obj.width ?? 40,
+            fixed: "left",
+            [obj.label ? "title" : ""]: obj.label,
+            align: "center",
+          };
+        }
+
+        const fixed =
+          index === fixedLeftIndex
+            ? "left"
+            : index === arr.length - 1
+            ? "right"
+            : undefined;
+        return {
+          fixed,
+          title: obj.label,
+          colKey,
+          align: obj.align ?? "center",
+          ellipsis: index !== arr.length - 1,
+          [obj.width ? "width" : ""]: obj.width,
+          [obj.minWidth ? "minWidth" : ""]: obj.minWidth,
+        };
+      })
+    : [];
 };

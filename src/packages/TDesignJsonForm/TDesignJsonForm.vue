@@ -1,9 +1,9 @@
 <script lang="ts">
 import { ref } from 'vue'
-import { type JsonFormProps, JsonFormDefault, type Inputs, type CommonOption, type CommonInput } from '../types'
-import { getLabelAlignByLayout, getLayoutByLayout } from '../utils'
+import { type JsonFormProps, JsonFormDefault, type Inputs, type CommonOption, type CommonInput, type Columns } from '../types'
+import { getColumnsByColumns, getLabelAlignByLayout, getLayoutByLayout } from '../utils'
 import TDesignFormItem from './TDesignFormItem.vue'
-import { FormProps } from 'tdesign-vue-next'
+import { FormProps, PageInfo } from 'tdesign-vue-next'
 import { set } from 'lodash'
 
 export interface TDesignJsonFormProps extends JsonFormProps {
@@ -52,7 +52,14 @@ const onSubmit: FormProps['onSubmit'] = ({ validateResult }) => {
 const onReset: FormProps['onReset'] = () => {
 }
 const tableData = ref()
-const paginationTotal = ref(0)
+const pagination = ref({
+  pageSize: 10,
+  total: 0,
+  current: 1,
+  showPageSize: true,
+  showJumper: true,
+  size: 'medium',
+})
 const formItemRef = ref()
 
 const getCanSet = (inputs: Inputs, setKey: string) => {
@@ -95,18 +102,32 @@ const getFlatModel = computed(() => {
 })
 const init = () => {
   if (props.request && props.columns) {
-    props.request(model.value).then(({total, rows}) => {
+    props.request({
+      ...model.value,
+      current: pagination.value.current,
+      pageSize: pagination.value.pageSize,
+    }).then(({total, rows}) => {
       tableData.value = rows ?? []
-      paginationTotal.value = total ?? 0
+      pagination.value.total = total ?? 0
     })
   }
 }
+// 分页变化
+const onPageChange = (pageInfo: PageInfo) => {
+  pagination.value.current = pageInfo.current
+  pagination.value.pageSize = pageInfo.pageSize
+  init()
+}
+
+let columnList = getColumnsByColumns(props.columns as Columns)
 
 watch(() => props.model, (val) => {
   model.value = val
 }, {
   immediate: true
 })
+
+init();
 
 defineExpose({
   init,
@@ -123,9 +144,9 @@ defineExpose({
       v-bind="$attrs"
       :data="model"
       :disabled="disabled"
-      :label-align="getLabelAlignByLayout(layout)"
-      :layout="getLayoutByLayout(layout)"
-      :label-width="layout === 'inline' ? 'auto' : '240px'"
+      :label-align="getLabelAlignByLayout(columns ? 'inline' : layout)"
+      :layout="getLayoutByLayout(columns ? 'inline' : layout)"
+      :label-width="(columns ? 'inline' : layout) === 'inline' ? 'auto' : '240px'"
       reset-type="initial"
       class="json-form__form"
       @submit="onSubmit"
@@ -147,11 +168,20 @@ defineExpose({
       </TDesignFormItem>
       <t-form-item v-if="request" class="json-form__form__action">
         <t-button theme="primary" type="submit" style="margin-right: 8px">
-          {{ (layout === 'inline' || columns ) ? '查询' : '提交' }}
+          {{ ((columns ? 'inline' : layout) === 'inline') ? '查询' : '提交' }}
         </t-button>
         <t-button theme="default" variant="base" type="reset">重置</t-button>
       </t-form-item>
     </t-form>
+
+    <t-enhanced-table
+      v-if="columns"
+      v-bind="$attrs"
+      :data="tableData"
+      :columns="columnList"
+      :pagination="pagination"
+      @page-change="onPageChange"
+    />
   </div>
 </template>
 

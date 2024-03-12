@@ -8,7 +8,7 @@ const componentMap = {
   AcroDesignJsonForm,
 }
 const configModel = ref({
-  type: 'normal', // 'tabTop', //  'tabLeft', // 'normal',
+  type: 'formNormal', // 'listTree', // 'listRadio', // 'listCheckbox', // 'listNormal', // 'formTabTop', //  'formTabLeft', // 'formNormal',
   component: 'TDesignJsonForm',
   layout: 'vertical' as Layout,
   disabled: false,
@@ -29,10 +29,14 @@ const configInputs = ref<Inputs>({
     label: '表单类型',
     type: 'select',
     options: [
-      { value: 'normal', label: '普通表单' },
-      { value: 'tabLeft', label: '左边导航' },
-      { value: 'tabTop', label: '头部导航' },
-      { value: 'step', label: '步骤条', disabled: true },
+      { value: 'formNormal', label: '普通表单' },
+      { value: 'formTabLeft', label: '左边导航表单' },
+      { value: 'formTabTop', label: '头部导航表单' },
+      { value: 'formStep', label: '步骤条表单', disabled: true },
+      { value: 'listNormal', label: '普通列表' },
+      { value: 'listCheckbox', label: '多选列表' },
+      { value: 'listRadio', label: '单选列表' },
+      { value: 'listTree', label: '树形列表' },
     ],
   },
   layout: {
@@ -58,8 +62,10 @@ const configInputs = ref<Inputs>({
   },
 })
 
+const selectedRowKeys = ref([])
+
 const formData = ref({
-  normal: {
+  formNormal: {
     model: {},
     inputs: {
       title1: {
@@ -141,7 +147,7 @@ const formData = ref({
       })
     }
   },
-  tabLeft: {
+  formTabLeft: {
     inputs: {
       tabs: {
         type: 'tabs',
@@ -152,11 +158,6 @@ const formData = ref({
             label: '基本信息',
             value: '1',
             inputs: {
-              title1: {
-                type: 'title',
-                label: '基本信息',
-                span: 12,
-              },
               input1: '普通输入框',
               select1: {
                 type: 'select',
@@ -252,7 +253,7 @@ const formData = ref({
       },
     }
   },
-  tabTop: {
+  formTabTop: {
     inputs: {
       tabs: {
         type: 'tabs',
@@ -263,11 +264,6 @@ const formData = ref({
             label: '基本信息',
             value: '1',
             inputs: {
-              title1: {
-                type: 'title',
-                label: '基本信息',
-                span: 12,
-              },
               input1: '普通输入框',
               select1: {
                 type: 'select',
@@ -354,17 +350,154 @@ const formData = ref({
         }, 200)
       })
     }
-  }
+  },
+  formStep: {},
+  listNormal: {
+    inputs: {
+      input1: '普通输入框',
+    },
+    request: (x: any) => {
+      return new Promise((resolve) => {
+        console.log('正在请求model', x)
+        setTimeout(() => {
+          resolve({
+            total: 100,
+            rows: Array(x.pageSize).fill(0).map((_, index) => {
+              index = index + x.pageSize * (x.current - 1);
+              return {
+                id: index,
+                name: `name${index}`,
+                age: 18 + index,
+                address: `address${index}`,
+              }
+            })
+          })
+        }, 200)
+      })
+    },
+    columns: {
+      id: '序号',
+      name: '姓名',
+      age: '年龄',
+      address: '地址',
+    }
+  },
+  listCheckbox: {
+    inputs: {
+      input1: '普通输入框',
+    },
+    request: (x: any) => {
+      return new Promise((resolve) => {
+        console.log('正在请求model', x)
+        setTimeout(() => {
+          resolve({
+            total: 100,
+            rows: Array(x.pageSize).fill(0).map((_, index) => {
+              index = index + x.pageSize * (x.current - 1);
+              return {
+                id: index,
+                name: `name${index}`,
+                age: 18 + index,
+                address: `address${index}`,
+              }
+            })
+          })
+        }, 200)
+      })
+    },
+    columns: {
+      $multiple: true,
+      id: '序号',
+      name: '姓名',
+      age: '年龄',
+      address: '地址',
+    }
+  },
+  listRadio: {
+    inputs: {
+      input1: '普通输入框',
+    },
+    request: (x: any) => {
+      return new Promise((resolve) => {
+        console.log('正在请求model', x)
+        setTimeout(() => {
+          resolve({
+            total: 100,
+            rows: Array(x.pageSize).fill(0).map((_, index) => {
+              index = index + x.pageSize * (x.current - 1);
+              return {
+                id: index,
+                name: `name${index}`,
+                age: 18 + index,
+                address: `address${index}`,
+              }
+            })
+          })
+        }, 200)
+      })
+    },
+    columns: {
+      $single: true,
+      id: '序号',
+      name: '姓名',
+      age: '年龄',
+      address: '地址',
+    }
+  },
+  listTree: {
+    inputs: {
+      input1: '普通输入框',
+    },
+    request: (x: any) => {
+      return new Promise((resolve) => {
+        console.log('正在请求model', x)
+        setTimeout(() => {
+          resolve({
+            total: 100,
+            rows: Array(x.pageSize).fill(0).map((_, index) => {
+              index = index + x.pageSize * (x.current - 1);
+              return {
+                id: index,
+                name: `name${index}`,
+                age: 18 + index,
+                address: `address${index}`,
+                children: index === 3 ? Array(3).fill(0).map((_, index) => {
+                  index = index + x.pageSize * (x.current - 1);
+                  return {
+                    id: index,
+                    name: `name${index}`,
+                    age: 18 + index,
+                    address: `address${index}`,
+                  }
+                }) : undefined
+              }
+            })
+          })
+        }, 200)
+      })
+    },
+    columns: {
+      id: '序号',
+      name: '姓名',
+      age: '年龄',
+      address: '地址',
+    },
+    tree: {
+      childrenKey: 'children'
+    }
+  },
 })
 </script>
 
 <template>
   <div class="container">
     <main>
+      选中的行: {{ selectedRowKeys }}
       <!-- {{ formData.normal.model }} -->
       <component
         :is="componentMap[configModel.component as keyof typeof componentMap]"
         v-bind="(formData[configModel.type as keyof typeof formData] as any)"
+        v-model:selectedRowKeys="selectedRowKeys"
         :layout="configModel.layout"
         :disabled="configModel.disabled"
         :span="configModel.span"

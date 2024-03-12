@@ -239,6 +239,6 @@ defineExpose({
 </template>
 
 <style scoped lang="scss">
-.TDesignFormItem {
+.t-design-form-item {
 }
 </style>
