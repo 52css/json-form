@@ -1,6 +1,6 @@
 <script lang="ts">
 import { ref } from 'vue'
-import { type JsonFormProps, JsonFormDefault, type Inputs, type Model } from '../types'
+import { type JsonFormProps, JsonFormDefault, type Inputs, type CommonOption, type CommonInput } from '../types'
 import { getLabelAlignByLayout, getLayoutByLayout } from '../utils'
 import TDesignFormItem from './TDesignFormItem.vue'
 import { FormProps } from 'tdesign-vue-next'
@@ -69,7 +69,10 @@ const getCanSet = (inputs: Inputs, setKey: string) => {
     }
 
     if (inputField.type === 'tabs') {
-      for (const tab of inputField.options) {
+      type TabOptions = (CommonOption & {
+          inputs: Record<string, CommonInput>;
+      })[];
+      for (const tab of inputField.options as TabOptions) {
         if (getCanSet(tab.inputs, setKey)) {
           return true;
         }
@@ -118,7 +121,7 @@ defineExpose({
       :disabled="disabled"
       :label-align="getLabelAlignByLayout(layout)"
       :layout="getLayoutByLayout(layout)"
-      label-width="auto"
+      :label-width="layout === 'inline' ? 'auto' : '240px'"
       class="json-form__form"
       @submit="onSubmit"
       @reset="onReset"
@@ -128,7 +131,7 @@ defineExpose({
           <slot :name="(name as string)" v-bind="scopeData" />
         </template>
       </TDesignFormItem>
-      <t-form-item v-if="request">
+      <t-form-item v-if="request" class="json-form__form__action">
         <t-button theme="primary" type="submit" style="margin-right: 8px">
           {{ (layout === 'inline' || columns ) ? '查询' : '提交' }}
         </t-button>

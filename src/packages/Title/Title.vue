@@ -23,7 +23,11 @@ defineEmits<TitleEmits>()
 
 <style scoped lang="scss">
 .title {
-  position: relative;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  padding: 8px 0;
+  z-index: 2;
   &::before {
     position: absolute;
     content: "";
@@ -41,7 +45,7 @@ defineEmits<TitleEmits>()
     content: '';
     left: 0;
     right: 0;
-    bottom: -8px;
+    bottom: 0;
     height: 1px;
     background-color: #d7d7d7;
   }

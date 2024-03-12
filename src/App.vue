@@ -67,44 +67,52 @@ const model = ref({
   }
 })
 const inputs: Inputs = {
-  // input1: "普通输入框",
-  // input2: "支持必填*",
-  // input3: {
-  //   type: "input",
-  //   label: "通过type生成",
-  //   placeholder: "请输入a试试",
-  // },
-  // input4: {
-  //   if: (x: any) => x.input3 !== "a",
-  //   type: "input",
-  //   label: "支持默认值",
-  //   value: "默认值",
-  // },
-  // input5: {
-  //   type: "input",
-  //   label: "支持禁用",
-  //   disabled: true,
-  // },
-  // input6: {
-  //   type: "input",
-  //   label: "禁用是同步函数",
-  //   disabled: () => !!configModel.value.oneDisabled,
-  // },
-  // input7: {
-  //   type: "input",
-  //   label: "禁用是异步函数",
-  //   disabled: async () => !!configModel.value.oneDisabled,
-  // },
-  // input8: '自定义插槽',
-  // "obj.input9": {
-  //   type: "input",
-  //   label: "支持对象属性",
-  // },
-  // input10: {
-  //   type: 'input',
-  //   label: "span默认12",
-  //   span: () => configModel.value.oneSpan
-  // },
+  title1: {
+    type: 'title',
+    label: '所有配置项',
+  },
+  input1: "普通输入框",
+  input2: "支持必填*",
+  input3: {
+    type: "input",
+    label: "通过type生成",
+    placeholder: "请输入a试试",
+  },
+  input4: {
+    if: (x: any) => x.input3 !== "a",
+    type: "input",
+    label: "支持默认值",
+    value: "默认值",
+  },
+  input5: {
+    type: "input",
+    label: "支持禁用",
+    disabled: true,
+  },
+  input6: {
+    type: "input",
+    label: "禁用是同步函数",
+    disabled: () => !!configModel.value.oneDisabled,
+  },
+  input7: {
+    type: "input",
+    label: "禁用是异步函数",
+    disabled: async () => !!configModel.value.oneDisabled,
+  },
+  input8: '自定义插槽',
+  "obj.input9": {
+    type: "input",
+    label: "支持对象属性",
+  },
+  input10: {
+    type: 'input',
+    label: "span默认12",
+    span: () => configModel.value.oneSpan
+  },
+  title2: {
+    type: 'title',
+    label: '支持tabs兼容对象',
+  },
   tabs: {
     type: 'tabs',
     value: '1',
@@ -129,6 +137,10 @@ const inputs: Inputs = {
       },
     ],
   },
+  title3: {
+    type: 'title',
+    label: '支持数据切换onChange或outputs',
+  },
   input14: {
     type: 'input',
     label: '支持onChange',
@@ -149,27 +161,6 @@ const inputs: Inputs = {
       select1Label2: (_m: Model, _val: string, content:any) => content.option.label
     }
   },
-  title1: {
-    type: 'title',
-    label: '标题1',
-  },
-  // checkbox1: {
-  //   type: "checkbox",
-  //   label: '复选框1',
-  //   options: [
-  //     { label: "选项1", value: "1" },
-  //     { label: "选项2", value: "2" },
-  //   ],
-  // },
-  // checkbox2: {
-  //   type: "checkbox",
-  //   label: '复选框2',
-  //   options: [
-  //     { label: "选项1", value: "1" },
-  //     { label: "选项2", value: "2" },
-  //   ],
-  //   value: ["1"],
-  // },
 }
 const request: Request = (model: Model) => {
   return new Promise((resolve) => {

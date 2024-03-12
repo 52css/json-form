@@ -91,6 +91,7 @@ defineExpose({
           :value="(option?.value as string)"
           :key="(option?.value as string)"
           :destroy-on-hide="false"
+          style="padding-top: 1rem;"
         >
           <TDesignFormItem :inputs="(option.inputs as Inputs)" :model="model" :default-model="defaultModel" :span="span">
             <template v-for="(_value, name) in $slots" #[name]="scopeData">
