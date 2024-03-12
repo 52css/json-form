@@ -97,7 +97,7 @@ defineExpose({
           :value="(option?.value as string)"
           :key="(option?.value as string)"
           :destroy-on-hide="false"
-          :style="`padding-${inputField.placement ?? 'top'}: 1rem;`"
+          :style="`padding-${((inputField.placement ?? 'top') === 'top') ? 'block' : 'inline'}: 1rem;`"
         >
           <TDesignJsonForm
             v-if="option.request"
