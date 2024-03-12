@@ -99,6 +99,7 @@ export const getInputsByInputs = (inputs: Inputs, model: Model) => {
     const isArray =
       rtv[key].type === "checkbox-group" ||
       rtv[key].type === "tree-select" ||
+      rtv[key].type === "range-input" ||
       rtv[key].type === "date-range-picker" ||
       rtv[key].type === "time-range-picker" ||
       (rtv[key].type === "select" && rtv[key].multiple);
@@ -137,7 +138,9 @@ export const setOutputs = (model: Model, inputField: Field, args: any[]) => {
   const value = args[0];
   for (const [key, val] of Object.entries(inputField.outputs)) {
     if (value) {
-      const optionItem = getOption(value, inputField.options);
+      const optionItem = inputField.type && ["date-range-picker", 'range-input', 'time-range-picker'].includes(inputField.type)
+        ? value
+        : getOption(value, inputField.options);
       model[key] =
         typeof val === "function"
           ? val(model, ...args)

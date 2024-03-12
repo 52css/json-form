@@ -130,7 +130,7 @@ export interface TimePickerField extends CommonField {
 }
 
 export interface TimeRangePickerField extends CommonField {
-  type: "time-range";
+  type: "time-range-picker";
   value?: CommonAttr<CommonValue[]>;
 }
 
