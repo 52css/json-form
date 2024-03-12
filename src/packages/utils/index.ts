@@ -89,12 +89,7 @@ export const getCommonInput = (commonInput: CommonInput, model: Model) => {
   return rtv;
 };
 
-export const getInputsByInputs = (
-  inputs: Inputs,
-  model: Model,
-  defaultModel: Model,
-  isFirst: boolean = false
-) => {
+export const getInputsByInputs = (inputs: Inputs, model: Model) => {
   const rtv: Record<string, Field> = {};
 
   for (const [key, val] of Object.entries(inputs)) {
@@ -111,9 +106,6 @@ export const getInputsByInputs = (
     const newVal = get(model, key) ?? rtv[key].value ?? defaultValue;
 
     model[key] = newVal;
-    if (isFirst) {
-      defaultModel[key] = newVal;
-    }
   }
 
   return rtv;

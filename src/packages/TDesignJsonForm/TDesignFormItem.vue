@@ -26,7 +26,6 @@ import { registerJsonFormFieldComponents } from '../index'
 export interface TDesignFormItemProps {
   inputs?: Inputs
   model: Model,
-  defaultModel: Model,
   span?: number,
 }
 export const TDesignFormItemDefault = {}
@@ -60,10 +59,10 @@ const componentMap: Record<string, Component> = {
   TTransfer,
   TUpload,
 }
-let inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model, props.defaultModel, true)
+let inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model)
 
 watch(() => props.model, () => {
-  inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model, props.defaultModel, false)
+  inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model)
 })
 
 defineExpose({
@@ -97,7 +96,7 @@ defineExpose({
           :destroy-on-hide="false"
           style="padding-top: 1rem;"
         >
-          <TDesignFormItem :inputs="(option.inputs as Inputs)" :model="model" :default-model="defaultModel" :span="span">
+          <TDesignFormItem :inputs="(option.inputs as Inputs)" :model="model" :span="span">
             <template v-for="(_value, name) in $slots" #[name]="scopeData">
               <slot :name="name" v-bind="scopeData" />
             </template>

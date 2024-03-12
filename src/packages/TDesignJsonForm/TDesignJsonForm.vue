@@ -4,7 +4,7 @@ import { type JsonFormProps, JsonFormDefault, type Inputs, type CommonOption, ty
 import { getLabelAlignByLayout, getLayoutByLayout } from '../utils'
 import TDesignFormItem from './TDesignFormItem.vue'
 import { FormProps } from 'tdesign-vue-next'
-import { cloneDeep, set } from 'lodash'
+import { set } from 'lodash'
 
 export interface TDesignJsonFormProps extends JsonFormProps {
   prop1?: string
@@ -49,9 +49,7 @@ const onSubmit: FormProps['onSubmit'] = ({ validateResult }) => {
     }
   }
 }
-const defaultModel = ref({})
 const onReset: FormProps['onReset'] = () => {
-  model.value = cloneDeep(defaultModel.value)
 }
 const tableData = ref()
 const paginationTotal = ref(0)
@@ -106,7 +104,6 @@ const init = () => {
 
 watch(() => props.model, (val) => {
   model.value = val
-  defaultModel.value = {}
 }, {
   immediate: true
 })
@@ -129,11 +126,12 @@ defineExpose({
       :label-align="getLabelAlignByLayout(layout)"
       :layout="getLayoutByLayout(layout)"
       :label-width="layout === 'inline' ? 'auto' : '240px'"
+      reset-type="initial"
       class="json-form__form"
       @submit="onSubmit"
       @reset="onReset"
     >
-      <TDesignFormItem ref="formItemRef" :inputs="inputs" :model="model" :default-model="defaultModel" :span="span">
+      <TDesignFormItem ref="formItemRef" :inputs="inputs" :model="model" :span="span">
         <template v-for="(_value, name) in $slots" #[name]="scopeData">
           <slot :name="(name as string)" v-bind="scopeData" />
         </template>
