@@ -2,7 +2,7 @@
 import { type Inputs, type Model } from '../types'
 import { getInputsByInputs, setOutputs } from '../utils'
 import _ from 'lodash'
-import { 
+import {
   AutoComplete as TAutoComplete,
   Cascader as TCascader,
   CheckboxGroup as TCheckboxGroup,
@@ -60,7 +60,11 @@ const componentMap: Record<string, Component> = {
   TTransfer,
   TUpload,
 }
-const inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model, props.defaultModel)
+let inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model, props.defaultModel, true)
+
+watch(() => props.model, () => {
+  inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model, props.defaultModel, false)
+})
 
 defineExpose({
   inputFieldMap,

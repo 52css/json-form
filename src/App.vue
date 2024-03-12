@@ -64,8 +64,19 @@ const configInputs = ref<Inputs>({
 const model = ref({
   obj: {
     input9: 99
-  }
+  },
+  input1: ''
 })
+setTimeout(() => {
+  console.log('模拟接口请求完毕')
+  // 模拟接口请求完毕
+  model.value = {
+    obj: {
+      input9: 100
+    },
+    input1: '哈哈'
+  }
+}, 1000)
 const inputs: Inputs = {
   title1: {
     type: 'title',

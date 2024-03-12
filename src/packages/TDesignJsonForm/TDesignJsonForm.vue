@@ -22,7 +22,7 @@ defineEmits<TDesignJsonFormEmits>()
 defineOptions({
   name: 'TDesignJsonForm',
 })
-const model = ref(props.model ?? {})
+const model = ref({})
 const onSubmit: FormProps['onSubmit'] = ({ validateResult }) => {
   if (validateResult === true) {
     props.request && props.request(getFlatModel.value).then(() => {
@@ -103,6 +103,13 @@ const init = () => {
     })
   }
 }
+
+watch(() => props.model, (val) => {
+  model.value = val
+  defaultModel.value = {}
+}, {
+  immediate: true
+})
 
 defineExpose({
   init,
