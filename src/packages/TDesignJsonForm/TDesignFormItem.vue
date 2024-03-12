@@ -1,5 +1,5 @@
 <script lang="ts">
-import { type Inputs, type Model } from '../types'
+import { type Inputs, type Model, type Layout, type Columns } from '../types'
 import { getInputsByInputs, setOutputs } from '../utils'
 import _ from 'lodash'
 import {
@@ -22,24 +22,28 @@ import {
   Upload as TUpload,
 } from 'tdesign-vue-next'
 import { registerJsonFormFieldComponents } from '../index'
+import TDesignJsonForm from './TDesignJsonForm.vue'
 
 export interface TDesignFormItemProps {
   inputs?: Inputs
   model: Model,
   span?: number,
+  layout?: Layout,
+  disabled?: boolean,
+  columns?: Columns,
 }
 export const TDesignFormItemDefault = {}
 export interface TDesignFormItemEmits {
   (event: 'event1'): void
 }
 export const pascalCase = (string: string) => _.upperFirst(_.camelCase(string));
-export default {
-  name: 'TDesignFormItem',
-}
 </script>
 <script setup lang="ts">
 const props = withDefaults(defineProps<TDesignFormItemProps>(), TDesignFormItemDefault)
 defineEmits<TDesignFormItemEmits>()
+defineOptions({
+  name: 'TDesignFormItem',
+})
 const componentMap: Record<string, Component> = {
   TAutoComplete,
   TCascader,
@@ -83,10 +87,9 @@ defineExpose({
       <t-tabs
         v-else-if="inputField.type === 'tabs'"
         v-model="model[prop]"
-        :data-span="inputField.span ?? span"
         :theme="inputField.theme"
         :placement="inputField.placement"
-        class="json-form__form__form-item"
+        style="width: 100%;"
       >
         <t-tab-panel
           v-for="option in inputField.options"
@@ -94,13 +97,33 @@ defineExpose({
           :value="(option?.value as string)"
           :key="(option?.value as string)"
           :destroy-on-hide="false"
-          style="padding-top: 1rem;"
+          :style="`padding-${inputField.placement ?? 'top'}: 1rem;`"
         >
-          <TDesignFormItem :inputs="(option.inputs as Inputs)" :model="model" :span="span">
+          <TDesignJsonForm
+            v-if="option.request"
+            :inputs="option.inputs"
+            :request="option.request"
+            :model="model"
+            :layout="layout"
+            :disabled="disabled"
+            :span="inputField.span ?? span"
+          >
             <template v-for="(_value, name) in $slots" #[name]="scopeData">
-              <slot :name="name" v-bind="scopeData" />
+              <slot :name="(name as string)" v-bind="scopeData" />
             </template>
-          </TDesignFormItem>
+          </TDesignJsonForm>
+          <div v-else style="display: flex; flex-wrap: wrap;">
+            <TDesignFormItem
+              :inputs="(option.inputs as Inputs)"
+              :model="model"
+              :span="span"
+            >
+              <template v-for="(_value, name) in $slots" #[name]="scopeData">
+                <slot :name="name" v-bind="scopeData" />
+              </template>
+            </TDesignFormItem>
+          </div>
+
         </t-tab-panel>
       </t-tabs>
       <t-form-item

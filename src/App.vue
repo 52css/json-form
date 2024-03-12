@@ -8,7 +8,7 @@ const componentMap = {
   AcroDesignJsonForm,
 }
 const configModel = ref({
-  type: 'normal',
+  type: 'tabLeft', // 'normal',
   component: 'TDesignJsonForm',
   layout: 'vertical' as Layout,
   disabled: false,
@@ -22,7 +22,7 @@ const configInputs = ref<Inputs>({
     type: 'select',
     options: [
       { value: 'normal', label: '普通表单' },
-      { value: 'step', label: '步骤条', disabled: false },
+      { value: 'step', label: '步骤条', disabled: true },
       { value: 'tabLeft', label: '左边导航' },
       { value: 'tabTop', label: '头部导航' },
     ],
@@ -78,7 +78,8 @@ const formData = ref({
     inputs: {
       title1: {
         type: 'title',
-        label: '基本信息'
+        label: '基本信息',
+        span: 12,
       },
       input1: '普通输入框',
       select1: {
@@ -152,6 +153,117 @@ const formData = ref({
           resolve(true)
         }, 200)
       })
+    }
+  },
+  tabLeft: {
+    inputs: {
+      tabs: {
+        type: 'tabs',
+        value: '1',
+        placement: 'left',
+        options: [
+          {
+            label: '基本信息',
+            value: '1',
+            inputs: {
+              title1: {
+                type: 'title',
+                label: '基本信息',
+                span: 12,
+              },
+              input1: '普通输入框',
+              select1: {
+                type: 'select',
+                label: '下拉框',
+                options: [
+                  { label: "选项1", value: "1" },
+                  { label: "选项2", value: "2" },
+                ],
+              },
+              cascader1: {
+                type: 'cascader',
+                label: '级联选择',
+                options: [
+                  {
+                    label: '选项一',
+                    value: '1',
+                    children: [
+                      { label: '子选项一', value: '1.1' },
+                      { label: '子选项二', value: '1.2' },
+                    ],
+                  },
+                  {
+                    label: '选项二',
+                    value: '2',
+                    children: [
+                      { label: '子选项三', value: '2.1' },
+                      { label: '子选项四', value: '2.2' },
+                    ],
+                  },
+                ]
+              },
+              textarea1: {
+                type: 'textarea',
+                label: '备注/详细地址',
+                maxlength: 100,
+              },
+              date1: {
+                type: 'date-picker',
+                label: '单个日期选择',
+              },
+              dateRange1: {
+                type: 'date-range-picker',
+                label: '时间段选择',
+                outputs: {
+                  startTime: 0,
+                  endTime: 1
+                }
+              },
+              radio1: {
+                type: 'radio-group',
+                label: '单选框',
+                options: [
+                  { label: "选项1", value: "1" },
+                  { label: "选项2", value: "2" },
+                ],
+              },
+              checkbox1: {
+                type: 'checkbox-group',
+                label: '多选框',
+                options: [
+                  { label: "选项1", value: "1" },
+                  { label: "选项2", value: "2" },
+                ],
+              },
+            },
+            request: (model: Model) => {
+              return new Promise((resolve) => {
+                console.log('正在请求model', model)
+                setTimeout(() => {
+                  resolve(true)
+                }, 200)
+              })
+            }
+          },
+          {
+            label: '高级信息',
+            value: '2',
+            inputs: {
+              'tab2.input11': 'input11',
+              'tab2.input12': 'input12*',
+              'tab2.input13': '自定义插槽'
+            },
+            request: (model: Model) => {
+              return new Promise((resolve) => {
+                console.log('正在请求model', model)
+                setTimeout(() => {
+                  resolve(true)
+                }, 200)
+              })
+            }
+          },
+        ],
+      },
     }
   }
 })

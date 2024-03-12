@@ -131,7 +131,16 @@ defineExpose({
       @submit="onSubmit"
       @reset="onReset"
     >
-      <TDesignFormItem ref="formItemRef" :inputs="inputs" :model="model" :span="span">
+      <TDesignFormItem
+        ref="formItemRef"
+        :inputs="inputs"
+        :request="request"
+        :model="model"
+        :span="span"
+        :layout="layout"
+        :disabled="disabled"
+        :columns="columns"
+      >
         <template v-for="(_value, name) in $slots" #[name]="scopeData">
           <slot :name="(name as string)" v-bind="scopeData" />
         </template>
