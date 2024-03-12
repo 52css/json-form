@@ -8,23 +8,13 @@ const componentMap = {
   AcroDesignJsonForm,
 }
 const configModel = ref({
-  type: 'tabTop', //  'tabLeft', // 'normal',
+  type: 'normal', // 'tabTop', //  'tabLeft', // 'normal',
   component: 'TDesignJsonForm',
   layout: 'vertical' as Layout,
   disabled: false,
   span: 12,
 })
 const configInputs = ref<Inputs>({
-  type: {
-    label: '表单类型',
-    type: 'select',
-    options: [
-      { value: 'normal', label: '普通表单' },
-      { value: 'step', label: '步骤条', disabled: true },
-      { value: 'tabLeft', label: '左边导航' },
-      { value: 'tabTop', label: '头部导航' },
-    ],
-  },
   component: {
     label: '组件',
     type: 'select',
@@ -33,6 +23,16 @@ const configInputs = ref<Inputs>({
       { value: 'ElementPlusJsonForm', label: 'element', disabled: true },
       { value: 'AntDesignJsonForm', label: 'ant-design', disabled: true },
       { value: 'AcroDesignJsonForm', label: 'acro-design', disabled: true },
+    ],
+  },
+  type: {
+    label: '表单类型',
+    type: 'select',
+    options: [
+      { value: 'normal', label: '普通表单' },
+      { value: 'tabLeft', label: '左边导航' },
+      { value: 'tabTop', label: '头部导航' },
+      { value: 'step', label: '步骤条', disabled: true },
     ],
   },
   layout: {
