@@ -6,6 +6,7 @@ import { AcroDesignJsonForm } from "./AcroDesignJsonForm";
 import { Title } from "./Title";
 import { startCase, camelCase } from "lodash";
 
+import "virtual:uno.css";
 import "./index.scss";
 
 import "@arco-design/web-vue/dist/arco.css";
@@ -13,7 +14,7 @@ import "@arco-design/web-vue/dist/arco.css";
 export * from "./types";
 export * from "./utils";
 
-const pascalCase = (str = '') => startCase(camelCase(str)).replace(/ /g, '')
+const pascalCase = (str = "") => startCase(camelCase(str)).replace(/ /g, "");
 
 const components: any[] = [
   TDesignJsonForm,
@@ -34,9 +35,7 @@ export {
 };
 
 export const registerJsonFormFieldComponents: Record<string, Component> = {};
-export const registerJsonFormFieldComponent = (
-  component: Component
-) => {
+export const registerJsonFormFieldComponent = (component: Component) => {
   if (!component.name) {
     return;
   }
