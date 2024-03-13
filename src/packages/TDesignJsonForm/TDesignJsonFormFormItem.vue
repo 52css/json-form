@@ -1,6 +1,6 @@
 <script lang="ts">
 import { type Inputs, type Model, type Layout, type Columns, type CommonOption } from '../types'
-import { getInputsByInputs, setOutputs, getOption, getOptionIndex } from '../utils'
+import { getInputsByInputs, setOutputs, getOptionIndex } from '../utils'
 import _ from 'lodash'
 import {
   AutoComplete as TAutoComplete,
@@ -22,9 +22,9 @@ import {
   Upload as TUpload,
 } from 'tdesign-vue-next'
 import { registerJsonFormFieldComponents } from '../index'
-import TDesignJsonForm from './TDesignJsonForm.vue'
+import TDesignJsonFormForm from './TDesignJsonFormForm.vue'
 
-export interface TDesignFormItemProps {
+export interface TDesignJsonFormFormItemProps {
   inputs?: Inputs
   model: Model,
   span?: number,
@@ -39,11 +39,11 @@ export interface TDesignFormItemEmits {
 export const pascalCase = (string: string) => _.upperFirst(_.camelCase(string));
 </script>
 <script setup lang="ts">
-const props = withDefaults(defineProps<TDesignFormItemProps>(), TDesignFormItemDefault)
+const props = withDefaults(defineProps<TDesignJsonFormFormItemProps>(), TDesignFormItemDefault)
 const slots = defineSlots()
 defineEmits<TDesignFormItemEmits>()
 defineOptions({
-  name: 'TDesignFormItem',
+  name: 'TDesignJsonFormFormItem',
 })
 const componentMap: Record<string, Component> = {
   TAutoComplete,
@@ -135,7 +135,7 @@ defineExpose({
           :destroy-on-hide="false"
           :style="`padding-${((inputField.placement ?? 'top') === 'top') ? 'block' : 'inline'}: 1rem;`"
         >
-          <TDesignJsonForm
+          <TDesignJsonFormForm
             v-if="option.request"
             :inputs="option.inputs"
             :request="option.request"
@@ -147,9 +147,9 @@ defineExpose({
             <template v-for="(_value, name) in slots" #[name]="scopeData">
               <slot :name="(name as string)" v-bind="scopeData" />
             </template>
-          </TDesignJsonForm>
+          </TDesignJsonFormForm>
           <div v-else style="display: flex; flex-wrap: wrap;">
-            <TDesignFormItem
+            <TDesignJsonFormFormItem
               :inputs="(option.inputs as Inputs)"
               :model="model"
               :span="span"
@@ -157,7 +157,7 @@ defineExpose({
               <template v-for="(_value, name) in slots" #[name]="scopeData">
                 <slot :name="name" v-bind="scopeData" />
               </template>
-            </TDesignFormItem>
+            </TDesignJsonFormFormItem>
           </div>
         </t-tab-panel>
       </t-tabs>
@@ -167,7 +167,7 @@ defineExpose({
         </t-steps>
         <!-- {{ model[prop] }} -->
         <div style="width: 100%">
-          <TDesignJsonForm
+          <TDesignJsonFormForm
             v-for="(option, optionIndex) in inputField.options"
             v-show="model[prop] === option.value"
             ref="jsonFormRef"
@@ -202,7 +202,7 @@ defineExpose({
                 {{ optionIndex === inputField.options.length - 1 ? '保存' : '下一步' }}
               </t-button>
             </template>
-          </TDesignJsonForm>
+          </TDesignJsonFormForm>
         </div>
       </template>
       <t-form-item
@@ -214,7 +214,7 @@ defineExpose({
         }]"
         :data-span="inputField.span ?? span"
         :data-prop="prop"
-        class="json-form__form__form-item"
+        class="json-form-form__form__form-item"
       >
         <!-- {{ inputField }} -->
         <slot

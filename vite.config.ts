@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
-
+import UnoCSS from "unocss/vite";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import {
@@ -11,7 +11,7 @@ import {
   // ArcoResolver,
 } from "unplugin-vue-components/resolvers";
 
-import { vitePluginForArco } from '@arco-plugins/vite-vue'
+// import { vitePluginForArco } from "@arco-plugins/vite-vue";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -51,6 +51,8 @@ export default defineConfig({
     // vitePluginForArco({
     //   style: 'css'
     // })
+    /** UnoCSS */
+    UnoCSS(),
   ],
   json: {
     // 是否支持从 .json 文件中进行按名导入

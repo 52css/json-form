@@ -9,6 +9,7 @@ const componentMap = {
 }
 const configModel = ref({
   type: 'formNormal', // 'formStep', // 'listTree', // 'listRadio', // 'listCheckbox', // 'listNormal', // 'formTabTop', //  'formTabLeft', // 'formNormal',
+  container: 'none', // 'dialog', // 'none',
   component: 'TDesignJsonForm',
   layout: 'vertical' as Layout,
   disabled: false,
@@ -39,6 +40,19 @@ const configInputs = ref<Inputs>({
       { value: 'listTree', label: '树形列表' },
     ],
   },
+  title: {
+    type: 'title',
+    label: '属性',
+  },
+  container: {
+    label: '容器',
+    type: 'select',
+    options: [
+      { label: 'none', value: 'none' },
+      { label: 'dialog', value: 'dialog' },
+      { label: 'drawer', value: 'drawer' },
+    ],
+  },
   layout: {
     label: '布局',
     type: 'select',
@@ -62,17 +76,13 @@ const configInputs = ref<Inputs>({
   },
 })
 
+const visible = ref(true)
 const selectedRowKeys = ref([])
 
 const formData = ref({
   formNormal: {
     model: {},
     inputs: {
-      title1: {
-        type: 'title',
-        label: '基本信息',
-        span: 12,
-      },
       input1: '普通输入框',
       select1: {
         type: 'select',
@@ -610,10 +620,12 @@ const formData = ref({
         :is="componentMap[configModel.component as keyof typeof componentMap]"
         v-bind="(formData[configModel.type as keyof typeof formData] as any)"
         v-model:selectedRowKeys="selectedRowKeys"
+        v-model:visible="visible"
         :layout="configModel.layout"
         :disabled="configModel.disabled"
         :span="configModel.span"
         :key="configModel.type"
+        :container="configModel.container"
       >
         <template #slot1>
           我是自定义插槽
@@ -630,6 +642,10 @@ const formData = ref({
       />
     </aside>
   </div>
+  <div flex>
+    <div>11</div>
+    <div>222</div>
+  </div>
 </template>
 
 <style scoped>
@@ -637,6 +653,7 @@ const formData = ref({
   display: flex;
   max-width: 1440px;
   margin: 20px auto;
+  height: 100vh;
 }
 .container main {
   flex: 1;

@@ -36,7 +36,6 @@ export interface CommonOption {
   request?: Request;
 }
 
-
 export interface AutoCompleteField extends CommonField {
   type: "auto-complete";
   value?: CommonAttr<CommonValue>;
@@ -203,6 +202,7 @@ export type Model = Record<string, any>;
 export type Layout = "horizontal" | "vertical" | "inline";
 export type Columns = Record<string, CommonColumn>;
 export type Request = (model: Model) => Promise<any>;
+export type Container = "none" | "dialog" | "drawer";
 
 export interface JsonFormProps {
   layout?: Layout;
@@ -213,6 +213,7 @@ export interface JsonFormProps {
   // submission?: boolean;
   span?: number;
   columns?: Columns;
+  container?: Container;
 }
 
 export const JsonFormDefault = {
@@ -221,4 +222,5 @@ export const JsonFormDefault = {
     return {};
   },
   span: 12,
+  container: "none" as Container,
 };
