@@ -132,6 +132,13 @@ export const getOption = (
   return options.find((option) => option.value === val);
 };
 
+export const getOptionIndex = (
+  val: CommonValue | CommonValue[],
+  options: CommonOption[]
+) => {
+  return options.findIndex((option) => option.value === val);
+};
+
 export const setOutputs = (model: Model, inputField: Field, args: any[]) => {
   if (!inputField.outputs) {
     return;

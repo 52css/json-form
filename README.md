@@ -127,15 +127,15 @@ const inputs: Inputs = {
 * [ ] 支持tdesign、element-plus、ant-design-vue、acro-design
 * [x] 支持组件动态注入
 * [ ] 支持插入场景（页面、抽屉、弹窗）
-* [ ] 支持表单形式（普通表单、步骤条、左边导航、头部导航）
+* [x] 支持表单形式（普通表单、步骤条、左边导航、头部导航）
   * [x] 普通表单
   * [x] 左边导航表单（每个表单提交）
   * [x] 头部导航表单（一次性提交）
-  * [ ] 步骤条表单（每次校验，可以分布提交，也可以一次性提交）
+  * [x] 步骤条表单（每次校验，可以分布提交，也可以一次性提交）
   * [x] 普通列表（搜索 + 表格）
   * [x] 多选列表（搜索 + 表格）
   * [x] 单选列表（搜索 + 表格）
-  * [ ] 树形列表（搜索 + 表格）
+  * [x] 树形列表（搜索 + 表格）
 
 ## Prop支持
 
@@ -175,7 +175,7 @@ const inputs: Inputs = {
   * [x] 支持outputValue是`string`，例如配置 `label`, 即输出选中项的`label`值到`model`的outputs的`key`上
   * [x] 支持outputValue是`function`，例如配置 `(_m: Model, _val: string, content:any) => content.option.label`, 即输出选中项的`content.option.label`值到`model`的outputs的`key`上
 * [x] 支持attrValue.type=`title`实现标题
-* [ ] 支持attrValue.type=`steps`，`步骤`表单
+* [x] 支持attrValue.type=`steps`，`步骤`表单
 * [x] 支持attrValue.`request`
   * [x] 新建表单 `request`, 提交调用`request`, 成功提示`操作成功`
   * [x] 编辑表单 `request` + `model`, 渲染页面，调用数据接口设置`model`，提交调用`request`, 成功提示`操作成果`

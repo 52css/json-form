@@ -32,7 +32,10 @@ export interface CommonOption {
   value: CommonValue;
   disabled?: boolean;
   children?: CommonOption[];
+  inputs?: Record<string, CommonInput>;
+  request?: Request;
 }
+
 
 export interface AutoCompleteField extends CommonField {
   type: "auto-complete";
@@ -161,6 +164,12 @@ export interface TitleField extends CommonField {
   label: CommonAttr<string>;
 }
 
+export interface StepsField extends CommonField {
+  type: "steps";
+  value?: CommonAttr<CommonValue>;
+  options?: CommonAttr<CommonOption[]>;
+}
+
 export type CommonInput =
   | string
   | AutoCompleteField
@@ -186,7 +195,8 @@ export type CommonInput =
   | TreeSelectField
   | UploadField
   | TabsField
-  | TitleField;
+  | TitleField
+  | StepsField;
 
 export type Inputs = Record<string, CommonInput>;
 export type Model = Record<string, any>;

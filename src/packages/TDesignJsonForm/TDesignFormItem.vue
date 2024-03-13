@@ -1,6 +1,6 @@
 <script lang="ts">
-import { type Inputs, type Model, type Layout, type Columns } from '../types'
-import { getInputsByInputs, setOutputs } from '../utils'
+import { type Inputs, type Model, type Layout, type Columns, type CommonOption } from '../types'
+import { getInputsByInputs, setOutputs, getOption, getOptionIndex } from '../utils'
 import _ from 'lodash'
 import {
   AutoComplete as TAutoComplete,
@@ -65,6 +65,41 @@ const componentMap: Record<string, Component> = {
   TUpload,
 }
 let inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model)
+const loading = ref(false)
+const jsonFormRef = ref()
+const onConfirm = (model: Model, prop: string, options: CommonOption[]) => {
+  const val = model[prop]
+  const index = getOptionIndex(val, options)
+  const item = options[index]
+  const stepJsonFormRef = jsonFormRef.value[index]
+  let stepModel = {}
+  jsonFormRef.value.forEach((item: any) => {
+    stepModel = {...stepModel, ...item.model()}
+  })
+  const stepNext = () => {
+    if (index < options.length - 1) {
+      model[prop] = options[index + 1].value
+    }
+  }
+
+  stepJsonFormRef.formRef.validate().then((res: any) => {
+    if (!res) {
+      return;
+    }
+
+    if (item.request) {
+      loading.value = true
+      item
+        .request(stepModel)
+        .then(stepNext)
+        .finally(() => {
+          loading.value = false
+        })
+    } else {
+      stepNext()
+    }
+  })
+}
 
 watch(() => props.model, () => {
   inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model)
@@ -124,9 +159,52 @@ defineExpose({
               </template>
             </TDesignFormItem>
           </div>
-
         </t-tab-panel>
       </t-tabs>
+      <template v-else-if="inputField.type === 'steps'">
+        <t-steps v-model="model[prop]" :style="`margin: 30px ${100 / (inputField.options.length + 2)}%`">
+          <t-step-item v-for="option in inputField.options" :title="option.label" :value="option.value" :key="option.value" />
+        </t-steps>
+        <!-- {{ model[prop] }} -->
+        <div style="width: 100%">
+          <TDesignJsonForm
+            v-for="(option, optionIndex) in inputField.options"
+            v-show="model[prop] === option.value"
+            ref="jsonFormRef"
+            :key="option.value"
+            :inputs="option.inputs"
+            :request="option.request"
+            :model="model"
+            :layout="layout"
+            :disabled="disabled"
+            :span="inputField.span ?? span"
+          >
+            <template v-for="(_value, name) in slots" #[name]="scopeData">
+              <slot :name="(name as string)" v-bind="scopeData" />
+            </template>
+            <template #extra>
+              <t-button
+                v-if="optionIndex !== 0"
+                theme="default"
+                @click="() => {
+                  model[prop] = inputField.options[optionIndex - 1].value
+                }"
+              >
+                上一步
+              </t-button>
+              <t-button
+                :disabled="loading"
+                :loading="loading"
+                style="width: 74px; margin-left: 1rem;"
+                theme="primary"
+                @click="onConfirm(model, prop, inputField.options)"
+              >
+                {{ optionIndex === inputField.options.length - 1 ? '保存' : '下一步' }}
+              </t-button>
+            </template>
+          </TDesignJsonForm>
+        </div>
+      </template>
       <t-form-item
         v-else
         :label="inputField?.label"

@@ -38,6 +38,9 @@ const onSubmit: FormProps['onSubmit'] = ({ validateResult }) => {
     tabs: for (const [key, val] of Object.entries(props.inputs)) {
       if (val && typeof val !== 'string' && val.type === 'tabs' && val.options && Array.isArray(val.options)) {
         for (let tabItem of val.options) {
+          if (!tabItem.inputs) {
+            continue;
+          }
           const tabsInputs = Object.keys(tabItem.inputs)
           const hasKey = errorKeys.some((errorKey) => tabsInputs.includes(errorKey));
 
@@ -61,6 +64,7 @@ const pagination = ref({
   showJumper: true,
   size: 'medium',
 })
+const formRef = ref()
 const formItemRef = ref()
 
 const getCanSet = (inputs: Inputs, setKey: string) => {
@@ -75,11 +79,19 @@ const getCanSet = (inputs: Inputs, setKey: string) => {
     }
 
     if (inputField.type === 'tabs') {
-      type TabOptions = (CommonOption & {
-          inputs: Record<string, CommonInput>;
-      })[];
+      type TabOptions = CommonOption[];
       for (const tab of inputField.options as TabOptions) {
-        if (getCanSet(tab.inputs, setKey)) {
+        if (tab.inputs && getCanSet(tab.inputs, setKey)) {
+          return true;
+        }
+      }
+      // inputField.options.forEach(x => setFlatModel(x.inputs, flatModel))
+    }
+
+    if (inputField.type === 'steps') {
+      type TabOptions = CommonOption[];
+      for (const tab of inputField.options as TabOptions) {
+        if (tab.inputs && getCanSet(tab.inputs, setKey)) {
           return true;
         }
       }
@@ -133,6 +145,8 @@ init();
 defineExpose({
   init,
   model: () => getFlatModel.value,
+  formRef,
+  formItemRef,
 })
 </script>
 
@@ -142,6 +156,7 @@ defineExpose({
     <!-- {{ defaultModel }} -->
     <t-form
       v-if="inputs"
+      ref="formRef"
       v-bind="$attrs"
       :data="model"
       :disabled="disabled"
@@ -167,8 +182,11 @@ defineExpose({
           <slot :name="(name as string)" v-bind="scopeData" />
         </template>
       </TDesignFormItem>
-      <t-form-item v-if="request" class="json-form__form__action">
-        <t-button theme="primary" type="submit" style="margin-right: 8px">
+      <t-form-item v-if="slots.extra" class="json-form__form__action">
+        <slot name="extra" />
+      </t-form-item>
+      <t-form-item v-else-if="request" class="json-form__form__action">
+        <t-button theme="primary" type="submit" style="margin-right: 1rem">
           {{ ((columns ? 'inline' : layout) === 'inline') ? '查询' : '提交' }}
         </t-button>
         <t-button theme="default" variant="base" type="reset">重置</t-button>
