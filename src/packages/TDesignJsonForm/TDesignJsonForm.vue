@@ -1,6 +1,7 @@
 <script lang="ts">
 import { type JsonFormProps, JsonFormDefault } from '../types'
 import TDesignJsonFormForm from './TDesignJsonFormForm.vue'
+import { useVModel } from '@vueuse/core'
 
 export interface TDesignJsonFormProps extends JsonFormProps {
   prop1?: string
@@ -9,50 +10,64 @@ export const TDesignJsonFormDefault = {
   ...JsonFormDefault
 }
 export interface TDesignJsonFormEmits {
-  (event: 'event1'): void
+  (event: 'update:visible', visible: boolean): void
+  (event: 'close'): void
 }
 </script>
 <script setup lang="ts">
-withDefaults(defineProps<TDesignJsonFormProps>(), TDesignJsonFormDefault)
+const props = withDefaults(defineProps<TDesignJsonFormProps>(), TDesignJsonFormDefault)
 const slots = defineSlots()
-defineEmits<TDesignJsonFormEmits>()
+const emit = defineEmits<TDesignJsonFormEmits>()
 defineOptions({
   name: 'TDesignJsonForm',
 })
 const jsonFormFormRef = ref()
+const loading = ref(false)
+const visible = useVModel(props, 'visible', emit)
 const onConfirm = () => {
   const formRef = jsonFormFormRef.value?.formRef
+  const model = jsonFormFormRef.value.model()
 
-  // formRef
+  console.log('jsonFormFormRef', jsonFormFormRef.value)
+
   formRef.validate().then((res: any) => {
     if (!res) {
       return;
     }
 
-    // if (item.request) {
-    //   loading.value = true
-    //   item
-    //     .request(stepModel)
-    //     .then(stepNext)
-    //     .finally(() => {
-    //       loading.value = false
-    //     })
-    // } else {
-    //   stepNext()
-    // }
+    // stepJsonFormRef.formRef.validate()
+    // console.log('222')
+    if (props.request) {
+      loading.value = true
+      props.request(model)
+        .finally(() => {
+          loading.value = false
+        })
+    } else {
+      // stepNext()
+    }
   })
 }
-// const onOuterSubmit = () => {
-//   const formRef = jsonFormFormRef.value?.formRef
-
-//   // formRef
-//   formRef.submit()
-// }
+watch(() => visible.value, (val) => {
+  if (!val) {
+    emit('close')
+  }
+})
 </script>
 
 <template>
   <template v-if="container === 'dialog'">
-    <t-dialog v-bind="$attrs" @confirm="onConfirm">
+    <t-dialog
+      v-bind="$attrs"
+      v-model:visible="visible"
+      :confirm-btn="{
+        content: '确定',
+        theme: 'primary',
+        loading,
+        disabled: loading,
+      }"
+      @confirm="onConfirm"
+    >
       <t-design-json-form-form
         ref="jsonFormFormRef"
         :inputs="inputs"

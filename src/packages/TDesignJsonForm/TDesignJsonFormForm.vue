@@ -25,8 +25,9 @@ defineOptions({
 })
 const model = ref<{ [key: string]: any }>({})
 const onSubmit: FormProps['onSubmit'] = ({ validateResult }) => {
+  console.log('33')
   if (validateResult === true) {
-    props.request && props.request(getFlatModel.value).then(() => {
+    return props.request && props.request(getFlatModel.value).then(() => {
       MessagePlugin.success('提交成功');
     })
   } else {
@@ -172,7 +173,7 @@ defineExpose({
       <t-form-item v-if="slots.extra" flex items-center justify-center w-full>
         <slot name="extra" />
       </t-form-item>
-      <t-form-item v-else-if="request" flex items-center justify-center w-full>
+      <t-form-item v-else-if="request" flex items-center justify-center :class="[{'w-full': !columns}]">
         <template v-if="columns">
           <t-button theme="primary" type="submit" style="margin-right: 0.5rem">
             查询
@@ -191,7 +192,7 @@ defineExpose({
         </template>
       </t-form-item>
     </t-form>
-
+    <slot name="toolbar" />
     <t-enhanced-table
       v-if="columns"
       v-bind="$attrs"

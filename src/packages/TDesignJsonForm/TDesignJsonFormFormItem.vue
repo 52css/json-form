@@ -118,7 +118,7 @@ defineExpose({
         v-bind="inputField"
         :is="registerJsonFormFieldComponents[pascalCase(inputField.type as string)]"
         :data-span="inputField.span ?? span"
-        class="json-form__form__form-item"
+        class="json-form-form__form__form-item"
       />
       <t-tabs
         v-else-if="inputField.type === 'tabs'"

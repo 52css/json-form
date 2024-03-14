@@ -143,6 +143,10 @@ const inputs: Inputs = {
 * [x] 支持`layout` 布局, 可设置`horizontal`, `vertical`, `inline`
 * [x] 支持span分栏（全局和单个）
 * [x] 支持disabled禁用(全局和单个)
+* [ ] 支持container控制插入元素
+  * [x] `none` 插入到页面
+  * [ ] `dialog` 插入到弹窗
+  * [ ] `drawer` 插入到抽屉
 
 ## Inputs支持
 
@@ -180,6 +184,7 @@ const inputs: Inputs = {
   * [x] 新建表单 `request`, 提交调用`request`, 成功提示`操作成功`
   * [x] 编辑表单 `request` + `model`, 渲染页面，调用数据接口设置`model`，提交调用`request`, 成功提示`操作成果`
   * [x] 列表，初始化调用`request` + `columns`，渲染表格
+* [ ] 支持attrValue.type=`card` 分组表单
 
 ## Form表单映射
 

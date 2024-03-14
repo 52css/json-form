@@ -214,6 +214,7 @@ export interface JsonFormProps {
   span?: number;
   columns?: Columns;
   container?: Container;
+  visible?: boolean;
 }
 
 export const JsonFormDefault = {

@@ -20,7 +20,7 @@ export default defineConfig({
     vueJsx(),
     AutoImport({
       //安装两行后你会发现在组件中不用再导入ref，reactive等
-      imports: ["vue", "vue-router"],
+      imports: ["vue", "vue-router", '@vueuse/core'],
       resolvers: [
         TDesignResolver({
           library: "vue-next",

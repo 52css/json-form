@@ -8,7 +8,7 @@ const componentMap = {
   AcroDesignJsonForm,
 }
 const configModel = ref({
-  type: 'formNormal', // 'formStep', // 'listTree', // 'listRadio', // 'listCheckbox', // 'listNormal', // 'formTabTop', //  'formTabLeft', // 'formNormal',
+  type: 'formTabLeft', // 'formStep', // 'listTree', // 'listRadio', // 'listCheckbox', // 'listNormal', // 'formTabTop', //  'formTabLeft', // 'formNormal',
   container: 'none', // 'dialog', // 'none',
   component: 'TDesignJsonForm',
   layout: 'vertical' as Layout,
@@ -52,6 +52,9 @@ const configInputs = ref<Inputs>({
       { label: 'dialog', value: 'dialog' },
       { label: 'drawer', value: 'drawer' },
     ],
+    onChange: (m: any) => {
+      visible.value = m.container !== 'none'
+    }
   },
   layout: {
     label: '布局',
@@ -83,7 +86,7 @@ const formData = ref({
   formNormal: {
     model: {},
     inputs: {
-      input1: '普通输入框*',
+      input1: '普通输入框',
       select1: {
         type: 'select',
         label: '下拉框',
@@ -153,7 +156,7 @@ const formData = ref({
       },
     },
     request: (model: Model) => {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         console.log('正在请求model', model)
         setTimeout(() => {
           resolve(true)
@@ -626,6 +629,7 @@ const formData = ref({
         :span="configModel.span"
         :key="configModel.type"
         :container="configModel.container"
+        @close="configModel.container = 'none'"
       >
         <template #slot1>
           我是自定义插槽
@@ -641,10 +645,6 @@ const formData = ref({
         :inputs="configInputs"
       />
     </aside>
-  </div>
-  <div flex>
-    <div>11</div>
-    <div>222</div>
   </div>
 </template>
 
