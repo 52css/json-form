@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { type JsonFormProps, JsonFormDefault, type Inputs, type CommonOption, type Columns } from '../types'
 import { getColumnsByColumns, getLabelAlignByLayout, getLayoutByLayout } from '../utils'
 import TDesignJsonFormFormItem from './TDesignJsonFormFormItem.vue'
-import { FormProps, PageInfo, PrimaryTableCol, TableRowData, TdPaginationProps, } from 'tdesign-vue-next'
+import { FormValidateResult, PageInfo, PrimaryTableCol, TableRowData, TdPaginationProps, } from 'tdesign-vue-next'
 import { set } from 'lodash'
 
 export interface TDesignJsonFormProps extends JsonFormProps {
@@ -24,8 +24,64 @@ defineOptions({
   name: 'TDesignJsonFormForm',
 })
 const model = ref<{ [key: string]: any }>({})
-const onSubmit: FormProps['onSubmit'] = ({ validateResult }) => {
-  console.log('33')
+const getIsTabsLeft = computed(() => {
+  if (!props.inputs) {
+    return false;
+  }
+
+  for (const [_key, val] of Object.entries(props.inputs)) {
+    if (val && typeof val !== 'string' && val.type === 'tabs' && val.placement === 'left') {
+      return true;
+    }
+  }
+
+  return false;
+})
+const getIsTabsTop = computed(() => {
+  if (!props.inputs) {
+    return false;
+  }
+
+  for (const [_key, val] of Object.entries(props.inputs)) {
+    if (val && typeof val !== 'string' && val.type === 'tabs' && val.placement === 'top') {
+      return true;
+    }
+  }
+
+  return false;
+})
+
+const getIsSteps = computed(() => {
+  if (!props.inputs) {
+    return false;
+  }
+
+  for (const [_key, val] of Object.entries(props.inputs)) {
+    if (val && typeof val !== 'string' && val.type === 'steps') {
+      return true;
+    }
+  }
+
+  return false;
+})
+const onSubmit = async () => {
+  // 如果inputs下的属性，有tabsLeft, 即 type=tabs, 并且placement=left, 验证选中的tabs的form
+  if (getIsTabsLeft.value) {
+    debugger;
+    return;
+  }
+  // 如果inputs下的属性，有tabsTop, 即 type=tabs, 并且placement=top 或 没有设置值, 验证整个大form
+  if (getIsTabsTop.value) {
+    return;
+  }
+
+  // 判断type=steps, 验证当前选中的form
+
+  if (getIsSteps.value) {
+    return;
+  }
+  // 普通表单
+  const validateResult: FormValidateResult<FormData> = await formRef.value?.validate()
   if (validateResult === true) {
     return props.request && props.request(getFlatModel.value).then(() => {
       MessagePlugin.success('提交成功');
@@ -53,8 +109,6 @@ const onSubmit: FormProps['onSubmit'] = ({ validateResult }) => {
       }
     }
   }
-}
-const onReset: FormProps['onReset'] = () => {
 }
 const tableData = ref()
 const pagination = ref({
@@ -153,8 +207,6 @@ defineExpose({
       :label-width="(columns ? 'inline' : layout) === 'inline' ? 'auto' : '240px'"
       reset-type="initial"
       class="json-form-form__form"
-      @submit="onSubmit"
-      @reset="onReset"
     >
       <t-design-json-form-form-item
         ref="formItemRef"
@@ -175,7 +227,7 @@ defineExpose({
       </t-form-item>
       <t-form-item v-else-if="request" flex items-center justify-center :class="[{'w-full': !columns}]">
         <template v-if="columns">
-          <t-button theme="primary" type="submit" style="margin-right: 0.5rem">
+          <t-button theme="primary" style="margin-right: 0.5rem" @click="onSubmit">
             查询
           </t-button>
           <t-button theme="default" variant="outline" type="reset">
@@ -183,7 +235,7 @@ defineExpose({
           </t-button>
         </template>
         <template v-else>
-          <t-button theme="primary" type="submit" style="margin-right: 0.5rem">
+          <t-button theme="primary" style="margin-right: 0.5rem" @click="onSubmit">
             提交
           </t-button>
           <t-button theme="default" variant="outline" type="reset">
