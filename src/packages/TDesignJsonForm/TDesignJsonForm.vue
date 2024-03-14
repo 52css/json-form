@@ -42,35 +42,18 @@ const onConfirm = () => {
     // }
   })
 }
+// const onOuterSubmit = () => {
+//   const formRef = jsonFormFormRef.value?.formRef
+
+//   // formRef
+//   formRef.submit()
+// }
 </script>
 
 <template>
-  <div class="json-form" h-full>
-    <div v-if="container === 'dialog'">
-      <t-dialog v-bind="$attrs" @confirm="onConfirm">
-        <t-design-json-form-form
-          ref="jsonFormFormRef"
-          :inputs="inputs"
-          :request="request"
-          :model="model"
-          :layout="layout"
-          :disabled="disabled"
-          :span="span"
-          :columns="columns"
-        >
-          <template v-for="(_value, name) in slots" #[name]="scopeData">
-            <slot :name="(name as string)" v-bind="scopeData" />
-          </template>
-          <template #extra></template>
-        </t-design-json-form-form>
-      </t-dialog>
-    </div>
-    <div v-else-if="container === 'drawer'">
-      drawer
-    </div>
-    <template v-else>
+  <template v-if="container === 'dialog'">
+    <t-dialog v-bind="$attrs" @confirm="onConfirm">
       <t-design-json-form-form
-        v-bind="$attrs"
         ref="jsonFormFormRef"
         :inputs="inputs"
         :request="request"
@@ -83,9 +66,34 @@ const onConfirm = () => {
         <template v-for="(_value, name) in slots" #[name]="scopeData">
           <slot :name="(name as string)" v-bind="scopeData" />
         </template>
+        <template #extra></template>
       </t-design-json-form-form>
-    </template>
-  </div>
+    </t-dialog>
+  </template>
+  <template v-else-if="container === 'drawer'">
+    drawer
+  </template>
+  <template v-else>
+    <t-design-json-form-form
+      v-bind="$attrs"
+      ref="jsonFormFormRef"
+      :inputs="inputs"
+      :request="request"
+      :model="model"
+      :layout="layout"
+      :disabled="disabled"
+      :span="span"
+      :columns="columns"
+    >
+      <template v-for="(_value, name) in slots" #[name]="scopeData">
+        <slot :name="(name as string)" v-bind="scopeData" />
+      </template>
+    </t-design-json-form-form>
+    <!-- <div mt-a flex items-center justify-center gap-2>
+      <t-button theme="default" variant="base" @click="onOuterSubmit">取消</t-button>
+      <t-button @click="onOuterSubmit">保存</t-button>
+    </div> -->
+  </template>
 </template>
 
 <style scoped lang="scss">

@@ -18,6 +18,8 @@ declare module 'vue' {
     ElInput: typeof import('element-plus/es')['ElInput']
     HelloWorld: typeof import('./../components/HelloWorld.vue')['default']
     JsonForm: typeof import('./../components/JsonForm.vue')['default']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
     TAutoComplete: typeof import('tdesign-vue-next')['AutoComplete']
     TButton: typeof import('tdesign-vue-next')['Button']
     TCascader: typeof import('tdesign-vue-next')['Cascader']

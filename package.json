@@ -22,7 +22,8 @@
     "element-plus": "^2.6.0",
     "lodash": "^4.17.21",
     "tdesign-vue-next": "^1.8.1",
-    "vue": "^3.4.19"
+    "vue": "^3.4.19",
+    "vue-router": "^4.3.0"
   },
   "devDependencies": {
     "@arco-plugins/vite-vue": "^1.4.5",

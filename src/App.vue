@@ -83,7 +83,7 @@ const formData = ref({
   formNormal: {
     model: {},
     inputs: {
-      input1: '普通输入框',
+      input1: '普通输入框*',
       select1: {
         type: 'select',
         label: '下拉框',
@@ -652,14 +652,20 @@ const formData = ref({
 .container {
   display: flex;
   max-width: 1440px;
-  margin: 20px auto;
+  margin: 0 auto;
+  padding: 20px 0;
   height: 100vh;
+  overflow: hidden;
 }
 .container main {
   flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .container aside {
   width: 200px;
   margin-left: 20px;
+  height: 100%;
 }
 </style>

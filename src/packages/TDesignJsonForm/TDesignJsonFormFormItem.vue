@@ -135,7 +135,7 @@ defineExpose({
           :destroy-on-hide="false"
           :style="`padding-${((inputField.placement ?? 'top') === 'top') ? 'block' : 'inline'}: 1rem;`"
         >
-          <TDesignJsonFormForm
+          <t-design-json-form-form
             v-if="option.request"
             :inputs="option.inputs"
             :request="option.request"
@@ -147,9 +147,9 @@ defineExpose({
             <template v-for="(_value, name) in slots" #[name]="scopeData">
               <slot :name="(name as string)" v-bind="scopeData" />
             </template>
-          </TDesignJsonFormForm>
+          </t-design-json-form-form>
           <div v-else style="display: flex; flex-wrap: wrap;">
-            <TDesignJsonFormFormItem
+            <t-design-json-form-form-item
               :inputs="(option.inputs as Inputs)"
               :model="model"
               :span="span"
@@ -157,7 +157,7 @@ defineExpose({
               <template v-for="(_value, name) in slots" #[name]="scopeData">
                 <slot :name="name" v-bind="scopeData" />
               </template>
-            </TDesignJsonFormFormItem>
+            </t-design-json-form-form-item>
           </div>
         </t-tab-panel>
       </t-tabs>
@@ -167,7 +167,9 @@ defineExpose({
         </t-steps>
         <!-- {{ model[prop] }} -->
         <div style="width: 100%">
-          <TDesignJsonFormForm
+          <!-- aaa: {{ model[prop] }} {{ typeof model[prop] }} -->
+          <!-- bbb: {{ inputField.options }} -->
+          <t-design-json-form-form
             v-for="(option, optionIndex) in inputField.options"
             v-show="model[prop] === option.value"
             ref="jsonFormRef"
@@ -202,7 +204,7 @@ defineExpose({
                 {{ optionIndex === inputField.options.length - 1 ? '保存' : '下一步' }}
               </t-button>
             </template>
-          </TDesignJsonFormForm>
+          </t-design-json-form-form>
         </div>
       </template>
       <t-form-item

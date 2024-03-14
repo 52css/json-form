@@ -140,9 +140,7 @@ defineExpose({
 </script>
 
 <template>
-  <div class="json-form-form">
-    <!-- {{ model }} -->
-    <!-- {{ defaultModel }} -->
+  <div flex flex-col gap-2>
     <t-form
       v-if="inputs"
       ref="formRef"
@@ -157,7 +155,7 @@ defineExpose({
       @submit="onSubmit"
       @reset="onReset"
     >
-      <TDesignJsonFormFormItem
+      <t-design-json-form-form-item
         ref="formItemRef"
         :inputs="inputs"
         :request="request"
@@ -170,15 +168,27 @@ defineExpose({
         <template v-for="(_value, name) in slots" #[name]="scopeData">
           <slot :name="(name as string)" v-bind="scopeData" />
         </template>
-      </TDesignJsonFormFormItem>
-      <t-form-item v-if="slots.extra" class="json-form-form__form__action">
+      </t-design-json-form-form-item>
+      <t-form-item v-if="slots.extra" flex items-center justify-center w-full>
         <slot name="extra" />
       </t-form-item>
-      <t-form-item v-else-if="request" class="json-form-form__form__action">
-        <t-button theme="primary" type="submit" style="margin-right: 1rem">
-          {{ ((columns ? 'inline' : layout) === 'inline') ? '查询' : '提交' }}
-        </t-button>
-        <t-button theme="default" variant="base" type="reset">重置</t-button>
+      <t-form-item v-else-if="request" flex items-center justify-center w-full>
+        <template v-if="columns">
+          <t-button theme="primary" type="submit" style="margin-right: 0.5rem">
+            查询
+          </t-button>
+          <t-button theme="default" variant="outline" type="reset">
+            重置
+          </t-button>
+        </template>
+        <template v-else>
+          <t-button theme="primary" type="submit" style="margin-right: 0.5rem">
+            提交
+          </t-button>
+          <t-button theme="default" variant="outline" type="reset">
+            重置
+          </t-button>
+        </template>
       </t-form-item>
     </t-form>
 
@@ -191,8 +201,6 @@ defineExpose({
       select-on-row-click
       @page-change="onPageChange"
     />
-
-    <slot name="footer" />
   </div>
 </template>
 
