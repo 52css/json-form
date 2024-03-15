@@ -107,6 +107,7 @@ watch(() => props.model, () => {
 
 defineExpose({
   inputFieldMap,
+  jsonFormRef,
 })
 </script>
 
@@ -137,6 +138,7 @@ defineExpose({
         >
           <t-design-json-form-form
             v-if="option.request"
+            ref="jsonFormRef"
             :inputs="option.inputs"
             :request="option.request"
             :model="model"

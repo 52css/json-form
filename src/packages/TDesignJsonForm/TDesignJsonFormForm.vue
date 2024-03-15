@@ -27,16 +27,17 @@ const model = ref<{ [key: string]: any }>({})
 const loading = ref(false);
 const getIsTabsLeft = computed(() => {
   if (!props.inputs) {
-    return false;
+    return ;
   }
 
-  for (const [_key, val] of Object.entries(props.inputs)) {
+  for (const [key, val] of Object.entries(props.inputs)) {
     if (val && typeof val !== 'string' && val.type === 'tabs' && val.placement === 'left') {
-      return true;
+      const index = (val.options as CommonOption[])?.findIndex(x => x.value === model.value[key])
+      return index;
     }
   }
 
-  return false;
+  return;
 })
 const getIsSteps = computed(() => {
   if (!props.inputs) {
@@ -51,10 +52,20 @@ const getIsSteps = computed(() => {
 
   return false;
 })
-const onSubmit = async ({validateSuccess, requestSuccess, requestComplete}) => {
+
+interface SubmitParams {
+  validateSuccess?: () => void
+  requestSuccess?: () => void
+  requestComplete?: () => void
+}
+const onSubmit = async ({validateSuccess, requestSuccess, requestComplete}: SubmitParams) => {
   // 如果inputs下的属性，有tabsLeft, 即 type=tabs, 并且placement=left, 验证选中的tabs的form
-  if (getIsTabsLeft.value) {
-    debugger;
+  if (getIsTabsLeft.value !== undefined) {
+    formItemRef.value.jsonFormRef[getIsTabsLeft.value].onSubmit({
+      validateSuccess,
+      requestSuccess,
+      requestComplete,
+    })
     return;
   }
 

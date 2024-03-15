@@ -8,7 +8,7 @@ const componentMap = {
   AcroDesignJsonForm,
 }
 const configModel = ref({
-  type: 'formNormal', // 'formStep', // 'listTree', // 'listRadio', // 'listCheckbox', // 'listNormal', // 'formTabTop', //  'formTabLeft', // 'formNormal',
+  type: 'formTabLeft', // 'formStep', // 'listTree', // 'listRadio', // 'listCheckbox', // 'listNormal', // 'formTabTop', //  'formTabLeft', // 'formNormal',
   container: 'none', // 'dialog', // 'none',
   component: 'TDesignJsonForm',
   layout: 'vertical' as Layout,
@@ -48,9 +48,9 @@ const configInputs = ref<Inputs>({
     label: '容器',
     type: 'select',
     options: [
-      { label: 'none', value: 'none' },
-      { label: 'dialog', value: 'dialog' },
-      { label: 'drawer', value: 'drawer' },
+      { label: '页面', value: 'none' },
+      { label: '弹窗', value: 'dialog' },
+      { label: '抽屉', value: 'drawer' },
     ],
     onChange: (m: any) => {
       visible.value = m.container !== 'none'
@@ -60,9 +60,9 @@ const configInputs = ref<Inputs>({
     label: '布局',
     type: 'select',
     options: [
-      { label: 'horizontal', value: 'horizontal' },
-      { label: 'vertical', value: 'vertical' },
-      { label: 'inline', value: 'inline' },
+      { label: '横向', value: 'horizontal' },
+      { label: '纵向', value: 'vertical' },
+      { label: '行内', value: 'inline' },
     ],
   },
   disabled: {
