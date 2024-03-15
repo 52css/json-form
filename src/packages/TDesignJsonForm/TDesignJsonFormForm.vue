@@ -24,6 +24,7 @@ defineOptions({
   name: 'TDesignJsonFormForm',
 })
 const model = ref<{ [key: string]: any }>({})
+const loading = ref(false);
 const getIsTabsLeft = computed(() => {
   if (!props.inputs) {
     return false;
@@ -37,20 +38,6 @@ const getIsTabsLeft = computed(() => {
 
   return false;
 })
-const getIsTabsTop = computed(() => {
-  if (!props.inputs) {
-    return false;
-  }
-
-  for (const [_key, val] of Object.entries(props.inputs)) {
-    if (val && typeof val !== 'string' && val.type === 'tabs' && val.placement === 'top') {
-      return true;
-    }
-  }
-
-  return false;
-})
-
 const getIsSteps = computed(() => {
   if (!props.inputs) {
     return false;
@@ -64,27 +51,29 @@ const getIsSteps = computed(() => {
 
   return false;
 })
-const onSubmit = async () => {
+const onSubmit = async ({validateSuccess, requestSuccess, requestComplete}) => {
   // 如果inputs下的属性，有tabsLeft, 即 type=tabs, 并且placement=left, 验证选中的tabs的form
   if (getIsTabsLeft.value) {
     debugger;
     return;
   }
-  // 如果inputs下的属性，有tabsTop, 即 type=tabs, 并且placement=top 或 没有设置值, 验证整个大form
-  if (getIsTabsTop.value) {
-    return;
-  }
 
   // 判断type=steps, 验证当前选中的form
-
   if (getIsSteps.value) {
     return;
   }
-  // 普通表单
+
+  // 普通表单 或者 tabs + placement=top, 验证整个大form
   const validateResult: FormValidateResult<FormData> = await formRef.value?.validate()
   if (validateResult === true) {
+    loading.value = true;
+    validateSuccess && validateSuccess();
     return props.request && props.request(getFlatModel.value).then(() => {
       MessagePlugin.success('提交成功');
+      requestSuccess && requestSuccess();
+    }).finally(() => {
+      loading.value = false;
+      requestComplete && requestComplete();
     })
   } else {
     console.log('Errors: ', validateResult);
@@ -188,7 +177,8 @@ init();
 
 defineExpose({
   init,
-  model: () => getFlatModel.value,
+  onSubmit,
+  getFlatModel,
   formRef,
   formItemRef,
 })
@@ -227,7 +217,7 @@ defineExpose({
       </t-form-item>
       <t-form-item v-else-if="request" flex items-center justify-center :class="[{'w-full': !columns}]">
         <template v-if="columns">
-          <t-button theme="primary" style="margin-right: 0.5rem" @click="onSubmit">
+          <t-button theme="primary" :loading="loading" style="margin-right: 0.5rem" @click="onSubmit">
             查询
           </t-button>
           <t-button theme="default" variant="outline" type="reset">
@@ -235,7 +225,7 @@ defineExpose({
           </t-button>
         </template>
         <template v-else>
-          <t-button theme="primary" style="margin-right: 0.5rem" @click="onSubmit">
+          <t-button theme="primary" :loading="loading" style="margin-right: 0.5rem" @click="onSubmit">
             提交
           </t-button>
           <t-button theme="default" variant="outline" type="reset">

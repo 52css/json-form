@@ -8,7 +8,7 @@ const componentMap = {
   AcroDesignJsonForm,
 }
 const configModel = ref({
-  type: 'formTabLeft', // 'formStep', // 'listTree', // 'listRadio', // 'listCheckbox', // 'listNormal', // 'formTabTop', //  'formTabLeft', // 'formNormal',
+  type: 'formNormal', // 'formStep', // 'listTree', // 'listRadio', // 'listCheckbox', // 'listNormal', // 'formTabTop', //  'formTabLeft', // 'formNormal',
   container: 'none', // 'dialog', // 'none',
   component: 'TDesignJsonForm',
   layout: 'vertical' as Layout,
@@ -86,7 +86,7 @@ const formData = ref({
   formNormal: {
     model: {},
     inputs: {
-      input1: '普通输入框',
+      input1: '普通输入框*',
       select1: {
         type: 'select',
         label: '下拉框',

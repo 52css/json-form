@@ -24,27 +24,16 @@ defineOptions({
 const jsonFormFormRef = ref()
 const loading = ref(false)
 const visible = useVModel(props, 'visible', emit)
-const onConfirm = () => {
-  const formRef = jsonFormFormRef.value?.formRef
-  const model = jsonFormFormRef.value.model()
-
-  console.log('jsonFormFormRef', jsonFormFormRef.value)
-
-  formRef.validate().then((res: any) => {
-    if (!res) {
-      return;
-    }
-
-    // stepJsonFormRef.formRef.validate()
-    // console.log('222')
-    if (props.request) {
-      loading.value = true
-      props.request(model)
-        .finally(() => {
-          loading.value = false
-        })
-    } else {
-      // stepNext()
+const onConfirm = async () => {
+  jsonFormFormRef.value?.onSubmit({
+    validateSuccess() {
+      loading.value = true;
+    },
+    requestSuccess() {
+      visible.value = false;
+    },
+    requestComplete() {
+      loading.value = false;
     }
   })
 }
