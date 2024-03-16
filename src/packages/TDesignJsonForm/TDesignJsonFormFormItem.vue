@@ -31,6 +31,7 @@ export interface TDesignJsonFormFormItemProps {
   layout?: Layout,
   disabled?: boolean,
   columns?: Columns,
+  onSubmit?: any
 }
 export const TDesignFormItemDefault = {}
 export interface TDesignFormItemEmits {
@@ -67,39 +68,39 @@ const componentMap: Record<string, Component> = {
 let inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model)
 const loading = ref(false)
 const jsonFormRef = ref()
-const onConfirm = (model: Model, prop: string, options: CommonOption[]) => {
-  const val = model[prop]
-  const index = getOptionIndex(val, options)
-  const item = options[index]
-  const stepJsonFormRef = jsonFormRef.value[index]
-  let stepModel = {}
-  jsonFormRef.value.forEach((item: any) => {
-    stepModel = {...stepModel, ...item.model()}
-  })
-  const stepNext = () => {
-    if (index < options.length - 1) {
-      model[prop] = options[index + 1].value
-    }
-  }
+// const onConfirm = (model: Model, prop: string, options: CommonOption[]) => {
+//   const val = model[prop]
+//   const index = getOptionIndex(val, options)
+//   const item = options[index]
+//   const stepJsonFormRef = jsonFormRef.value[index]
+//   let stepModel = {}
+//   jsonFormRef.value.forEach((item: any) => {
+//     stepModel = {...stepModel, ...item.model()}
+//   })
+//   const stepNext = () => {
+//     if (index < options.length - 1) {
+//       model[prop] = options[index + 1].value
+//     }
+//   }
 
-  stepJsonFormRef.formRef.validate().then((res: any) => {
-    if (!res) {
-      return;
-    }
+//   stepJsonFormRef.formRef.validate().then((res: any) => {
+//     if (!res) {
+//       return;
+//     }
 
-    if (item.request) {
-      loading.value = true
-      item
-        .request(stepModel)
-        .then(stepNext)
-        .finally(() => {
-          loading.value = false
-        })
-    } else {
-      stepNext()
-    }
-  })
-}
+//     if (item.request) {
+//       loading.value = true
+//       item
+//         .request(stepModel)
+//         .then(stepNext)
+//         .finally(() => {
+//           loading.value = false
+//         })
+//     } else {
+//       stepNext()
+//     }
+//   })
+// }
 
 watch(() => props.model, () => {
   inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model)
@@ -201,7 +202,7 @@ defineExpose({
                 :loading="loading"
                 style="width: 74px; margin-left: 1rem;"
                 theme="primary"
-                @click="onConfirm(model, prop, inputField.options)"
+                @click="onSubmit"
               >
                 {{ optionIndex === inputField.options.length - 1 ? '保存' : '下一步' }}
               </t-button>

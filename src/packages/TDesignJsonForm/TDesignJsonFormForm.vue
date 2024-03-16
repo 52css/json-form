@@ -30,10 +30,15 @@ const getIsTabsLeft = computed(() => {
     return ;
   }
 
-  for (const [key, val] of Object.entries(props.inputs)) {
+  for (const [prop, val] of Object.entries(props.inputs)) {
     if (val && typeof val !== 'string' && val.type === 'tabs' && val.placement === 'left') {
-      const index = (val.options as CommonOption[])?.findIndex(x => x.value === model.value[key])
-      return index;
+      const index = (val.options as CommonOption[])?.findIndex(x => x.value === model.value[prop])
+      return {
+        index,
+        prop,
+        options: val.options,
+        option: (val.options as CommonOption[])[index]
+      };
     }
   }
 
@@ -41,16 +46,22 @@ const getIsTabsLeft = computed(() => {
 })
 const getIsSteps = computed(() => {
   if (!props.inputs) {
-    return false;
+    return;
   }
 
-  for (const [_key, val] of Object.entries(props.inputs)) {
+  for (const [prop, val] of Object.entries(props.inputs)) {
     if (val && typeof val !== 'string' && val.type === 'steps') {
-      return true;
+      const index = (val.options as CommonOption[])?.findIndex(x => x.value === model.value[prop])
+      return {
+        index,
+        prop,
+        options: val.options,
+        option: (val.options as CommonOption[])[index]
+      };
     }
   }
 
-  return false;
+  return;
 })
 
 interface SubmitParams {
@@ -60,8 +71,8 @@ interface SubmitParams {
 }
 const onSubmit = async ({validateSuccess, requestSuccess, requestComplete}: SubmitParams) => {
   // 如果inputs下的属性，有tabsLeft, 即 type=tabs, 并且placement=left, 验证选中的tabs的form
-  if (getIsTabsLeft.value !== undefined) {
-    formItemRef.value.jsonFormRef[getIsTabsLeft.value].onSubmit({
+  if (getIsTabsLeft.value) {
+    formItemRef.value.jsonFormRef[getIsTabsLeft.value.index].onSubmit({
       validateSuccess,
       requestSuccess,
       requestComplete,
@@ -71,6 +82,41 @@ const onSubmit = async ({validateSuccess, requestSuccess, requestComplete}: Subm
 
   // 判断type=steps, 验证当前选中的form
   if (getIsSteps.value) {
+    const validateResult: FormValidateResult<FormData> = formItemRef.value.jsonFormRef[getIsSteps.value.index].formRef.validate()
+
+    if (validateResult) {
+      loading.value = true;
+      validateSuccess && validateSuccess();
+      const option = getIsSteps.value?.option;
+      const options = getIsSteps.value?.options as CommonOption[];
+      const prop = getIsSteps.value?.prop;
+      const index = getIsSteps.value?.index;
+      const stepRequest = option.request;
+
+      if (stepRequest) {
+
+      } else {
+        if (index < options.length - 1) {
+          model.value[prop] = options[index + 1].value
+        } else {
+          requestSuccess && requestSuccess();
+        }
+      }
+      // debugger
+      // return stepRequest && stepRequest(getFlatModel.value).then(() => {
+      //   MessagePlugin.success('提交成功');
+      //   if (getIsSteps.value?.index < getIsSteps.value?.val.options.length - 1) {
+      //     model[prop] = getIsSteps.value?.val.options[index + 1].value
+      //   } else {
+      //     requestSuccess && requestSuccess();
+      //   }
+      // }).finally(() => {
+      //   loading.value = false;
+      //   requestComplete && requestComplete();
+      // })
+    } else {
+      console.log('Errors: ', validateResult);
+    }
     return;
   }
 
@@ -218,6 +264,7 @@ defineExpose({
         :layout="layout"
         :disabled="disabled"
         :columns="columns"
+        :onSubmit="onSubmit"
       >
         <template v-for="(_value, name) in slots" #[name]="scopeData">
           <slot :name="(name as string)" v-bind="scopeData" />
