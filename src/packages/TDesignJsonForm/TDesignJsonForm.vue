@@ -49,13 +49,6 @@ watch(() => visible.value, (val) => {
     <t-dialog
       v-bind="$attrs"
       v-model:visible="visible"
-      :confirm-btn="{
-        content: '确定',
-        theme: 'primary',
-        loading,
-        disabled: loading,
-      }"
-      @confirm="onConfirm"
     >
       <t-design-json-form-form
         ref="jsonFormFormRef"
@@ -72,6 +65,34 @@ watch(() => visible.value, (val) => {
         </template>
         <template #extra></template>
       </t-design-json-form-form>
+      <template #footer>
+        <template v-if="getIsSteps">
+          <t-button v-if="step !== 0" theme="default" @click="onPrev">
+            上一步
+          </t-button>
+          <t-button
+            :disabled="loading"
+            :loading="loading"
+            style="width: 74px"
+            theme="primary"
+            @click="onConfirm"
+          >
+            {{ step === stepList.length - 1 ? '保存' : '下一步' }}
+          </t-button>
+        </template>
+        <template v-else>
+          <t-button theme="default" @click="visible = false">
+            取消
+          </t-button>
+          <t-button
+            :loading="loading"
+            theme="primary"
+            @click="onConfirm"
+          >
+            确定
+          </t-button>
+        </template>
+      </template>
     </t-dialog>
   </template>
   <template v-else-if="container === 'drawer'">
@@ -93,14 +114,10 @@ watch(() => visible.value, (val) => {
         <slot :name="(name as string)" v-bind="scopeData" />
       </template>
     </t-design-json-form-form>
-    <!-- <div mt-a flex items-center justify-center gap-2>
-      <t-button theme="default" variant="base" @click="onOuterSubmit">取消</t-button>
-      <t-button @click="onOuterSubmit">保存</t-button>
-    </div> -->
   </template>
 </template>
 
 <style scoped lang="scss">
 .t-design-json-form {
 }
-</style>./TDesignJsonFormFormItem.vue
+</style>

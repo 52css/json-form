@@ -1,6 +1,6 @@
 <script lang="ts">
-import { type Inputs, type Model, type Layout, type Columns, type CommonOption } from '../types'
-import { getInputsByInputs, setOutputs, getOptionIndex } from '../utils'
+import { type Inputs, type Model, type Layout, type Columns } from '../types'
+import { getInputsByInputs, setOutputs } from '../utils'
 import _ from 'lodash'
 import {
   AutoComplete as TAutoComplete,
@@ -67,40 +67,7 @@ const componentMap: Record<string, Component> = {
 }
 let inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model)
 const loading = ref(false)
-const jsonFormRef = ref()
-// const onConfirm = (model: Model, prop: string, options: CommonOption[]) => {
-//   const val = model[prop]
-//   const index = getOptionIndex(val, options)
-//   const item = options[index]
-//   const stepJsonFormRef = jsonFormRef.value[index]
-//   let stepModel = {}
-//   jsonFormRef.value.forEach((item: any) => {
-//     stepModel = {...stepModel, ...item.model()}
-//   })
-//   const stepNext = () => {
-//     if (index < options.length - 1) {
-//       model[prop] = options[index + 1].value
-//     }
-//   }
-
-//   stepJsonFormRef.formRef.validate().then((res: any) => {
-//     if (!res) {
-//       return;
-//     }
-
-//     if (item.request) {
-//       loading.value = true
-//       item
-//         .request(stepModel)
-//         .then(stepNext)
-//         .finally(() => {
-//           loading.value = false
-//         })
-//     } else {
-//       stepNext()
-//     }
-//   })
-// }
+const tDesignJsonFormFormRef = ref()
 
 watch(() => props.model, () => {
   inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model)
@@ -108,7 +75,7 @@ watch(() => props.model, () => {
 
 defineExpose({
   inputFieldMap,
-  jsonFormRef,
+  tDesignJsonFormFormRef,
 })
 </script>
 
@@ -139,7 +106,7 @@ defineExpose({
         >
           <t-design-json-form-form
             v-if="option.request"
-            ref="jsonFormRef"
+            ref="tDesignJsonFormFormRef"
             :inputs="option.inputs"
             :request="option.request"
             :model="model"
@@ -175,7 +142,7 @@ defineExpose({
           <t-design-json-form-form
             v-for="(option, optionIndex) in inputField.options"
             v-show="model[prop] === option.value"
-            ref="jsonFormRef"
+            ref="tDesignJsonFormFormRef"
             :key="option.value"
             :inputs="option.inputs"
             :request="option.request"
