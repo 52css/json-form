@@ -32,6 +32,7 @@ declare module 'vue' {
     TDesignJsonForm: typeof import('tdesign-vue-next')['DesignJsonForm']
     TDesignJsonFormForm: typeof import('tdesign-vue-next')['DesignJsonFormForm']
     TDialog: typeof import('tdesign-vue-next')['Dialog']
+    TDrawer: typeof import('tdesign-vue-next')['Drawer']
     TEnhancedTable: typeof import('tdesign-vue-next')['EnhancedTable']
     TForm: typeof import('tdesign-vue-next')['Form']
     TFormItem: typeof import('tdesign-vue-next')['FormItem']

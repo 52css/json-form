@@ -8,7 +8,7 @@ const componentMap = {
   AcroDesignJsonForm,
 }
 const configModel = ref({
-  type: 'formStep', // 'listTree', // 'listRadio', // 'listCheckbox', // 'listNormal', // 'formStep', // 'formTabTop', //  'formTabLeft', // 'formNormal',
+  type: 'formTabTop', // 'listTree', // 'listRadio', // 'listCheckbox', // 'listNormal', // 'formStep', // 'formTabTop', //  'formTabLeft', // 'formNormal',
   container: 'none', // 'dialog', // 'none',
   component: 'TDesignJsonForm',
   layout: 'vertical' as Layout,
@@ -630,6 +630,7 @@ const formData = ref({
         :key="configModel.type"
         :container="configModel.container"
         @close="configModel.container = 'none'"
+        size="600px"
       >
         <template #slot1>
           我是自定义插槽

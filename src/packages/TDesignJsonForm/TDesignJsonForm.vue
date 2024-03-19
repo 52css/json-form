@@ -80,7 +80,35 @@ console.log('props.request', props.request)
     </t-dialog>
   </template>
   <template v-else-if="container === 'drawer'">
-    drawer
+    <t-drawer
+      v-bind="$attrs"
+      v-model:visible="visible"
+    >
+      <t-design-json-form-form
+        ref="jsonFormFormRef"
+        :inputs="inputs"
+        :request="request"
+        :model="model"
+        :layout="layout"
+        :disabled="disabled"
+        :span="span"
+        :columns="columns"
+      >
+        <template v-for="(_value, name) in slots" #[name]="scopeData">
+          <slot :name="(name as string)" v-bind="scopeData" />
+        </template>
+        <template #extra></template>
+      </t-design-json-form-form>
+      <template #footer>
+        <t-design-json-form-action
+          :inputs="inputs"
+          :model="model"
+          :loading="loading"
+          :request="request"
+          @submit="onSubmit"
+        />
+      </template>
+    </t-drawer>
   </template>
   <template v-else> 
     <t-design-json-form-form
