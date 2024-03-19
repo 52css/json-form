@@ -69,12 +69,13 @@ interface SubmitParams {
   requestSuccess?: () => void
   requestComplete?: () => void
 }
+const noop = () => {}
 const onSubmit = async ({validateSuccess, requestSuccess, requestComplete}: SubmitParams) => {
   // 如果inputs下的属性，有tabsLeft, 即 type=tabs, 并且placement=left, 验证选中的tabs的form
   if (getIsTabsLeft.value) {
     tDesignJsonFormFormItemRef.value.tDesignJsonFormFormRef[getIsTabsLeft.value.index].onSubmit({
       validateSuccess,
-      requestSuccess,
+      noop,
       requestComplete,
     })
     return;
@@ -111,7 +112,6 @@ const onSubmit = async ({validateSuccess, requestSuccess, requestComplete}: Subm
           .then(() => {
             MessagePlugin.success('保存成功');
             stepNext();
-            requestSuccess && requestSuccess();
           })
           .finally(() => {
             loading.value = false;
@@ -119,7 +119,6 @@ const onSubmit = async ({validateSuccess, requestSuccess, requestComplete}: Subm
           })
       } else {
         stepNext()
-        requestSuccess && requestSuccess();
         requestComplete && requestComplete();
       }
     } else {
@@ -278,17 +277,14 @@ defineExpose({
           <slot :name="(name as string)" v-bind="scopeData" />
         </template>
       </t-design-json-form-form-item>
-      <t-form-item v-if="slots.extra" flex items-center justify-center w-full>
-        <slot name="extra" />
-      </t-form-item>
-      <t-form-item v-else-if="request" flex items-center justify-center :class="[{'w-full': !columns}]">
-        <template v-if="columns">
-          <t-button theme="primary" :loading="loading" style="margin-right: 0.5rem" @click="onSubmit">
-            查询
-          </t-button>
-          <t-button theme="default" variant="outline" type="reset">
-            重置
-          </t-button>
+      <t-form-item v-if="request && columns"  :class="[{'w-full': !columns}]">
+        <t-button theme="primary" :loading="loading" style="margin-right: 0.5rem" @click="onSubmit">
+          查询
+        </t-button>
+        <t-button theme="default" variant="outline" type="reset">
+          重置
+        </t-button>
+        <!-- <template v-if="columns">
         </template>
         <template v-else>
           <t-button theme="primary" :loading="loading" style="margin-right: 0.5rem" @click="onSubmit">
@@ -297,10 +293,10 @@ defineExpose({
           <t-button theme="default" variant="outline" type="reset">
             重置
           </t-button>
-        </template>
+        </template> -->
       </t-form-item>
+      <slot v-if="!getIsTabsLeft && !getIsSteps" name="extra" />
     </t-form>
-    <slot name="toolbar" />
     <t-enhanced-table
       v-if="columns"
       v-bind="$attrs"

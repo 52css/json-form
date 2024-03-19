@@ -662,6 +662,7 @@ const formData = ref({
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: auto;
 }
 .container aside {
   width: 200px;

@@ -140,7 +140,7 @@ defineExpose({
           <!-- aaa: {{ model[prop] }} {{ typeof model[prop] }} -->
           <!-- bbb: {{ inputField.options }} -->
           <t-design-json-form-form
-            v-for="(option, optionIndex) in inputField.options"
+            v-for="(option) in inputField.options"
             v-show="model[prop] === option.value"
             ref="tDesignJsonFormFormRef"
             :key="option.value"
@@ -153,26 +153,6 @@ defineExpose({
           >
             <template v-for="(_value, name) in slots" #[name]="scopeData">
               <slot :name="(name as string)" v-bind="scopeData" />
-            </template>
-            <template #extra>
-              <t-button
-                v-if="optionIndex !== 0"
-                theme="default"
-                @click="() => {
-                  model[prop] = inputField.options[optionIndex - 1].value
-                }"
-              >
-                上一步
-              </t-button>
-              <t-button
-                :disabled="loading"
-                :loading="loading"
-                style="width: 74px; margin-left: 1rem;"
-                theme="primary"
-                @click="onSubmit"
-              >
-                {{ optionIndex === inputField.options.length - 1 ? '保存' : '下一步' }}
-              </t-button>
             </template>
           </t-design-json-form-form>
         </div>

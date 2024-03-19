@@ -1,3 +1,4 @@
+import { useSteps } from "./index";
 // import { computed } from "vue";
 
 // export function useComputed(fn) {
@@ -28,6 +29,7 @@ import {
   type CommonValue,
   type CommonOption,
   type Columns,
+  InputField,
 } from "../types";
 
 export interface Field {
@@ -241,3 +243,40 @@ export const getColumnsByColumns = (columns: Columns) => {
       })
     : [];
 };
+
+const getCustomType = (fn: (val: CommonInput) => boolean) => {
+  return (model: Ref<Model>, inputs?: Inputs) => {
+    return computed(() => {
+      if (!inputs) {
+        return;
+      }
+
+      for (const [prop, val] of Object.entries(inputs)) {
+        if (val && typeof val !== "string" && fn(val)) {
+          const options = val.options as CommonOption[];
+          const index = options?.findIndex(
+            (x) => x.value === model.value[prop]
+          );
+          return {
+            index,
+            prop,
+            options,
+            option: options[index],
+          };
+        }
+      }
+
+      return;
+    });
+  };
+};
+
+export const useTabsLeft = getCustomType(
+  (val) => val.type === "tabs" && (val.placement ?? "top") === "left"
+);
+
+export const useTabsRight = getCustomType(
+  (val) => val.type === "tabs" && (val.placement ?? "top") === "right"
+);
+
+export const useSteps = getCustomType((val) => val.type === "steps");

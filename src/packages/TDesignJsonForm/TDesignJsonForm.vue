@@ -1,6 +1,7 @@
 <script lang="ts">
 import { type JsonFormProps, JsonFormDefault } from '../types'
 import TDesignJsonFormForm from './TDesignJsonFormForm.vue'
+import TDesignJsonFormAction from './TDesignJsonFormAction.vue'
 import { useVModel } from '@vueuse/core'
 
 export interface TDesignJsonFormProps extends JsonFormProps {
@@ -24,7 +25,7 @@ defineOptions({
 const jsonFormFormRef = ref()
 const loading = ref(false)
 const visible = useVModel(props, 'visible', emit)
-const onConfirm = async () => {
+const onSubmit = async () => {
   jsonFormFormRef.value?.onSubmit({
     validateSuccess() {
       loading.value = true;
@@ -42,6 +43,8 @@ watch(() => visible.value, (val) => {
     emit('close')
   }
 })
+
+console.log('props.request', props.request)
 </script>
 
 <template>
@@ -66,39 +69,20 @@ watch(() => visible.value, (val) => {
         <template #extra></template>
       </t-design-json-form-form>
       <template #footer>
-        <template v-if="getIsSteps">
-          <t-button v-if="step !== 0" theme="default" @click="onPrev">
-            上一步
-          </t-button>
-          <t-button
-            :disabled="loading"
-            :loading="loading"
-            style="width: 74px"
-            theme="primary"
-            @click="onConfirm"
-          >
-            {{ step === stepList.length - 1 ? '保存' : '下一步' }}
-          </t-button>
-        </template>
-        <template v-else>
-          <t-button theme="default" @click="visible = false">
-            取消
-          </t-button>
-          <t-button
-            :loading="loading"
-            theme="primary"
-            @click="onConfirm"
-          >
-            确定
-          </t-button>
-        </template>
+        <t-design-json-form-action
+          :inputs="inputs"
+          :model="model"
+          :loading="loading"
+          :request="request"
+          @submit="onSubmit"
+        />
       </template>
     </t-dialog>
   </template>
   <template v-else-if="container === 'drawer'">
     drawer
   </template>
-  <template v-else>
+  <template v-else> 
     <t-design-json-form-form
       v-bind="$attrs"
       ref="jsonFormFormRef"
@@ -112,6 +96,17 @@ watch(() => visible.value, (val) => {
     >
       <template v-for="(_value, name) in slots" #[name]="scopeData">
         <slot :name="(name as string)" v-bind="scopeData" />
+      </template>
+      <template v-if="!columns" #extra>
+        <t-form-item flex items-center justify-center w-full>
+          <t-design-json-form-action
+            :inputs="inputs"
+            :model="model"
+            :loading="loading"
+            :request="request"
+            @submit="onSubmit"
+          />
+        </t-form-item>
       </template>
     </t-design-json-form-form>
   </template>

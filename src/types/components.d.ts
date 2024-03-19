@@ -27,6 +27,7 @@ declare module 'vue' {
     TColorPicker: typeof import('tdesign-vue-next')['ColorPicker']
     TDatePicker: typeof import('tdesign-vue-next')['DatePicker']
     TDateRangePicker: typeof import('tdesign-vue-next')['DateRangePicker']
+    TDesignFormAction: typeof import('tdesign-vue-next')['DesignFormAction']
     TDesignFormItem: typeof import('tdesign-vue-next')['DesignFormItem']
     TDesignJsonForm: typeof import('tdesign-vue-next')['DesignJsonForm']
     TDesignJsonFormForm: typeof import('tdesign-vue-next')['DesignJsonFormForm']
