@@ -52,6 +52,7 @@ console.log('props.request', props.request)
     <t-dialog
       v-bind="$attrs"
       v-model:visible="visible"
+      :size="size"
     >
       <t-design-json-form-form
         ref="jsonFormFormRef"
@@ -83,6 +84,7 @@ console.log('props.request', props.request)
     <t-drawer
       v-bind="$attrs"
       v-model:visible="visible"
+      :size="size"
     >
       <t-design-json-form-form
         ref="jsonFormFormRef"
@@ -110,7 +112,7 @@ console.log('props.request', props.request)
       </template>
     </t-drawer>
   </template>
-  <template v-else> 
+  <template v-else>
     <t-design-json-form-form
       v-bind="$attrs"
       ref="jsonFormFormRef"
