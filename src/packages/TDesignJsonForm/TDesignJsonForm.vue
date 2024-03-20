@@ -54,7 +54,7 @@ watch(() => visible.value, (val) => {
       v-model:visible="visible"
       :size="size"
     >
-      <t-design-json-form-form
+      <TDesignJsonFormForm
         ref="jsonFormFormRef"
         :inputs="inputs"
         :request="request"
@@ -68,9 +68,9 @@ watch(() => visible.value, (val) => {
           <slot :name="(name as string)" v-bind="scopeData" />
         </template>
         <template #extra></template>
-      </t-design-json-form-form>
+      </TDesignJsonFormForm>
       <template #footer>
-        <t-design-json-form-action
+        <TDesignJsonFormAction
           :inputs="inputs"
           :model="model"
           :loading="loading"
@@ -86,7 +86,7 @@ watch(() => visible.value, (val) => {
       v-model:visible="visible"
       :size="size"
     >
-      <t-design-json-form-form
+      <TDesignJsonFormForm
         ref="jsonFormFormRef"
         :inputs="inputs"
         :request="request"
@@ -100,9 +100,9 @@ watch(() => visible.value, (val) => {
           <slot :name="(name as string)" v-bind="scopeData" />
         </template>
         <template #extra></template>
-      </t-design-json-form-form>
+      </TDesignJsonFormForm>
       <template #footer>
-        <t-design-json-form-action
+        <TDesignJsonFormAction
           :inputs="inputs"
           :model="model"
           :loading="loading"
@@ -113,7 +113,7 @@ watch(() => visible.value, (val) => {
     </t-drawer>
   </template>
   <template v-else>
-    <t-design-json-form-form
+    <TDesignJsonFormForm
       v-bind="$attrs"
       ref="jsonFormFormRef"
       :inputs="inputs"
@@ -129,7 +129,7 @@ watch(() => visible.value, (val) => {
       </template>
       <template v-if="!columns" #extra>
         <t-form-item flex items-center justify-center w-full>
-          <t-design-json-form-action
+          <TDesignJsonFormAction
             :inputs="inputs"
             :model="model"
             :loading="loading"
@@ -138,7 +138,7 @@ watch(() => visible.value, (val) => {
           />
         </t-form-item>
       </template>
-    </t-design-json-form-form>
+    </TDesignJsonFormForm>
   </template>
 </template>
 

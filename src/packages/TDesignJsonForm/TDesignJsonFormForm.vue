@@ -262,7 +262,7 @@ defineExpose({
       reset-type="initial"
       class="json-form-form__form"
     >
-      <t-design-json-form-form-item
+      <TDesignJsonFormFormItem
         ref="tDesignJsonFormFormItemRef"
         :inputs="inputs"
         :request="request"
@@ -276,7 +276,7 @@ defineExpose({
         <template v-for="(_value, name) in slots" #[name]="scopeData">
           <slot :name="(name as string)" v-bind="scopeData" />
         </template>
-      </t-design-json-form-form-item>
+      </TDesignJsonFormFormItem>
       <t-form-item v-if="request && columns"  :class="[{'w-full': !columns}]">
         <t-button theme="primary" :loading="loading" style="margin-right: 0.5rem" @click="onSubmit">
           查询

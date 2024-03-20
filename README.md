@@ -125,8 +125,12 @@ const inputs: Inputs = {
 ## 框架支持
 
 * [ ] 支持tdesign、element-plus、ant-design-vue、acro-design
+  * [x] 支持tdesign
+  * [ ] 支持element-plus
+  * [ ] 支持ant-design-vue
+  * [ ] 支持acro-design
 * [x] 支持组件动态注入
-* [ ] 支持插入场景（页面、抽屉、弹窗）
+* [x] 支持插入场景（页面、抽屉、弹窗）
 * [x] 支持表单形式（普通表单、步骤条、左边导航、头部导航）
   * [x] 普通表单
   * [x] 左边导航表单（每个表单提交）
@@ -143,10 +147,10 @@ const inputs: Inputs = {
 * [x] 支持`layout` 布局, 可设置`horizontal`, `vertical`, `inline`
 * [x] 支持span分栏（全局和单个）
 * [x] 支持disabled禁用(全局和单个)
-* [ ] 支持container控制插入元素
+* [x] 支持container控制插入元素
   * [x] `none` 插入到页面
-  * [ ] `dialog` 插入到弹窗
-  * [ ] `drawer` 插入到抽屉
+  * [x] `dialog` 插入到弹窗
+  * [x] `drawer` 插入到抽屉
 
 ## Inputs支持
 
