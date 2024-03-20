@@ -135,14 +135,16 @@ watch(() => visible.value, (val) => {
       </template>
       <template v-if="!columns" #extra>
         <el-form-item flex items-center justify-center w-full>
-          <ElementPlusJsonFormAction
-            :inputs="inputs"
-            :model="model"
-            :loading="loading"
-            :request="request"
-            @submit="onSubmit"
-            @reset="onReset"
-          />
+          <section flex items-center justify-center w-full>
+            <ElementPlusJsonFormAction
+              :inputs="inputs"
+              :model="model"
+              :loading="loading"
+              :request="request"
+              @submit="onSubmit"
+              @reset="onReset"
+              />
+          </section>
         </el-form-item>
       </template>
     </ElementPlusJsonFormForm>
