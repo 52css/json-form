@@ -38,6 +38,10 @@ const onSubmit = async () => {
     }
   })
 }
+const onReset = () => {
+  jsonFormFormRef.value?.onReset()
+}
+
 watch(() => visible.value, (val) => {
   if (!val) {
     emit('close')
@@ -76,6 +80,7 @@ watch(() => visible.value, (val) => {
           :loading="loading"
           :request="request"
           @submit="onSubmit"
+          @reset="onReset"
         />
       </template>
     </el-dialog>
@@ -108,6 +113,7 @@ watch(() => visible.value, (val) => {
           :loading="loading"
           :request="request"
           @submit="onSubmit"
+          @reset="onReset"
         />
       </template>
     </el-drawer>
@@ -135,6 +141,7 @@ watch(() => visible.value, (val) => {
             :loading="loading"
             :request="request"
             @submit="onSubmit"
+            @reset="onReset"
           />
         </el-form-item>
       </template>

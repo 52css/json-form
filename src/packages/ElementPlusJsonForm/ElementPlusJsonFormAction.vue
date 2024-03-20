@@ -4,6 +4,7 @@ import { type JsonFormProps, type CommonOption, type Model } from '../types'
 export interface ElementPlusJsonFormActionProps extends JsonFormProps {
   prop1?: string
   onSubmit?: any
+  onReset?: any
   model?: Model
   loading?: boolean
 }
@@ -97,7 +98,7 @@ watch(() => props.model, (val: Model) => {
       <el-button type="primary" :loading="loading" style="margin-right: 0.5rem" @click="onSubmit">
         提交
       </el-button>
-      <el-button type="default" variant="outline">
+      <el-button type="default" variant="outline" @click="onReset">
         重置
       </el-button>
     </template>
@@ -105,7 +106,7 @@ watch(() => props.model, (val: Model) => {
       <el-button type="primary" :loading="loading" style="margin-right: 0.5rem" @click="onSubmit">
         提交
       </el-button>
-      <el-button type="default" variant="outline">
+      <el-button type="default" variant="outline" @click="onReset">
         重置
       </el-button>
     </template>

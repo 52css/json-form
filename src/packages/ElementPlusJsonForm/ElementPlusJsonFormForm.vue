@@ -167,6 +167,21 @@ const onSubmit = async ({validateSuccess, requestSuccess, requestComplete}: Subm
     }
   }
 }
+const onReset = () => {
+  // 如果inputs下的属性，有tabsLeft, 即 type=tabs, 并且placement=left, 验证选中的tabs的form
+  if (getIsTabsLeft.value) {
+    formItemRef.value.jsonFormFormRef[getIsTabsLeft.value.index].formRef.resetFields()
+    return;
+  }
+
+  // 判断type=steps, 验证当前选中的form
+  if (getIsSteps.value) {
+    formItemRef.value.jsonFormFormRef[getIsSteps.value.index].formRef.resetFields()
+    return;
+  }
+
+  formRef.value?.resetFields()
+}
 const tableData = ref()
 const pagination = ref({
   pageSize: 10,
@@ -246,6 +261,7 @@ init();
 defineExpose({
   init,
   onSubmit,
+  onReset,
   getFlatModel,
   formRef,
   formItemRef,
@@ -288,12 +304,13 @@ defineExpose({
         <el-button type="primary" :loading="loading" style="margin-right: 0.5rem" @click="onSubmit">
           查询
         </el-button>
-        <el-button type="default" variant="outline">
+        <el-button type="default" variant="outline" @click="onReset">
           重置
         </el-button>
       </el-form-item>
       <slot v-if="!getIsTabsLeft && !getIsSteps" name="extra" />
     </el-form>
+    {{ tableData }}
     <el-table
       v-if="columns"
       v-bind="$attrs"
