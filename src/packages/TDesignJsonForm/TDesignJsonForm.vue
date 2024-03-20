@@ -44,7 +44,7 @@ watch(() => visible.value, (val) => {
   }
 })
 
-console.log('props.request', props.request)
+// console.log('props.request', props.request)
 </script>
 
 <template>
