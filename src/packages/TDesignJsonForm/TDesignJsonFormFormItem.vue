@@ -66,8 +66,7 @@ const componentMap: Record<string, Component> = {
   TUpload,
 }
 let inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model)
-const loading = ref(false)
-const tDesignJsonFormFormRef = ref()
+const jsonFormFormRef = ref()
 
 watch(() => props.model, () => {
   inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model)
@@ -75,7 +74,7 @@ watch(() => props.model, () => {
 
 defineExpose({
   inputFieldMap,
-  tDesignJsonFormFormRef,
+  jsonFormFormRef,
 })
 </script>
 
@@ -106,7 +105,7 @@ defineExpose({
         >
           <TDesignJsonFormForm
             v-if="option.request"
-            ref="tDesignJsonFormFormRef"
+            ref="jsonFormFormRef"
             :inputs="option.inputs"
             :request="option.request"
             :model="model"
@@ -142,7 +141,7 @@ defineExpose({
           <TDesignJsonFormForm
             v-for="(option) in inputField.options"
             v-show="model[prop] === option.value"
-            ref="tDesignJsonFormFormRef"
+            ref="jsonFormFormRef"
             :key="option.value"
             :inputs="option.inputs"
             :request="option.request"

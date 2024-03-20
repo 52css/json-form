@@ -1,5 +1,5 @@
 <script lang="ts">
-import { type Inputs, type Model, type Layout, type Columns } from '../types'
+import { type Inputs, type Model, type Layout, type Columns, type CommonOption, type CommonValue } from '../types'
 import { getInputsByInputs, setOutputs } from '../utils'
 import _ from 'lodash'
 import {
@@ -66,8 +66,10 @@ const componentMap: Record<string, Component> = {
   TUpload,
 }
 let inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model)
-const loading = ref(false)
-const elementPlusJsonFormFormRef = ref()
+const jsonFormFormRef = ref()
+const getActive = (options: CommonOption[], val: CommonValue) => {
+  return options.findIndex(x => x.value === val)
+}
 
 watch(() => props.model, () => {
   inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model)
@@ -75,7 +77,7 @@ watch(() => props.model, () => {
 
 defineExpose({
   inputFieldMap,
-  elementPlusJsonFormFormRef,
+  jsonFormFormRef,
 })
 </script>
 
@@ -89,24 +91,30 @@ defineExpose({
         :data-span="inputField.span ?? span"
         class="json-form-form__form__form-item"
       />
+      <!-- el-tabs placement => tab-position -->
+      <!-- el-tabs theme => type -->
       <el-tabs
         v-else-if="inputField.type === 'tabs'"
-        v-model="model[prop]"
+        v-model="(model as Model)[prop]"
         :theme="inputField.theme"
         :placement="inputField.placement"
+        :tab-position="inputField.placement"
+        :type="(inputField.theme)"
         style="width: 100%;"
       >
+        <!-- el-tab-pane value => name -->
         <el-tab-pane
           v-for="option in inputField.options"
           :label="option?.label"
           :value="(option?.value as string)"
+          :name="(option?.value as string)"
           :key="(option?.value as string)"
           :destroy-on-hide="false"
           :style="`padding-${((inputField.placement ?? 'top') === 'top') ? 'block' : 'inline'}: 1rem;`"
         >
           <ElementPlusJsonFormForm
             v-if="option.request"
-            ref="elementPlusJsonFormFormRef"
+            ref="jsonFormFormRef"
             :inputs="option.inputs"
             :request="option.request"
             :model="model"
@@ -132,7 +140,7 @@ defineExpose({
         </el-tab-pane>
       </el-tabs>
       <template v-else-if="inputField.type === 'steps'">
-        <el-steps v-model="model[prop]" :style="`margin: 30px ${100 / (inputField.options.length + 2)}%`">
+        <el-steps :active="getActive(inputField.options, (model as Model)[prop])" :style="`margin: 30px ${100 / (inputField.options.length + 2)}%;width: 100%`">
           <el-step v-for="option in inputField.options" :title="option.label" :value="option.value" :key="option.value" />
         </el-steps>
         <!-- {{ model[prop] }} -->
@@ -141,8 +149,8 @@ defineExpose({
           <!-- bbb: {{ inputField.options }} -->
           <ElementPlusJsonFormForm
             v-for="(option) in inputField.options"
-            v-show="model[prop] === option.value"
-            ref="ElementPlusJsonFormFormRef"
+            v-show="(model as Model)[prop] === option.value"
+            ref="jsonFormFormRef"
             :key="option.value"
             :inputs="option.inputs"
             :request="option.request"
@@ -157,6 +165,7 @@ defineExpose({
           </ElementPlusJsonFormForm>
         </div>
       </template>
+      <!-- el-form-item prop => name -->
       <el-form-item
         v-else
         :label="inputField?.label"

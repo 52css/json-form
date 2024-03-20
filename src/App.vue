@@ -10,7 +10,7 @@ const componentMap = {
 const configModel = ref({
   type: 'formNormal', // 'listTree', // 'listRadio', // 'listCheckbox', // 'listNormal', // 'formStep', // 'formTabTop', //  'formTabLeft', // 'formNormal',
   container: 'none', // 'dialog', // 'none',
-  component: 'ElementPlusJsonForm', // 'TDesignJsonForm',
+  component: 'ElementPlusJsonForm', // 'ElementPlusJsonForm', // 'TDesignJsonForm',
   layout: 'vertical' as Layout,
   disabled: false,
   span: 12,

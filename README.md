@@ -209,4 +209,10 @@ const inputs: Inputs = {
 
 | 属性       | tdesign | element-plus | ant-design | acro-design |
 |----------|---------|--------------|------------|-------------|
-| prefix属性 | label   | -            | -          | -           |
+| prefix属性 | label   | prefix       | prefix     | prefix      |
+
+## Tabs表单映射
+
+| 属性          | tdesign   | element-plus | ant-design | acro-design |
+|-------------|-----------|--------------|------------|-------------|
+| placement属性 | placement | tab-position | -          | -           |

@@ -70,10 +70,11 @@ interface SubmitParams {
   requestComplete?: () => void
 }
 const noop = () => {}
+const to = (promise: any) => promise.then(() => true).catch((err: Error) => err);
 const onSubmit = async ({validateSuccess, requestSuccess, requestComplete}: SubmitParams) => {
   // 如果inputs下的属性，有tabsLeft, 即 type=tabs, 并且placement=left, 验证选中的tabs的form
   if (getIsTabsLeft.value) {
-    elementPlusJsonFormFormItemRef.value.elementPlusJsonFormFormRef[getIsTabsLeft.value.index].onSubmit({
+    formItemRef.value.jsonFormFormRef[getIsTabsLeft.value.index].onSubmit({
       validateSuccess,
       noop,
       requestComplete,
@@ -88,7 +89,7 @@ const onSubmit = async ({validateSuccess, requestSuccess, requestComplete}: Subm
     const prop = getIsSteps.value?.prop;
     const index = getIsSteps.value?.index;
     const stepRequest = option.request;
-    const validateResult: FormValidateResult<FormData> = await elementPlusJsonFormFormItemRef.value.elementPlusJsonFormFormRef[index].tFormRef.validate()
+    const validateResult: FormValidateResult<FormData> = await to(formItemRef.value.jsonFormFormRef[index].formRef.validate())
 
     if (validateResult === true) {
       loading.value = true;
@@ -103,7 +104,7 @@ const onSubmit = async ({validateSuccess, requestSuccess, requestComplete}: Subm
       }
 
       for (let i = 0; i <= index; i++) {
-        stepModel = {...stepModel, ...elementPlusJsonFormFormItemRef.value.elementPlusJsonFormFormRef[i].getFlatModel}
+        stepModel = {...stepModel, ...formItemRef.value.jsonFormFormRef[i].getFlatModel}
       }
 
       if (stepRequest) {
@@ -128,7 +129,10 @@ const onSubmit = async ({validateSuccess, requestSuccess, requestComplete}: Subm
   }
 
   // 普通表单 或者 tabs + placement=top, 验证整个大form
-  const validateResult: FormValidateResult<FormData> = await tFormRef.value?.validate()
+  const validateResult: FormValidateResult<FormData> = await to(formRef.value?.validate())
+
+  console.log('validateResult', validateResult)
+
   if (validateResult === true) {
     loading.value = true;
     validateSuccess && validateSuccess();
@@ -172,8 +176,8 @@ const pagination = ref({
   showJumper: true,
   size: 'medium',
 })
-const tFormRef = ref()
-const elementPlusJsonFormFormItemRef = ref()
+const formRef = ref()
+const formItemRef = ref()
 
 const getCanSet = (inputs: Inputs, setKey: string) => {
   for (const [key, inputField] of Object.entries(inputs)) {
@@ -198,7 +202,7 @@ const getCanSet = (inputs: Inputs, setKey: string) => {
 }
 const getFlatModel = computed(() => {
   const flatModel = {};
-  const inputs = elementPlusJsonFormFormItemRef.value?.inputFieldMap
+  const inputs = formItemRef.value?.inputFieldMap
 
   for (const [key, val] of Object.entries(toRaw(model.value))) {
     const canSet  = getCanSet(inputs, key);
@@ -243,8 +247,8 @@ defineExpose({
   init,
   onSubmit,
   getFlatModel,
-  tFormRef,
-  elementPlusJsonFormFormItemRef,
+  formRef,
+  formItemRef,
 })
 </script>
 
@@ -252,7 +256,7 @@ defineExpose({
   <div flex flex-col gap-2>
     <el-form
       v-if="inputs"
-      ref="tFormRef"
+      ref="formRef"
       v-bind="$attrs"
       :data="model"
       :model="model"
@@ -266,7 +270,7 @@ defineExpose({
       class="json-form-form__form"
     >
       <ElementPlusJsonFormFormItem
-        ref="elementPlusJsonFormFormItemRef"
+        ref="formItemRef"
         :inputs="inputs"
         :request="request"
         :model="model"

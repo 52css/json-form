@@ -73,7 +73,7 @@ const noop = () => {}
 const onSubmit = async ({validateSuccess, requestSuccess, requestComplete}: SubmitParams) => {
   // 如果inputs下的属性，有tabsLeft, 即 type=tabs, 并且placement=left, 验证选中的tabs的form
   if (getIsTabsLeft.value) {
-    tDesignJsonFormFormItemRef.value.tDesignJsonFormFormRef[getIsTabsLeft.value.index].onSubmit({
+    formItemRef.value.jsonFormFormRef[getIsTabsLeft.value.index].onSubmit({
       validateSuccess,
       noop,
       requestComplete,
@@ -88,7 +88,7 @@ const onSubmit = async ({validateSuccess, requestSuccess, requestComplete}: Subm
     const prop = getIsSteps.value?.prop;
     const index = getIsSteps.value?.index;
     const stepRequest = option.request;
-    const validateResult: FormValidateResult<FormData> = await tDesignJsonFormFormItemRef.value.tDesignJsonFormFormRef[index].tFormRef.validate()
+    const validateResult: FormValidateResult<FormData> = await formItemRef.value.jsonFormFormRef[index].formRef.validate()
 
     if (validateResult === true) {
       loading.value = true;
@@ -103,7 +103,7 @@ const onSubmit = async ({validateSuccess, requestSuccess, requestComplete}: Subm
       }
 
       for (let i = 0; i <= index; i++) {
-        stepModel = {...stepModel, ...tDesignJsonFormFormItemRef.value.tDesignJsonFormFormRef[i].getFlatModel}
+        stepModel = {...stepModel, ...formItemRef.value.jsonFormFormRef[i].getFlatModel}
       }
 
       if (stepRequest) {
@@ -128,7 +128,7 @@ const onSubmit = async ({validateSuccess, requestSuccess, requestComplete}: Subm
   }
 
   // 普通表单 或者 tabs + placement=top, 验证整个大form
-  const validateResult: FormValidateResult<FormData> = await tFormRef.value?.validate()
+  const validateResult: FormValidateResult<FormData> = await formRef.value?.validate()
   if (validateResult === true) {
     loading.value = true;
     validateSuccess && validateSuccess();
@@ -172,8 +172,8 @@ const pagination = ref({
   showJumper: true,
   size: 'medium',
 })
-const tFormRef = ref()
-const tDesignJsonFormFormItemRef = ref()
+const formRef = ref()
+const formItemRef = ref()
 
 const getCanSet = (inputs: Inputs, setKey: string) => {
   for (const [key, inputField] of Object.entries(inputs)) {
@@ -198,7 +198,7 @@ const getCanSet = (inputs: Inputs, setKey: string) => {
 }
 const getFlatModel = computed(() => {
   const flatModel = {};
-  const inputs = tDesignJsonFormFormItemRef.value?.inputFieldMap
+  const inputs = formItemRef.value?.inputFieldMap
 
   for (const [key, val] of Object.entries(toRaw(model.value))) {
     const canSet  = getCanSet(inputs, key);
@@ -243,16 +243,17 @@ defineExpose({
   init,
   onSubmit,
   getFlatModel,
-  tFormRef,
-  tDesignJsonFormFormItemRef,
+  formRef,
+  formItemRef,
 })
 </script>
 
 <template>
   <div flex flex-col gap-2>
+    <!-- t-form model => data -->
     <t-form
       v-if="inputs"
-      ref="tFormRef"
+      ref="formRef"
       v-bind="$attrs"
       :data="model"
       :model="model"
@@ -264,7 +265,7 @@ defineExpose({
       class="json-form-form__form"
     >
       <TDesignJsonFormFormItem
-        ref="tDesignJsonFormFormItemRef"
+        ref="formItemRef"
         :inputs="inputs"
         :request="request"
         :model="model"
