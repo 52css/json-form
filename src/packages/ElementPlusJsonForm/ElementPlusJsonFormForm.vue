@@ -2,26 +2,26 @@
 import { ref } from 'vue'
 import { type JsonFormProps, JsonFormDefault, type Inputs, type CommonOption, type Columns } from '../types'
 import { getColumnsByColumns, getLabelAlignByLayout, getLayoutByLayout } from '../utils'
-import TDesignJsonFormFormItem from './TDesignJsonFormFormItem.vue'
+import ElementPlusJsonFormFormItem from './ElementPlusJsonFormFormItem.vue'
 import { FormValidateResult, PageInfo, PrimaryTableCol, TableRowData, TdPaginationProps, } from 'tdesign-vue-next'
 import { set } from 'lodash'
 
-export interface TDesignJsonFormProps extends JsonFormProps {
+export interface ElementPlusJsonFormProps extends JsonFormProps {
   prop1?: string
 }
-export const TDesignJsonFormDefault = {
+export const ElementPlusJsonFormDefault = {
   ...JsonFormDefault
 }
-export interface TDesignJsonFormEmits {
+export interface ElementPlusJsonFormEmits {
   (event: 'event1'): void
 }
 </script>
 <script setup lang="ts">
-const props = withDefaults(defineProps<TDesignJsonFormProps>(), TDesignJsonFormDefault)
+const props = withDefaults(defineProps<ElementPlusJsonFormProps>(), ElementPlusJsonFormDefault)
 const slots = defineSlots()
-defineEmits<TDesignJsonFormEmits>()
+defineEmits<ElementPlusJsonFormEmits>()
 defineOptions({
-  name: 'TDesignJsonFormForm',
+  name: 'ElementPlusJsonFormForm',
 })
 const model = ref<{ [key: string]: any }>({})
 const loading = ref(false);
@@ -73,7 +73,7 @@ const noop = () => {}
 const onSubmit = async ({validateSuccess, requestSuccess, requestComplete}: SubmitParams) => {
   // 如果inputs下的属性，有tabsLeft, 即 type=tabs, 并且placement=left, 验证选中的tabs的form
   if (getIsTabsLeft.value) {
-    tDesignJsonFormFormItemRef.value.tDesignJsonFormFormRef[getIsTabsLeft.value.index].onSubmit({
+    elementPlusJsonFormFormItemRef.value.elementPlusJsonFormFormRef[getIsTabsLeft.value.index].onSubmit({
       validateSuccess,
       noop,
       requestComplete,
@@ -88,7 +88,7 @@ const onSubmit = async ({validateSuccess, requestSuccess, requestComplete}: Subm
     const prop = getIsSteps.value?.prop;
     const index = getIsSteps.value?.index;
     const stepRequest = option.request;
-    const validateResult: FormValidateResult<FormData> = await tDesignJsonFormFormItemRef.value.tDesignJsonFormFormRef[index].tFormRef.validate()
+    const validateResult: FormValidateResult<FormData> = await elementPlusJsonFormFormItemRef.value.elementPlusJsonFormFormRef[index].tFormRef.validate()
 
     if (validateResult === true) {
       loading.value = true;
@@ -103,7 +103,7 @@ const onSubmit = async ({validateSuccess, requestSuccess, requestComplete}: Subm
       }
 
       for (let i = 0; i <= index; i++) {
-        stepModel = {...stepModel, ...tDesignJsonFormFormItemRef.value.tDesignJsonFormFormRef[i].getFlatModel}
+        stepModel = {...stepModel, ...elementPlusJsonFormFormItemRef.value.elementPlusJsonFormFormRef[i].getFlatModel}
       }
 
       if (stepRequest) {
@@ -173,7 +173,7 @@ const pagination = ref({
   size: 'medium',
 })
 const tFormRef = ref()
-const tDesignJsonFormFormItemRef = ref()
+const elementPlusJsonFormFormItemRef = ref()
 
 const getCanSet = (inputs: Inputs, setKey: string) => {
   for (const [key, inputField] of Object.entries(inputs)) {
@@ -198,7 +198,7 @@ const getCanSet = (inputs: Inputs, setKey: string) => {
 }
 const getFlatModel = computed(() => {
   const flatModel = {};
-  const inputs = tDesignJsonFormFormItemRef.value?.inputFieldMap
+  const inputs = elementPlusJsonFormFormItemRef.value?.inputFieldMap
 
   for (const [key, val] of Object.entries(toRaw(model.value))) {
     const canSet  = getCanSet(inputs, key);
@@ -244,13 +244,13 @@ defineExpose({
   onSubmit,
   getFlatModel,
   tFormRef,
-  tDesignJsonFormFormItemRef,
+  elementPlusJsonFormFormItemRef,
 })
 </script>
 
 <template>
   <div flex flex-col gap-2>
-    <t-form
+    <el-form
       v-if="inputs"
       ref="tFormRef"
       v-bind="$attrs"
@@ -259,12 +259,14 @@ defineExpose({
       :disabled="disabled"
       :label-align="getLabelAlignByLayout(columns ? 'inline' : layout)"
       :layout="getLayoutByLayout(columns ? 'inline' : layout)"
+      :label-position="getLabelAlignByLayout(layout)"
+      :inline="layout === 'inline'"
       :label-width="(columns ? 'inline' : layout) === 'inline' ? 'auto' : '240px'"
       reset-type="initial"
       class="json-form-form__form"
     >
-      <TDesignJsonFormFormItem
-        ref="tDesignJsonFormFormItemRef"
+      <ElementPlusJsonFormFormItem
+        ref="elementPlusJsonFormFormItemRef"
         :inputs="inputs"
         :request="request"
         :model="model"
@@ -277,28 +279,18 @@ defineExpose({
         <template v-for="(_value, name) in slots" #[name]="scopeData">
           <slot :name="(name as string)" v-bind="scopeData" />
         </template>
-      </TDesignJsonFormFormItem>
-      <t-form-item v-if="request && columns"  :class="[{'w-full': !columns}]">
-        <t-button theme="primary" :loading="loading" style="margin-right: 0.5rem" @click="onSubmit">
+      </ElementPlusJsonFormFormItem>
+      <el-form-item v-if="request && columns"  :class="[{'w-full': !columns}]">
+        <el-button type="primary" :loading="loading" style="margin-right: 0.5rem" @click="onSubmit">
           查询
-        </t-button>
-        <t-button theme="default" variant="outline" type="reset">
+        </el-button>
+        <el-button type="default" variant="outline">
           重置
-        </t-button>
-        <!-- <template v-if="columns">
-        </template>
-        <template v-else>
-          <t-button theme="primary" :loading="loading" style="margin-right: 0.5rem" @click="onSubmit">
-            提交
-          </t-button>
-          <t-button theme="default" variant="outline" type="reset">
-            重置
-          </t-button>
-        </template> -->
-      </t-form-item>
+        </el-button>
+      </el-form-item>
       <slot v-if="!getIsTabsLeft && !getIsSteps" name="extra" />
-    </t-form>
-    <t-enhanced-table
+    </el-form>
+    <el-table
       v-if="columns"
       v-bind="$attrs"
       :data="tableData"

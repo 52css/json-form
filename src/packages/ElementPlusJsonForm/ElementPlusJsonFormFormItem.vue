@@ -22,9 +22,9 @@ import {
   Upload as TUpload,
 } from 'tdesign-vue-next'
 import { registerJsonFormFieldComponents } from '../index'
-import TDesignJsonFormForm from './TDesignJsonFormForm.vue'
+import ElementPlusJsonFormForm from './ElementPlusJsonFormForm.vue'
 
-export interface TDesignJsonFormFormItemProps {
+export interface ElementPlusJsonFormFormItemProps {
   inputs?: Inputs
   model: Model,
   span?: number,
@@ -40,11 +40,11 @@ export interface TDesignFormItemEmits {
 export const pascalCase = (string: string) => _.upperFirst(_.camelCase(string));
 </script>
 <script setup lang="ts">
-const props = withDefaults(defineProps<TDesignJsonFormFormItemProps>(), TDesignFormItemDefault)
+const props = withDefaults(defineProps<ElementPlusJsonFormFormItemProps>(), TDesignFormItemDefault)
 const slots = defineSlots()
 defineEmits<TDesignFormItemEmits>()
 defineOptions({
-  name: 'TDesignJsonFormFormItem',
+  name: 'ElementPlusJsonFormFormItem',
 })
 const componentMap: Record<string, Component> = {
   TAutoComplete,
@@ -67,7 +67,7 @@ const componentMap: Record<string, Component> = {
 }
 let inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model)
 const loading = ref(false)
-const tDesignJsonFormFormRef = ref()
+const elementPlusJsonFormFormRef = ref()
 
 watch(() => props.model, () => {
   inputFieldMap = getInputsByInputs(props.inputs as Inputs, props.model)
@@ -75,7 +75,7 @@ watch(() => props.model, () => {
 
 defineExpose({
   inputFieldMap,
-  tDesignJsonFormFormRef,
+  elementPlusJsonFormFormRef,
 })
 </script>
 
@@ -89,14 +89,14 @@ defineExpose({
         :data-span="inputField.span ?? span"
         class="json-form-form__form__form-item"
       />
-      <t-tabs
+      <el-tabs
         v-else-if="inputField.type === 'tabs'"
         v-model="model[prop]"
         :theme="inputField.theme"
         :placement="inputField.placement"
         style="width: 100%;"
       >
-        <t-tab-panel
+        <el-tab-pane
           v-for="option in inputField.options"
           :label="option?.label"
           :value="(option?.value as string)"
@@ -104,9 +104,9 @@ defineExpose({
           :destroy-on-hide="false"
           :style="`padding-${((inputField.placement ?? 'top') === 'top') ? 'block' : 'inline'}: 1rem;`"
         >
-          <TDesignJsonFormForm
+          <ElementPlusJsonFormForm
             v-if="option.request"
-            ref="tDesignJsonFormFormRef"
+            ref="elementPlusJsonFormFormRef"
             :inputs="option.inputs"
             :request="option.request"
             :model="model"
@@ -117,9 +117,9 @@ defineExpose({
             <template v-for="(_value, name) in slots" #[name]="scopeData">
               <slot :name="(name as string)" v-bind="scopeData" />
             </template>
-          </TDesignJsonFormForm>
+          </ElementPlusJsonFormForm>
           <div v-else style="display: flex; flex-wrap: wrap;">
-            <TDesignJsonFormFormItem
+            <ElementPlusJsonFormFormItem
               :inputs="(option.inputs as Inputs)"
               :model="model"
               :span="span"
@@ -127,22 +127,22 @@ defineExpose({
               <template v-for="(_value, name) in slots" #[name]="scopeData">
                 <slot :name="name" v-bind="scopeData" />
               </template>
-            </TDesignJsonFormFormItem>
+            </ElementPlusJsonFormFormItem>
           </div>
-        </t-tab-panel>
-      </t-tabs>
+        </el-tab-pane>
+      </el-tabs>
       <template v-else-if="inputField.type === 'steps'">
-        <t-steps v-model="model[prop]" :style="`margin: 30px ${100 / (inputField.options.length + 2)}%`">
-          <t-step-item v-for="option in inputField.options" :title="option.label" :value="option.value" :key="option.value" />
-        </t-steps>
+        <el-steps v-model="model[prop]" :style="`margin: 30px ${100 / (inputField.options.length + 2)}%`">
+          <el-step v-for="option in inputField.options" :title="option.label" :value="option.value" :key="option.value" />
+        </el-steps>
         <!-- {{ model[prop] }} -->
         <div style="width: 100%">
           <!-- aaa: {{ model[prop] }} {{ typeof model[prop] }} -->
           <!-- bbb: {{ inputField.options }} -->
-          <TDesignJsonFormForm
+          <ElementPlusJsonFormForm
             v-for="(option) in inputField.options"
             v-show="model[prop] === option.value"
-            ref="tDesignJsonFormFormRef"
+            ref="ElementPlusJsonFormFormRef"
             :key="option.value"
             :inputs="option.inputs"
             :request="option.request"
@@ -154,16 +154,17 @@ defineExpose({
             <template v-for="(_value, name) in slots" #[name]="scopeData">
               <slot :name="(name as string)" v-bind="scopeData" />
             </template>
-          </TDesignJsonFormForm>
+          </ElementPlusJsonFormForm>
         </div>
       </template>
-      <t-form-item
+      <el-form-item
         v-else
         :label="inputField?.label"
-        :name="prop"
         :prop="prop"
+        :name="prop"
         :rules="[{
           required: inputField?.required,
+          message: inputField?.label + '必填',
         }]"
         :data-span="inputField.span ?? span"
         :data-prop="prop"
@@ -265,7 +266,7 @@ defineExpose({
             }
           }"
         />
-      </t-form-item>
+      </el-form-item>
     </template>
   </template>
 </template>

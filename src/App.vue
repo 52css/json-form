@@ -8,9 +8,9 @@ const componentMap = {
   AcroDesignJsonForm,
 }
 const configModel = ref({
-  type: 'formTabTop', // 'listTree', // 'listRadio', // 'listCheckbox', // 'listNormal', // 'formStep', // 'formTabTop', //  'formTabLeft', // 'formNormal',
+  type: 'formNormal', // 'listTree', // 'listRadio', // 'listCheckbox', // 'listNormal', // 'formStep', // 'formTabTop', //  'formTabLeft', // 'formNormal',
   container: 'none', // 'dialog', // 'none',
-  component: 'TDesignJsonForm',
+  component: 'ElementPlusJsonForm', // 'TDesignJsonForm',
   layout: 'vertical' as Layout,
   disabled: false,
   span: 12,
