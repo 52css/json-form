@@ -274,7 +274,6 @@ defineExpose({
       v-if="inputs"
       ref="formRef"
       v-bind="$attrs"
-      :data="model"
       :model="model"
       :disabled="disabled"
       :label-align="getLabelAlignByLayout(columns ? 'inline' : layout)"
@@ -310,7 +309,7 @@ defineExpose({
       </el-form-item>
       <slot v-if="!getIsTabsLeft && !getIsSteps" name="extra" />
     </el-form>
-    {{ tableData }}
+    {{ columnList }}
     <el-table
       v-if="columns"
       v-bind="$attrs"
@@ -319,7 +318,9 @@ defineExpose({
       :pagination="(pagination as TdPaginationProps)"
       select-on-row-click
       @page-change="onPageChange"
-    />
+    >
+      <el-table-column v-for="(column) in columnList" v-bind="column" :key="column.colKey" :label="column.title" :prop="column.colKey"  />
+    </el-table>
   </div>
 </template>
 
