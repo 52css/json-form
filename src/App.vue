@@ -10,7 +10,7 @@ const componentMap = {
 const configModel = ref({
   type: 'formNormal', // 'listTree', // 'listRadio', // 'listCheckbox', // 'listNormal', // 'formStep', // 'formTabTop', //  'formTabLeft', // 'formNormal',
   container: 'none', // 'dialog', // 'none',
-  component: 'ElementPlusJsonForm', // 'ElementPlusJsonForm', // 'TDesignJsonForm',
+  component: 'TDesignJsonForm', // 'ElementPlusJsonForm', // 'TDesignJsonForm',
   layout: 'vertical' as Layout,
   disabled: false,
   span: 12,
@@ -90,10 +90,14 @@ const formData = ref({
       select1: {
         type: 'select',
         label: '下拉框',
+        clearable: true,
         options: [
           { label: "选项1", value: "1" },
           { label: "选项2", value: "2" },
         ],
+        outputs: {
+          aaaa: 'label'
+        },
       },
       cascader1: {
         type: 'cascader',
@@ -156,7 +160,7 @@ const formData = ref({
       },
     },
     request: (model: Model) => {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         console.log('正在请求model', model)
         setTimeout(() => {
           resolve(true)

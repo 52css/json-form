@@ -1,10 +1,10 @@
 <script lang="ts">
 import { ref } from 'vue'
 import { type JsonFormProps, JsonFormDefault, type Inputs, type CommonOption, type Columns } from '../types'
-import { getColumnsByColumns, getLabelAlignByLayout, getLayoutByLayout } from '../utils'
+import { getColumnsByColumns, getLabelAlignByLayout, getLayoutByLayout, setOutputs } from '../utils'
 import TDesignJsonFormFormItem from './TDesignJsonFormFormItem.vue'
 import { FormValidateResult, PageInfo, PrimaryTableCol, TableRowData, TdPaginationProps, } from 'tdesign-vue-next'
-import { set } from 'lodash'
+import { cloneDeep, set } from 'lodash'
 
 export interface TDesignJsonFormProps extends JsonFormProps {
   prop1?: string
@@ -230,9 +230,20 @@ const onPageChange = (pageInfo: PageInfo) => {
 }
 
 let columnList = getColumnsByColumns(props.columns as Columns)
+const onReset = () => {
+  // 重新变更model，用于重置掉outputs的值
+  model.value = cloneDeep(initModel.value)
+}
+const initModel = ref()
 
 watch(() => props.model, (val) => {
   model.value = val
+
+  // 初始化model，用于重置掉outputs的值
+  if (!initModel.value) {
+    initModel.value = cloneDeep(val)
+    console.log('initModel', initModel.value)
+  }
 }, {
   immediate: true
 })
@@ -250,6 +261,7 @@ defineExpose({
 
 <template>
   <div flex flex-col gap-2>
+    <!-- {{ model }} -->
     <!-- t-form model => data -->
     <t-form
       v-if="inputs"
@@ -263,6 +275,7 @@ defineExpose({
       :label-width="(columns ? 'inline' : layout) === 'inline' ? 'auto' : '240px'"
       reset-type="initial"
       class="json-form-form__form"
+      @reset="onReset"
     >
       <TDesignJsonFormFormItem
         ref="formItemRef"
