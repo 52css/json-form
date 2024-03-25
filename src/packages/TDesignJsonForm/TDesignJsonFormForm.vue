@@ -242,7 +242,6 @@ watch(() => props.model, (val) => {
   // 初始化model，用于重置掉outputs的值
   if (!initModel.value) {
     initModel.value = cloneDeep(val)
-    console.log('initModel', initModel.value)
   }
 }, {
   immediate: true
